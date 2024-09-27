@@ -141,6 +141,9 @@ header {
     display: grid;
     grid-template-columns: repeat(4, 1fr)
 }
+.feature-cards h3{
+    color: #4e7c56;
+}
 
 .card {
     background-color: white;
