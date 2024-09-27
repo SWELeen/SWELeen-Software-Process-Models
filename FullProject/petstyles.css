@@ -235,6 +235,7 @@ input[type="file"] {
     color: white;
     font-size: 14px;
     font-weight: normal;
+    text-decoration: none;
     cursor: pointer;
     border: none;
     transition: background-color 0.3s ease;
