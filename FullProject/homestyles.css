@@ -1,0 +1,198 @@
+/* Base Styles */
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f0;
+}
+
+/* Global Heading Styles */
+h1, h2 {
+    font-family: 'Montserrat', sans-serif;
+    color: #ffffff;
+}
+
+h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 64px;
+    font-weight: 700;
+}
+
+h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 48px;
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Navbar Styles */
+header {
+    background-color: #ffffff;
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.navbar {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar .logo img {
+    height: 50px;
+}
+
+.navbar .nav-links {
+    display: flex;
+    list-style: none;
+    flex-grow: 1;
+    justify-content:center;
+}
+
+.navbar .nav-links a {
+    text-decoration: none;
+    color: #4e7c56;
+    font-size: 18px;
+    font-weight: normal;
+    margin-right: 40px;
+}
+.navbar .nav-icons img {
+    height: 24px;
+    margin-left: 15px;
+}
+
+.navbar .auth-buttons a {
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 30px;
+    color: white;
+}
+
+.auth-buttons a.signup {
+    background-color: #ffffff;
+    color: #6A9A79; /* Desired text color */
+    text-decoration: none; /* Optional: Remove underline */
+}
+
+
+
+.login {
+    background-color: #6A9A79;
+}
+
+/* Hero Section */
+.hero {
+    position: relative;
+    text-align: center;
+}
+
+.hero-img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    filter: brightness(50%); /* Adjust the brightness percentage to darken */
+}
+
+
+.hero-text {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+}
+.hero-text h1 {
+    font-size: 64px;
+    font-weight: 700;
+    margin-bottom: 10px; /* Reduced margin to bring text closer */
+}
+
+.hero-text p {
+    font-size: 28px; /* Increased font size */
+    margin-bottom: 0; /* Remove bottom margin */
+}
+
+
+.cta-btn {
+    background-color: #EA8F5A;
+    padding: 10px 20px;
+    border-radius: 20px;
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 30px; /* Increase this value to push the button lower */
+}
+
+/* Features Section */
+.features {
+    background-color: #F1F2ED;
+    padding: 50px;
+    text-align: center;
+}
+
+.features h2 {
+    color: #4e7c56; /* Change this to your desired color */
+}
+
+.feature-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr)
+}
+
+.card {
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    padding: 20px;
+    width: 250px;
+    height: 150px; 
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+
+/* Footer Styles */
+footer {
+    background-color: #393737;
+    color: white;
+    padding: 20px 0;
+}
+
+.footer-container {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer-container h4 {
+    font-size: 16px;
+}
+
+.footer-container ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-container ul li {
+    margin-bottom: 10px;
+}
+
+.footer-container ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.footer-container a img {
+    height: 24px;
+    margin-right: 10px;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+}
+
