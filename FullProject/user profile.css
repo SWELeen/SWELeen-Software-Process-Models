@@ -1,3 +1,18 @@
+/* Global Styles */
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f0;
+}
+
+h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+    color: #4e7c56;
+    text-align: center;
+    margin: 20px 0 30px;
+}
 /* Navbar Styles */
 header {
     background-color: #ffffff;
