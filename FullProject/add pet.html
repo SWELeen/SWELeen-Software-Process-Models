@@ -6,6 +6,7 @@
     <title>Pet Care Form</title>
     <link rel="stylesheet" href="petstyles.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <script src="add pet.js"></script>
 </head>
 <body>
     <!-- Navbar -->
@@ -53,7 +54,7 @@
 
             <div class="form-group">
                 <label for="birthday">Birthday</label>
-                <input type="date" id="birthday" placeholder="MM/DD/YYYY">
+                <input type="date" id="birthday" onchange="calculateAge()">
             </div>
 
             <!-- Right Column -->
@@ -64,7 +65,7 @@
 
             <div class="form-group">
                 <label for="age">Age</label>
-                <input type="text" id="age" placeholder="Pet's age">
+                <input type="text" id="age" placeholder="Pet's age" disabled>
             </div>
 
             <div class="form-group">
@@ -140,9 +141,12 @@
         <!-- Buttons -->
        <div class="button-group">
     <a class="button back" href="user profile.html">Back</a>
-    <a class="button next" href="pet profile.html">Next</a>
+ 
+    <a class="button next" href="pet profile.html" onclick="handleSubmit()">Next</a>
+   
 </div>
 </div>
+
 
 
     <!-- Footer -->

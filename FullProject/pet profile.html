@@ -6,7 +6,9 @@
     <title>Pet profile</title>
     <link rel="stylesheet" href="pet profile.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <script src="add pet.js"></script>
 </head>
+<body onload="loadPetData()"></body>
 <body>
     <!-- Navbar -->
     <header>
@@ -44,7 +46,7 @@
 
             <div class="form-group">
                 <label for="birthday">Birthday</label>
-                <input type="date" id="birthday" placeholder="" readonly>
+                <input type="date" id="birthday" placeholder="" readonly onchange="calculateAge()">
             </div>
 
             <!-- Right Column -->
@@ -57,6 +59,7 @@
             <div class="form-group">
                 <label for="age">Age</label>
                 <input type="text" id="age" placeholder="" readonly>
+           
             </div>
 
             <div class="form-group">
@@ -131,8 +134,10 @@
         </div>
         <!-- Buttons -->
         <div class="button-group">
-            <button class="button back">Edit</button>
+           <button class="button edit" onclick="enableEditing()">Edit</button>
             <a href="user profile.html"><button class="button next">Save</button></a>
+          
+            
         </div>
     </div>
 
