@@ -82,8 +82,6 @@ function savePetData() {
 }
 
 // Handle Form Submission on Edit Page
-document.getElementById('editForm').onsubmit = function(event) {
-    event.preventDefault(); // Prevent the default form submission
+function handleSubmit() {
     savePetData(); // Save the updated data
-    // Optionally, redirect to another page or provide feedback
-};
+}
