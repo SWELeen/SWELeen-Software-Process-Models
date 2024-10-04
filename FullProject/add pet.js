@@ -1,4 +1,4 @@
-//Function to calculate the pet's age based on the birthday
+// Function to calculate the pet's age based on the birthday
 function calculateAge() {
     const birthdayInput = document.getElementById('birthday').value;
     if (!birthdayInput) {
@@ -19,6 +19,7 @@ function calculateAge() {
     // Update the age field in the profile page
     document.getElementById('age').value = age; // Ensure this is the correct ID for the age input
 }
+
 // Load Pet Data on the Profile Page
 function loadPetData() {
     const petData = JSON.parse(localStorage.getItem('petData'));
@@ -60,8 +61,8 @@ function enableEditing() {
     });
 }
 
-// Handle Form Submission
-function handleSubmit() {
+// Save the pet data to local storage
+function savePetData() {
     const formData = {
         name: document.getElementById('name').value,
         type: document.getElementById('type').value,
@@ -77,4 +78,12 @@ function handleSubmit() {
     };
 
     localStorage.setItem('petData', JSON.stringify(formData));
+    alert('Pet data saved successfully!');
 }
+
+// Handle Form Submission on Edit Page
+document.getElementById('editForm').onsubmit = function(event) {
+    event.preventDefault(); // Prevent the default form submission
+    savePetData(); // Save the updated data
+    // Optionally, redirect to another page or provide feedback
+};
