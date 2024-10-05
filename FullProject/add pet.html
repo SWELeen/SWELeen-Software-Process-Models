@@ -35,6 +35,7 @@
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" id="name" placeholder="Pet's name">
+                <span id="name-error" class="error-message"></span>
             </div>
 
             <div class="form-group file-upload-group">
@@ -51,17 +52,20 @@
             <div class="form-group">
                 <label for="type">Type</label>
                 <input type="text" id="type" placeholder="Pet's type">
+                <span id="type-error" class="error-message"></span>
             </div>
 
             <div class="form-group">
                 <label for="birthday">Birthday</label>
                 <input type="date" id="birthday" onchange="calculateAge()">
+                <span id="birthday-error" class="error-message"></span>
             </div>
 
             <!-- Right Column -->
             <div class="form-group">
                 <label for="breed">Breed</label>
                 <input type="text" id="breed" placeholder="Pet's breed">
+                <span id="breed-error" class="error-message"></span>
             </div>
 
             <div class="form-group">
@@ -72,6 +76,7 @@
             <div class="form-group">
                 <label for="weight">Weight</label>
                 <input type="text" id="weight" placeholder="Pet's weight">
+                <span id="weight-error" class="error-message"></span>
             </div>
 
             <!-- Special Needs Section -->
@@ -107,46 +112,42 @@
                 </div>
             </div>
 
-<!-- Training Section -->
-<div class="form-group full-width">
-  <label>Training</label>
-  <div class="toggle-container">
-      <input type="radio" id="house-trained" name="training">
-      <label for="house-trained">house-trained</label>
-      
-      <input type="radio" id="crate-trained" name="training">
-      <label for="crate-trained">crate-trained</label>
-      
-      <input type="radio" id="obedience" name="training">
-      <label for="obedience">obedience level</label>
-  </div>
-</div>
+            <!-- Training Section -->
+            <div class="form-group full-width">
+                <label>Training</label>
+                <div class="toggle-container">
+                    <input type="radio" id="house-trained" name="training">
+                    <label for="house-trained">house-trained</label>
 
-<!-- Vaccination Status Section -->
-<div class="form-group full-width">
-  <label>Vaccination Status</label>
-  <div class="toggle-container">
-      <input type="radio" id="up-to-date" name="vaccination-status">
-      <label for="up-to-date">up-to-date</label>
-      
-      <input type="radio" id="overdue" name="vaccination-status">
-      <label for="overdue">overdue</label>
-      
-      <input type="radio" id="pending" name="vaccination-status">
-      <label for="pending">pending</label>
-  </div>
-</div>
+                    <input type="radio" id="crate-trained" name="training">
+                    <label for="crate-trained">crate-trained</label>
 
+                    <input type="radio" id="obedience" name="training">
+                    <label for="obedience">obedience level</label>
+                </div>
+            </div>
 
+            <!-- Vaccination Status Section -->
+            <div class="form-group full-width">
+                <label>Vaccination Status</label>
+                <div class="toggle-container">
+                    <input type="radio" id="up-to-date" name="vaccination-status">
+                    <label for="up-to-date">up-to-date</label>
+
+                    <input type="radio" id="overdue" name="vaccination-status">
+                    <label for="overdue">overdue</label>
+
+                    <input type="radio" id="pending" name="vaccination-status">
+                    <label for="pending">pending</label>
+                </div>
+            </div>
         </div>
         <!-- Buttons -->
-       <div class="button-group">
-    <a class="button back" href="user profile.html">Back</a>
- 
-    <a class="button next" href="#" onclick="handleSubmit()">Next</a>
+        <div class="button-group">
+            <a class="button back" href="user profile.html">Back</a>
 
-   
-</div>
+            <a class="button next" href="#" onclick="handleSubmit()">Next</a>
+        </div>
 </div>
 
 

@@ -28,7 +28,7 @@
         </nav>
     </header>
 
-    
+
     <!-- Main Form Section -->
     <div class="container">
         <h2>Pet's profile</h2>
@@ -41,16 +41,19 @@
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" id="name" placeholder="" readonly>
+                <span id="name-error" class="error-message"></span>
             </div>
 
             <div class="form-group">
                 <label for="type">Type</label>
                 <input type="text" id="type" placeholder="" readonly>
+                <span id="type-error" class="error-message"></span>
             </div>
 
             <div class="form-group">
                 <label for="birthday">Birthday</label>
                 <input type="date" id="birthday" placeholder="" readonly onchange="calculateAge()">
+                <span id="birthday-error" class="error-message"></span>
             </div>
 
             <!-- Right Column -->
@@ -58,6 +61,7 @@
             <div class="form-group">
                 <label for="breed">Breed</label>
                 <input type="text" id="breed" placeholder="" readonly>
+                <span id="breed-error" class="error-message"></span>
             </div>
 
             <div class="form-group">
@@ -69,6 +73,7 @@
             <div class="form-group">
                 <label for="weight">Weight</label>
                 <input type="text" id="weight" placeholder="" readonly>
+                <span id="weight-error" class="error-message"></span>
             </div>
 
             <!-- Special Needs Section -->
@@ -141,7 +146,7 @@
     <button class="button edit" type="button" onclick="enableEditing()">Edit</button>
     <button class="button next" type="button" onclick="handleSubmit()">Save</button>
 </div>
-    </div>
+</div>
 
     <!-- Footer -->
     <footer>
