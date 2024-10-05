@@ -101,7 +101,6 @@ function validateForm() {
     }
     return true; // Allow form submission
 }
-
 // Handle Form Submission on the first page
 function handleSubmit() {
     if (validateForm()) {
