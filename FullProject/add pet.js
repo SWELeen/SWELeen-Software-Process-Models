@@ -20,7 +20,7 @@ function calculateAge() {
     document.getElementById('age').value = age; // Ensure this is the correct ID for the age input
 }
 
-// Load Pet Data on the Profile Page
+// Load Pet Data on the Profile Page, including the image
 function loadPetData() {
     const petData = JSON.parse(localStorage.getItem('petData'));
     if (petData) {
@@ -30,6 +30,10 @@ function loadPetData() {
         document.getElementById('age').value = petData.age;
         document.getElementById('breed').value = petData.breed;
         document.getElementById('weight').value = petData.weight;
+        
+        if (petData.photo) {
+            document.getElementById('pet-photo').src = petData.photo;  // Set the pet photo
+        }
 
         if (petData.specialNeeds) {
             document.getElementById(`special-${petData.specialNeeds}`).checked = true;
@@ -49,16 +53,33 @@ function loadPetData() {
     }
 }
 
-// Enable editing of the form fields
+
+
+// Enable editing of the form fields including the file input
 function enableEditing() {
-    const inputs = document.querySelectorAll('input[type="text"], input[type="date"], input[name="special-needs"], input[name="spayed-neutered"], input[name="gender"], input[name="training"], input[name="vaccination-status"]');
+    const inputs = document.querySelectorAll('input[type="text"], input[type="date"], input[type="file"], input[name="special-needs"], input[name="spayed-neutered"], input[name="gender"], input[name="training"], input[name="vaccination-status"]');
     inputs.forEach(input => {
-        if (input.type === 'radio') {
+        if (input.type === 'radio' || input.type === 'file') {
             input.disabled = false;
         } else {
             input.removeAttribute('readonly');
         }
     });
+}
+// Function to preview the uploaded image and save it to localStorage
+function previewImage(event) {
+    const reader = new FileReader();
+    const file = event.target.files[0];
+    
+    reader.onload = function() {
+        const imageUrl = reader.result;
+        document.getElementById('pet-photo').src = imageUrl;
+        localStorage.setItem('petPhoto', imageUrl);  // Save the image as a base64 string in localStorage
+    };
+    
+    if (file) {
+        reader.readAsDataURL(file);  // Read the file and trigger onload event
+    }
 }
 
 // Save the pet data to local storage
@@ -74,7 +95,9 @@ function savePetData() {
         spayedNeutered: document.querySelector('input[name="spayed-neutered"]:checked')?.id.split('-')[1],
         gender: document.querySelector('input[name="gender"]:checked')?.id,
         training: document.querySelector('input[name="training"]:checked')?.id,
-        vaccinationStatus: document.querySelector('input[name="vaccination-status"]:checked')?.id
+        vaccinationStatus: document.querySelector('input[name="vaccination-status"]:checked')?.id,
+        photo: localStorage.getItem('petPhoto')  // Save the photo from localStorage
+
     };
 
     localStorage.setItem('petData', JSON.stringify(formData));
