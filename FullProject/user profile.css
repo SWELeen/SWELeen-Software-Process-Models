@@ -166,7 +166,6 @@ button:hover {
 .pet-icon {
     width: 20px; /* Icon width */
     height: 20px; /* Icon height */
-    margin-left: 10px; /* Space between name and icon */
 }
 
 /* Add Pet Button */
