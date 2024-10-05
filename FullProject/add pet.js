@@ -81,7 +81,33 @@ function savePetData() {
     alert('Pet data saved successfully!');
 }
 
-// Handle Form Submission on Edit Page
+// Function to validate form inputs
+function validateForm() {
+    const name = document.getElementById('name').value.trim();
+    const type = document.getElementById('type').value.trim();
+    const birthday = document.getElementById('birthday').value;
+    const breed = document.getElementById('breed').value.trim();
+    const weight = document.getElementById('weight').value.trim();
+    const specialNeeds = document.querySelector('input[name="special-needs"]:checked');
+    const spayedNeutered = document.querySelector('input[name="spayed-neutered"]:checked');
+    const gender = document.querySelector('input[name="gender"]:checked');
+    const training = document.querySelector('input[name="training"]:checked');
+    const vaccinationStatus = document.querySelector('input[name="vaccination-status"]:checked');
+
+    // Check if all required fields are filled
+    if (!name || !type || !birthday || !breed || !weight || !specialNeeds || !spayedNeutered || !gender || !training || !vaccinationStatus) {
+        alert('Please fill in all the required fields before proceeding to the next page.');
+        return false; // Prevent form submission
+    }
+    return true; // Allow form submission
+}
+
+// Handle Form Submission on the first page
 function handleSubmit() {
-    savePetData(); // Save the updated data
+    if (validateForm()) {
+        calculateAge(); // Calculate age before saving
+        savePetData(); // Save the updated data
+        // Navigate to the next page
+        window.location.href = 'user profile.html';
+    }
 }
