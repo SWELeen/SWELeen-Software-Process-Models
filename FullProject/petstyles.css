@@ -149,6 +149,7 @@ input[type="file"] {
     filter: hue-rotate(50deg);
 }
 
+
 /* General Toggle Container (for single row options) */
 .toggle-container {
     display: inline-flex;
