@@ -1,4 +1,4 @@
-//Function to calculate the pet's age based on the birthday
+// Function to calculate the pet's age based on the birthday
 function calculateAge() {
     const birthdayInput = document.getElementById('birthday').value;
     if (!birthdayInput) {

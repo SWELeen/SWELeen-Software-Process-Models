@@ -260,6 +260,9 @@ input[type="file"] {
     border: none;
     transition: background-color 0.3s ease;
 }
+.Profile {
+    margin-left: 270px; /* Moves the Profile button a bit to the right */
+}
 
 .button:hover {
     background-color: #3b6347;
