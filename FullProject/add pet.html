@@ -40,7 +40,8 @@
             <div class="form-group file-upload-group">
                 <div class="file-input-container">
                     <label class="custom-file-upload">
-                        <input type="file" id="photo-upload">
+                        <input type="file" id="photo-upload" onchange="previewImage(event)">
+
                         <img src="photo.png" id="pet-photo" alt="Pet's Photo Preview">
                     </label>
                     <span class="upload-text">Upload Pet's photo</span>
