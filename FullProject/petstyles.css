@@ -113,22 +113,26 @@ input[type="file"] {
 .custom-file-upload {
     display: flex;
     align-items: center;
-    padding: 10px;
+    justify-content: center;
     border-radius: 50%;
     background-color: #fff;
     border: 2px solid #ccc;
-    width: 30px;
-    height: 30px;
-    justify-content: center;
+    width: 70px;
+    height: 70px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    overflow: hidden; /* Ensures the image doesn't overflow the container */
 }
 
 /* Icon inside the button */
 .custom-file-upload img {
-    width: 25px;
-    height: 25px;
+    width: 100%; /* Makes the image fill the container's width */
+    height: 100%; /* Ensures it also fills the height */
+    border-radius: 50%; /* Keeps the image circular */
+    object-fit: cover; /* Ensures the image covers the container evenly without stretching */
+    aspect-ratio: 1/1; /* Enforces a 1:1 aspect ratio to prevent ovals */
 }
+
 
 /* Text next to the button */
 .upload-text {
@@ -148,6 +152,7 @@ input[type="file"] {
 .custom-file-upload:hover img {
     filter: hue-rotate(50deg);
 }
+
 
 /* General Toggle Container (for single row options) */
 .toggle-container {
