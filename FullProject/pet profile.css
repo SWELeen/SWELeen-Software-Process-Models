@@ -56,20 +56,20 @@ header {
 
 /* Container for the Form */
 .container {
-    max-width: 600px; /* Set a max-width to ensure equal space on both sides */
+    max-width: 600px;
     background-color: #f7f7f7;
     margin: 40px auto;
     padding: 40px;
     border-radius: 15px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    text-align: center; /* Ensure form content is centered */
+    text-align: center;
 }
 
 /* Form Layout */
 .form-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    column-gap: 20px; /* Increase gap for better spacing */
+    column-gap: 20px;
     row-gap: 15px;
     justify-content: center;
 }
@@ -94,93 +94,59 @@ input[type="text"], input[type="date"], input[type="file"] {
     border: 1px solid #ccc;
     font-size: 14px;
     background-color: #fff;
-    width: 93%; /* Ensure inputs take full width of their columns */
+    width: 93%;
 }
 
-/* Adjust the upload button container */
-.file-input-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-/* Style for hidden file input */
-input[type="file"] {
-    display: none;
-}
-
-/* Custom file upload button */
-.custom-file-upload {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    border-radius: 50%;
-    background-color: #fff;
-    border: 2px solid #ccc;
-    width: 30px;
-    height: 30px;
-    justify-content: center;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-/* Icon inside the button */
-.custom-file-upload img {
-    width: 25px;
-    height: 25px;
-}
-
-/* Text next to the button */
-.upload-text {
-    font-size: 14px;
-    color: #4e7c56;
-    font-weight: bold;
-    text-align: left;
-    margin-left: 10px;
-}
-
-/* Hover effect */
-.custom-file-upload:hover {
-    background-color: #f5f5f0;
-    border-color: #ff704d;
-}
-
-.custom-file-upload:hover img {
-    filter: hue-rotate(50deg);
-}
+/* Photo Container Styles */
 .photo-container {
     display: flex;
     align-items: center;
-    padding: 10px;
+    justify-content: center;
     border-radius: 50%;
     background-color: #fff;
     border: 2px solid #ccc;
-    width: 70px;
-    height: 70px;
-    justify-content: center;
+    width: 100px;
+    height: 100px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-left: 80px; /* Move the photo container to the left */
+    margin-left: 80px;
+    overflow: hidden;
+    position: relative;
 }
 
 .photo-container img {
     width: 100%;
     height: 100%;
+    border-radius: 50%;
     object-fit: cover;
+    aspect-ratio: 1/1;
 }
 
-/* General Toggle Container (for single row options) */
+.photo-container input[type="file"] {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.photo-container:hover {
+    background-color: #f5f5f0;
+    border-color: #ff704d;
+}
+
+/* Toggle Container Styles */
 .toggle-container {
     display: inline-flex;
     background-color: #fff;
     border-radius: 5px;
     overflow: hidden;
     border: 1px solid #ccc;
-    width: 100%; /* Ensure container takes full width */
+    width: 100%;
 }
 
 .toggle-container input[type="radio"] {
-    display: none; /* Hide the radio buttons */
+    display: none;
 }
 
 .toggle-container label {
@@ -190,7 +156,7 @@ input[type="file"] {
     background-color: transparent;
     cursor: pointer;
     transition: all 0.3s ease;
-    flex-grow: 1; /* Ensure labels take equal space */
+    flex-grow: 1;
     text-align: center;
     margin: 0;
 }
@@ -200,47 +166,45 @@ input[type="file"] {
     color: white;
 }
 
-/* Full-width container for sections like Training and Vaccination Status */
+/* Full-width Section Styles */
 .full-width {
-    grid-column: span 2; /* Make the section span across two columns */
+    grid-column: span 2;
 }
 
-/* Styling for Full-width Toggle Container */
 .full-width .toggle-container {
     display: flex;
-    width: 100%; /* Make the container take the full width */
-    height: auto; /* Adjust height to be flexible */
+    width: 100%;
+    height: auto;
     border-radius: 5px;
     border: 1px solid #ccc;
-    padding: 0; /* Remove padding from container */
+    padding: 0;
 }
 
 .full-width .toggle-container input[type="radio"] {
-    display: none; /* Hide the radio buttons */
+    display: none;
 }
 
 .full-width .toggle-container label {
-    flex-grow: 1; /* Make the labels take equal space */
-    padding: 10px; /* Consistent padding with the smaller toggle container */
+    flex-grow: 1;
+    padding: 10px;
     font-size: 14px;
     text-align: center;
     cursor: pointer;
     transition: background-color 0.3s ease;
     background-color: transparent;
-    border-right: 1px solid #ccc; /* Separate options visually */
+    border-right: 1px solid #ccc;
 }
 
 .full-width .toggle-container label:last-child {
-    border-right: none; /* Remove border for last label */
+    border-right: none;
 }
 
-/* Styling for selected (checked) labels */
 .full-width .toggle-container input[type="radio"]:checked + label {
     background-color: #ff704d;
     color: white;
 }
 
-/* Button group */
+/* Button Styles */
 .button-group {
     display: flex;
     justify-content: space-between;
@@ -260,8 +224,9 @@ input[type="file"] {
     border: none;
     transition: background-color 0.3s ease;
 }
+
 .Profile {
-    margin-left: 270px; /* Moves the Profile button a bit to the right */
+    margin-left: 270px;
 }
 
 .button:hover {
@@ -335,7 +300,6 @@ footer {
         flex-direction: column;
         text-align: center;
     }
-
     .footer-social {
         margin-top: 20px;
     }

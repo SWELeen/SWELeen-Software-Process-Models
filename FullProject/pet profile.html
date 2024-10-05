@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pet profile</title>
+    <title>Pet Profile</title>
     <link rel="stylesheet" href="pet profile.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <script src="add pet.js"></script>
+    <script src="add pet.js" defer></script>  <!-- Ensure JS is loaded after HTML -->
 </head>
-<body onload="loadPetData()"></body>
-<body>
+<body onload="loadPetData()">
+
     <!-- Navbar -->
     <header>
         <nav class="navbar">
@@ -28,47 +28,44 @@
         </nav>
     </header>
 
-    
     <!-- Main Form Section -->
     <div class="container">
-        <h2>Pet's profile</h2>
+        <h2>Pet's Profile</h2>
         <div class="form-container">
             <!-- Left Column -->
             <div class="photo-container">
-                <img id="pet-photo" src="pets.png" alt="Pet Photo">
-                
-            </div> 
+                <img id="pet-photo" src="pets.png" alt="Pet Photo" style="width: 100px; height: auto;">
+                <input type="file" id="file-input" accept="image/*" onchange="previewImage(event)" disabled  />
+            </div>
             <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" id="name" placeholder="" readonly>
+                <input type="text" id="name" readonly>
             </div>
 
             <div class="form-group">
                 <label for="type">Type</label>
-                <input type="text" id="type" placeholder="" readonly>
+                <input type="text" id="type" readonly>
             </div>
 
             <div class="form-group">
                 <label for="birthday">Birthday</label>
-                <input type="date" id="birthday" placeholder="" readonly onchange="calculateAge()">
+                <input type="date" id="birthday" readonly onchange="calculateAge()">
             </div>
 
             <!-- Right Column -->
-
             <div class="form-group">
                 <label for="breed">Breed</label>
-                <input type="text" id="breed" placeholder="" readonly>
+                <input type="text" id="breed" readonly>
             </div>
 
             <div class="form-group">
                 <label for="age">Age</label>
-                <input type="text" id="age" placeholder="" readonly>
-           
+                <input type="text" id="age" readonly>
             </div>
 
             <div class="form-group">
                 <label for="weight">Weight</label>
-                <input type="text" id="weight" placeholder="" readonly>
+                <input type="text" id="weight" readonly>
             </div>
 
             <!-- Special Needs Section -->
@@ -104,44 +101,43 @@
                 </div>
             </div>
 
-<!-- Training Section -->
-<div class="form-group full-width">
-  <label>Training</label>
-  <div class="toggle-container">
-      <input type="radio" id="house-trained" name="training" disabled>
-      <label for="house-trained">house-trained</label>
-      
-      <input type="radio" id="crate-trained" name="training" disabled>
-      <label for="crate-trained">crate-trained</label>
-      
-      <input type="radio" id="obedience" name="training" disabled>
-      <label for="obedience">obedience level</label>
-  </div>
-</div>
+            <!-- Training Section -->
+            <div class="form-group full-width">
+                <label>Training</label>
+                <div class="toggle-container">
+                    <input type="radio" id="house-trained" name="training" disabled>
+                    <label for="house-trained">House-trained</label>
+                    
+                    <input type="radio" id="crate-trained" name="training" disabled>
+                    <label for="crate-trained">Crate-trained</label>
+                    
+                    <input type="radio" id="obedience" name="training" disabled>
+                    <label for="obedience">Obedience level</label>
+                </div>
+            </div>
 
-<!-- Vaccination Status Section -->
-<div class="form-group full-width">
-  <label>Vaccination Status</label>
-  <div class="toggle-container">
-      <input type="radio" id="up-to-date" name="vaccination-status" disabled>
-      <label for="up-to-date">up-to-date</label>
-      
-      <input type="radio" id="overdue" name="vaccination-status" disabled>
-      <label for="overdue">overdue</label>
-      
-      <input type="radio" id="pending" name="vaccination-status" disabled>
-      <label for="pending">pending</label>
-  </div>
-</div>
-
-
+            <!-- Vaccination Status Section -->
+            <div class="form-group full-width">
+                <label>Vaccination Status</label>
+                <div class="toggle-container">
+                    <input type="radio" id="up-to-date" name="vaccination-status" disabled>
+                    <label for="up-to-date">Up-to-date</label>
+                    
+                    <input type="radio" id="overdue" name="vaccination-status" disabled>
+                    <label for="overdue">Overdue</label>
+                    
+                    <input type="radio" id="pending" name="vaccination-status" disabled>
+                    <label for="pending">Pending</label>
+                </div>
+            </div>
         </div>
-<!-- Buttons -->
-<div class="button-group">
-    <button class="button edit" type="button" onclick="enableEditing()">Edit</button>
-    <button class="button Profile" type="button" onclick="window.location.href='user profile.html';">Profile</button>
-    <button class="button next" type="button" onclick="handleSubmit()">Save</button>
-</div>
+
+        <!-- Buttons -->
+        <div class="button-group">
+            <button class="button edit" type="button" onclick="enableEditing()">Edit</button>
+            <button class="button Profile" type="button" onclick="window.location.href='user profile.html';">Profile</button>
+            <button class="button next" type="button" onclick="handleSubmit()">Save</button>
+        </div>
     </div>
 
     <!-- Footer -->

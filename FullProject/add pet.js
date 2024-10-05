@@ -55,11 +55,11 @@ function loadPetData() {
 
 
 
-// Enable editing of the form fields
+// Enable editing of the form fields including the file input
 function enableEditing() {
-    const inputs = document.querySelectorAll('input[type="text"], input[type="date"], input[name="special-needs"], input[name="spayed-neutered"], input[name="gender"], input[name="training"], input[name="vaccination-status"]');
+    const inputs = document.querySelectorAll('input[type="text"], input[type="date"], input[type="file"], input[name="special-needs"], input[name="spayed-neutered"], input[name="gender"], input[name="training"], input[name="vaccination-status"]');
     inputs.forEach(input => {
-        if (input.type === 'radio') {
+        if (input.type === 'radio' || input.type === 'file') {
             input.disabled = false;
         } else {
             input.removeAttribute('readonly');
@@ -74,10 +74,10 @@ function previewImage(event) {
     
     reader.onload = function() {
         const imageUrl = reader.result;
-        document.getElementById('profile-pic').src = imageUrl;
+        document.getElementById('pet-photo').src = imageUrl;
         localStorage.setItem('petPhoto', imageUrl);  // Save the image as a base64 string in localStorage
     };
-
+    
     if (file) {
         reader.readAsDataURL(file);  // Read the file and trigger onload event
     }
