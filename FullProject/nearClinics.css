@@ -1,0 +1,126 @@
+/* Global Styles */
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f0;
+}
+h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    color: #4e7c56;
+    text-align: center;
+    margin: 20px 0 30px;
+}
+/* Navbar Styles */
+header {
+    background-color: #ffffff;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.navbar {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar .logo img {
+    height: 50px;
+}
+
+.navbar .nav-links {
+    display: flex;
+    list-style: none;
+}
+
+.navbar .nav-links li {
+    margin-right: 30px;
+}
+
+.navbar .nav-links a {
+    text-decoration: none;
+    color: #4e7c56;
+    font-size: 18px;
+    font-weight: normal;
+}
+
+.navbar .nav-icons img {
+    height: 24px;
+    margin-left: 15px;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #393737;
+    color: white;
+    padding: 30px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 30px;
+    text-align: left;
+}
+
+.footer-container h4 {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.footer-container ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-container ul li {
+    margin-bottom: 10px;
+}
+
+.footer-container ul li a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-container ul li a:hover {
+    color: #cce5cc;
+}
+
+.footer-social a {
+    margin-right: 15px;
+}
+
+.footer-social a img {
+    height: 24px;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+    border-top: 1px solid #ccc;
+    padding-top: 20px;
+    width: 100%;
+}
+
+/* Responsive Footer */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-social {
+        margin-top: 20px;
+    }
+}
