@@ -108,28 +108,73 @@ function savePetData() {
 function validateForm() {
     const name = document.getElementById('name').value.trim();
     const type = document.getElementById('type').value.trim();
-    const birthday = document.getElementById('birthday').value;
+    const birthday = new Date(document.getElementById('birthday').value);
     const breed = document.getElementById('breed').value.trim();
     const weight = document.getElementById('weight').value.trim();
+    const today = new Date();
+
+    // Clear previous messages
+    document.getElementById('name-error').textContent = '';
+    document.getElementById('type-error').textContent = '';
+    document.getElementById('breed-error').textContent = '';
+    document.getElementById('birthday-error').textContent = '';
+    document.getElementById('weight-error').textContent = '';
+
+    let isValid = true;
+
+    // Check if birthdate is valid or not
+    if (birthday > today) {
+        document.getElementById('birthday-error').textContent = "Error: Invalid birthdate.";
+        isValid = false;
+    }
+
+    // Check if name, type, and breed contain invalid characters
+    const invalidChars = /[^a-zA-Z\s]/; 
+    if (invalidChars.test(name)) {
+        document.getElementById('name-error').textContent = "Name is invalid! No numbers or symbols.";
+        isValid = false;
+    }
+    if (invalidChars.test(type)) {
+        document.getElementById('type-error').textContent = "Type is invalid! No numbers or symbols.";
+        isValid = false;
+    }
+    if (invalidChars.test(breed)) { 
+        document.getElementById('breed-error').textContent = "Breed is invalid! No numbers or symbols.";
+        isValid = false;
+    }
+
+    // Check if weight is a number
+    if (isNaN(weight) || weight.trim() === "") {
+        document.getElementById('weight-error').textContent = "Weight must be a number.";
+        isValid = false;
+    } else if (!/^\d+(\.\d+)?$/.test(weight)) { 
+        document.getElementById('weight-error').textContent = "Please enter valid numbers only.";
+        isValid = false;
+    }
+
+    // Check if all required fields are filled
     const specialNeeds = document.querySelector('input[name="special-needs"]:checked');
     const spayedNeutered = document.querySelector('input[name="spayed-neutered"]:checked');
     const gender = document.querySelector('input[name="gender"]:checked');
     const training = document.querySelector('input[name="training"]:checked');
     const vaccinationStatus = document.querySelector('input[name="vaccination-status"]:checked');
-
     // Check if all required fields are filled
     if (!name || !type || !birthday || !breed || !weight || !specialNeeds || !spayedNeutered || !gender || !training || !vaccinationStatus) {
         alert('Please fill in all the required fields before proceeding to the next page.');
-        return false; // Prevent form submission
+        isValid = false; // Prevent form submission
     }
-    return true; // Allow form submission
+
+    return isValid; // Allow form submission if valid
 }
-// Handle Form Submission on the first page
-function handleSubmit() {
+
+// Handle Form Submission
+function handleSubmit(event) {
     if (validateForm()) {
         calculateAge(); // Calculate age before saving
         savePetData(); // Save the updated data
         // Navigate to the next page
         window.location.href = 'user profile.html';
+    } else {
+        event.preventDefault(); // Prevent default action if validation fails
     }
 }
