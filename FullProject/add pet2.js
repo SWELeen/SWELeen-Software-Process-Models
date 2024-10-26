@@ -22,7 +22,7 @@ function calculateAge() {
 
 // Load Pet Data on the Profile Page, including the image
 function loadPetData() {
-    const petData = JSON.parse(localStorage.getItem('petData'));
+    const petData = JSON.parse(localStorage.getItem('petData2'));
     if (petData) {
         document.getElementById('name').value = petData.name;
         document.getElementById('type').value = petData.type;
