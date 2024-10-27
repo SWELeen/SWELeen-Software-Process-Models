@@ -1,34 +1,41 @@
 <?php
-// save_pet_data.php
+$servername = "localhost";  // Usually "localhost" for local servers
+$username = "root";         // Your MySQL username
+$password = "";             // Your MySQL password
+$dbname = "your_database";  // Replace with your database name
 
-include 'db_connection.php';
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
 
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Check if request is POST to insert data
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id = $_POST['ID'];
+    // Capture the input data
     $name = $_POST['name'];
     $type = $_POST['type'];
     $birthday = $_POST['birthday'];
-    $age = $_POST['age'];
     $breed = $_POST['breed'];
     $weight = $_POST['weight'];
-    $specialNeeds = $_POST['specialNeeds'];
-    $gender = $_POST['gender'];
-    $training = $_POST['training'];
-    $vaccinationStatus = $_POST['vaccinationStatus'];
+    $specialNeeds = isset($_POST['specialNeeds']) ? $_POST['specialNeeds'] : 'No';
+    $spayedNeutered = isset($_POST['spayedNeutered']) ? $_POST['spayedNeutered'] : 'No';
+    $gender = isset($_POST['gender']) ? $_POST['gender'] : 'Unknown';
+    $training = isset($_POST['training']) ? $_POST['training'] : 'None';
+    $vaccinationStatus = isset($_POST['vaccinationStatus']) ? $_POST['vaccinationStatus'] : 'Unknown';
 
-    $sql = "INSERT INTO pets (id, name, type, birthday, age, breed, weight, specialNeeds, gender, training, vaccinationStatus)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    // Prepare and execute SQL query to insert data
+    $sql = "INSERT INTO pets (name, type, birthday, breed, weight, specialNeeds, spayedNeutered, gender, training, vaccinationStatus)
+            VALUES ('$name', '$type', '$birthday', '$breed', '$weight', '$specialNeeds', '$spayedNeutered', '$gender', '$training', '$vaccinationStatus')";
 
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("isssissssss", $id, $name, $type, $birthday, $age, $breed, $weight, $specialNeeds, $gender, $training, $vaccinationStatus);
-
-    if ($stmt->execute()) {
+    if ($conn->query($sql) === TRUE) {
         echo "New record created successfully";
     } else {
-        echo "Error: " . $stmt->error;
+        echo "Error: " . $sql . "<br>" . $conn->error;
     }
-
-    $stmt->close();
 }
+
 $conn->close();
 ?>
