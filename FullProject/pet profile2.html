@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <script src="add pet2.js"></script>
 </head>
-<body onload="loadPetData()"></body>
+<body onload="loadPetData2()"></body>
 <body>
     <!-- Navbar -->
     <header>
@@ -36,7 +36,7 @@
             <!-- Left Column -->
             <div class="photo-container">
                 <img id="pet-photo" src="pets.png" alt="Pet Photo">
-                <input type="file" id="file-input" accept="image/*" onchange="previewImage(event)" disabled  />
+                <input type="file" id="file-input" accept="image/*" onchange="previewImage2(event)" disabled  />
             </div> 
             <div class="form-group">
                 <label for="name">Name</label>
@@ -52,7 +52,7 @@
 
             <div class="form-group">
                 <label for="birthday">Birthday</label>
-                <input type="date" id="birthday" placeholder="" readonly onchange="calculateAge()">
+                <input type="date" id="birthday" placeholder="" readonly onchange="calculateAge2()">
                 <span id="birthday-error" class="error-message"></span>
             </div>
 
@@ -143,8 +143,8 @@
         </div>
 <!-- Buttons -->
 <div class="button-group">
-    <button class="button edit" type="button" onclick="enableEditing()">Edit</button>
-    <button class="button next" type="button" onclick="handleSubmit()">Save</button>
+    <button class="button edit" type="button" onclick="enableEditing2()">Edit</button>
+    <button class="button next" type="button" onclick="handleSubmit2()">Save</button>
 </div>
 </div>
 

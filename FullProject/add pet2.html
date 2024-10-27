@@ -6,7 +6,7 @@
     <title>Pet Care Form</title>
     <link rel="stylesheet" href="petstyles.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <script src="add pet.js"></script>
+    <script src="add pet2.js"></script>
 </head>
 <body>
     <!-- Navbar -->
@@ -41,12 +41,18 @@
             <div class="form-group file-upload-group">
                 <div class="file-input-container">
                     <label class="custom-file-upload">
-                        <input type="file" id="photo-upload" onchange="previewImage(event)">
+                        <input type="file" id="photo-upload" onchange="previewImage2(event)">
 
                         <img src="photo.png" id="pet-photo" alt="Pet's Photo Preview">
                     </label>
                     <span class="upload-text">Upload Pet's photo</span>
                 </div>
+            </div>
+
+            <div class="form-group">
+                <label for="ID">ID (Only 1, 2, or 3 allowed):</label>
+                <input type="text" id="ID" placeholder="Pet's ID">
+                <span id="ID-error" class="error-message"></span>
             </div>
 
             <div class="form-group">
@@ -57,7 +63,7 @@
 
             <div class="form-group">
                 <label for="birthday">Birthday</label>
-                <input type="date" id="birthday" onchange="calculateAge()">
+                <input type="date" id="birthday" onchange="calculateAge2()">
                 <span id="birthday-error" class="error-message"></span>
             </div>
 
@@ -146,7 +152,7 @@
         <div class="button-group">
             <a class="button back" href="user profile.html">Back</a>
 
-            <a class="button next" href="#" onclick="handleSubmit()">Save</a>
+            <a class="button next" href="#" onclick="handleSubmit2()">Save</a>
         </div>
 </div>
 
