@@ -193,6 +193,6 @@ function handleSubmit2(event) {
         // Navigate to the next page
         window.location.href = 'user profile.html';
     } else {
-        event.preventDefault2(); // Prevent default action if validation fails
+        event.preventDefault(); // Prevent default action if validation fails
     }
 }
