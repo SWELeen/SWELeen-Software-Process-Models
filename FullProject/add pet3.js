@@ -75,7 +75,7 @@ function previewImage3(event) {
     reader.onload = function() {
         const imageUrl = reader.result;
         document.getElementById('pet-photo').src = imageUrl;
-        localStorage.setItem('petPhoto', imageUrl);  // Save the image as a base64 string in localStorage
+        localStorage.setItem('petPhoto3', imageUrl);  // Save the image as a base64 string in localStorage
     };
 
     if (file) {
@@ -98,7 +98,7 @@ function savePetData3() {
         gender: document.querySelector('input[name="gender"]:checked')?.id,
         training: document.querySelector('input[name="training"]:checked')?.id,
         vaccinationStatus: document.querySelector('input[name="vaccination-status"]:checked')?.id,
-        photo: localStorage.getItem('petPhoto')  // Save the photo from localStorage
+        photo: localStorage.getItem('petPhoto3')  // Save the photo from localStorage
 
     };
 
@@ -199,8 +199,8 @@ function handleSubmit3(event) {
 // Function to delete all saved pet data
 function deletePetData3() {
     if (confirm('Are you sure you want to delete all pet data? This action cannot be undone.')) {
-        localStorage.removeItem('petData');
-        localStorage.removeItem('petPhoto'); // Remove photo as well
+        localStorage.removeItem('petData3');
+        localStorage.removeItem('petPhoto3'); // Remove photo as well
         alert('Pet data deleted successfully!');
         window.location.href = 'user profile.html'; // Redirect to user profile page
     }
