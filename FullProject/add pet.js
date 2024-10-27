@@ -196,3 +196,28 @@ function handleSubmit(event) {
         event.preventDefault(); // Prevent default action if validation fails
     }
 }
+// Function to delete all saved pet data
+function deletePetData() {
+    localStorage.removeItem('petData');
+    localStorage.removeItem('petPhoto'); // Remove photo as well
+    alert('Pet data deleted successfully!');
+    resetFormFields();
+}
+
+// Function to reset form fields
+function resetFormFields() {
+    document.getElementById('ID').value = '';
+    document.getElementById('name').value = '';
+    document.getElementById('type').value = '';
+    document.getElementById('birthday').value = '';
+    document.getElementById('age').value = '';
+    document.getElementById('breed').value = '';
+    document.getElementById('weight').value = '';
+    document.getElementById('pet-photo').src = 'pets.png'; // Reset to default image
+
+    // Uncheck all radio buttons
+    const radios = document.querySelectorAll('input[type="radio"]');
+    radios.forEach(radio => {
+        radio.checked = false;
+    });
+}
