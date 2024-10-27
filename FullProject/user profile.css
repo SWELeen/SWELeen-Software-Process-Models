@@ -182,19 +182,17 @@ button:hover {
 }
 
 /* Add Pet Button */
-.add-pet {
-    text-align: left;
-    margin-bottom: 20px;
-}
+
 
 .add-pet-button {
-    padding: 10px 20px;
-    border-radius: 20px;
+    padding: 1px 5px;
+    border-radius: 30px;
     background-color: #4e7c56;
     color: white;
-    border: none;
+    border:none;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-right: 15px;
 }
 
 .add-pet-button:hover {
