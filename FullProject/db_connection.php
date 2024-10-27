@@ -4,7 +4,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "your_database";  // Replace with your actual database name
+$dbname = "aleefdatabase";  // Replace with your actual database name
 
 // Create a new connection
 $conn = new mysqli($servername, $username, $password, $dbname);
