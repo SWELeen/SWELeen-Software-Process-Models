@@ -198,10 +198,12 @@ function handleSubmit(event) {
 }
 // Function to delete all saved pet data
 function deletePetData() {
-    localStorage.removeItem('petData');
-    localStorage.removeItem('petPhoto'); // Remove photo as well
-    alert('Pet data deleted successfully!');
-    resetFormFields();
+    if (confirm('Are you sure you want to delete all pet data? This action cannot be undone.')) {
+        localStorage.removeItem('petData');
+        localStorage.removeItem('petPhoto'); // Remove photo as well
+        alert('Pet data deleted successfully!');
+        window.location.href = 'user profile.html'; // Redirect to user profile page
+    }
 }
 
 // Function to reset form fields
