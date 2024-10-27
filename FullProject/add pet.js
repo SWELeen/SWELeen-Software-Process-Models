@@ -20,20 +20,6 @@ function calculateAge() {
     document.getElementById('age').value = age;
 }
 
-// Remove loadPetData function as we will fetch from the database using PHP
-
-// Enable editing of the form fields including the file input
-function enableEditing() {
-    const inputs = document.querySelectorAll('input[type="text"], input[type="date"], input[type="file"], input[name="special-needs"], input[name="spayed-neutered"], input[name="gender"], input[name="training"], input[name="vaccination-status"]');
-    inputs.forEach(input => {
-        if (input.type === 'radio' || input.type === 'file') {
-            input.disabled = false;
-        } else {
-            input.removeAttribute('readonly');
-        }
-    });
-}
-
 // Preview uploaded image, display it, and prepare for AJAX upload if needed
 function previewImage(event) {
     const reader = new FileReader();
@@ -61,7 +47,13 @@ function savePetData() {
     formData.append('age', document.getElementById('age').value);
     formData.append('breed', document.getElementById('breed').value);
     formData.append('weight', document.getElementById('weight').value);
-    formData.append('photo', document.getElementById('pet-photo').src); // Assuming a base64 encoded image
+    
+    // Instead of using the base64 URL, get the file directly
+    const fileInput = document.getElementById('photo-upload');
+    if (fileInput.files[0]) {
+        formData.append('photo', fileInput.files[0]); // Append the file directly
+    }
+    
     formData.append('specialNeeds', document.querySelector('input[name="special-needs"]:checked')?.value);
     formData.append('spayedNeutered', document.querySelector('input[name="spayed-neutered"]:checked')?.value);
     formData.append('gender', document.querySelector('input[name="gender"]:checked')?.value);
@@ -155,7 +147,8 @@ function handleSubmit(event) {
     event.preventDefault();
     if (validateForm()) {
         calculateAge();
-        savePetData();
+        savePetData(); // Save data after validating
+        // Redirect to user profile only after the save process (you may handle this in the PHP file)
         window.location.href = 'user profile.html'; // Ensure URL matches your file
     }
 }
