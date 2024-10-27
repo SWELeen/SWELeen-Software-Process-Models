@@ -129,7 +129,8 @@ function validateForm() {
     if (!['1', '2', '3'].includes(ID)) {
         document.getElementById('ID-error').textContent = "ID must be 1, 2, or 3.";
         isValid = false;
-
+    }
+    
     // Check if birthdate is valid or not
     if (birthday > today) {
         document.getElementById('birthday-error').textContent = "Error: Invalid birthdate.";
