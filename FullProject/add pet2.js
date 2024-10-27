@@ -102,7 +102,7 @@ function savePetData2() {
 
     };
 
-    localStorage.setItem('petData', JSON.stringify(formData));
+    localStorage.setItem('petData2', JSON.stringify(formData));
     alert('Pet data saved successfully!');
 }
 

@@ -1,5 +1,5 @@
 // Function to calculate the pet's age based on the birthday
-function calculateAge() {
+function calculateAge3() {
     const birthdayInput = document.getElementById('birthday').value;
     if (!birthdayInput) {
         alert('Please enter the birthday.');
@@ -21,35 +21,35 @@ function calculateAge() {
 }
 
 // Load Pet Data on the Profile Page, including the image
-function loadPetData() {
-    const petData = JSON.parse(localStorage.getItem('petData'));
-    if (petData) {
-        document.getElementById('ID').value = petData.ID;
-        document.getElementById('name').value = petData.name;
-        document.getElementById('type').value = petData.type;
-        document.getElementById('birthday').value = petData.birthday;
-        document.getElementById('age').value = petData.age;
-        document.getElementById('breed').value = petData.breed;
-        document.getElementById('weight').value = petData.weight;
+function loadPetData3() {
+    const petData3 = JSON.parse(localStorage.getItem('petData3'));
+    if (petData3) {
+        document.getElementById('ID').value = petData3.ID;
+        document.getElementById('name').value = petData3.name;
+        document.getElementById('type').value = petData3.type;
+        document.getElementById('birthday').value = petData3.birthday;
+        document.getElementById('age').value = petData3.age;
+        document.getElementById('breed').value = petData3.breed;
+        document.getElementById('weight').value = petData3.weight;
 
-        if (petData.photo) {
-            document.getElementById('pet-photo').src = petData.photo;  // Set the pet photo
+        if (petData3.photo) {
+            document.getElementById('pet-photo').src = petData3.photo;  // Set the pet photo
         }
 
-        if (petData.specialNeeds) {
-            document.getElementById(`special-${petData.specialNeeds}`).checked = true;
+        if (petData3.specialNeeds) {
+            document.getElementById(`special-${petData3.specialNeeds}`).checked = true;
         }
-        if (petData.spayedNeutered) {
-            document.getElementById(`spayed-${petData.spayedNeutered}`).checked = true;
+        if (petData3.spayedNeutered) {
+            document.getElementById(`spayed-${petData3.spayedNeutered}`).checked = true;
         }
-        if (petData.gender) {
-            document.getElementById(petData.gender).checked = true;
+        if (petData3.gender) {
+            document.getElementById(petData3.gender).checked = true;
         }
-        if (petData.training) {
-            document.getElementById(petData.training).checked = true;
+        if (petData3.training) {
+            document.getElementById(petData3.training).checked = true;
         }
-        if (petData.vaccinationStatus) {
-            document.getElementById(petData.vaccinationStatus).checked = true;
+        if (petData3.vaccinationStatus) {
+            document.getElementById(petData3.vaccinationStatus).checked = true;
         }
     }
 }
@@ -57,7 +57,7 @@ function loadPetData() {
 
 
 // Enable editing of the form fields including the file input
-function enableEditing() {
+function enableEditing3() {
     const inputs = document.querySelectorAll('input[type="text"], input[type="date"], input[type="file"], input[name="special-needs"], input[name="spayed-neutered"], input[name="gender"], input[name="training"], input[name="vaccination-status"]');
     inputs.forEach(input => {
         if (input.type === 'radio' || input.type === 'file') {
@@ -68,7 +68,7 @@ function enableEditing() {
     });
 }
 // Function to preview the uploaded image and save it to localStorage
-function previewImage(event) {
+function previewImage3(event) {
     const reader = new FileReader();
     const file = event.target.files[0];
 
@@ -84,7 +84,7 @@ function previewImage(event) {
 }
 
 // Save the pet data to local storage
-function savePetData() {
+function savePetData3() {
     const formData = {
         name: document.getElementById('name').value,
         ID: document.getElementById('ID').value,
@@ -102,12 +102,12 @@ function savePetData() {
 
     };
 
-    localStorage.setItem('petData', JSON.stringify(formData));
+    localStorage.setItem('petData3', JSON.stringify(formData));
     alert('Pet data saved successfully!');
 }
 
 // Function to validate form inputs
-function validateForm() {
+function validateForm3() {
     const ID = document.getElementById('ID').value.trim();
     const name = document.getElementById('name').value.trim();
     const type = document.getElementById('type').value.trim();
@@ -186,10 +186,10 @@ function validateForm() {
 }
 
 // Handle Form Submission
-function handleSubmit(event) {
-    if (validateForm()) {
-        calculateAge(); // Calculate age before saving
-        savePetData(); // Save the updated data
+function handleSubmit3(event) {
+    if (validateForm3()) {
+        calculateAge3(); // Calculate age before saving
+        savePetData3(); // Save the updated data
         // Navigate to the next page
         window.location.href = 'user profile.html';
     } else {
