@@ -17,64 +17,96 @@ function calculateAge() {
     }
 
     // Update the age field in the profile page
-    document.getElementById('age').value = age;
+    document.getElementById('age').value = age; // Ensure this is the correct ID for the age input
 }
 
-// Preview uploaded image, display it, and prepare for AJAX upload if needed
+// Load Pet Data on the Profile Page, including the image
+function loadPetData() {
+    const petData = JSON.parse(localStorage.getItem('petData'));
+    if (petData) {
+        document.getElementById('ID').value = petData.ID;
+        document.getElementById('name').value = petData.name;
+        document.getElementById('type').value = petData.type;
+        document.getElementById('birthday').value = petData.birthday;
+        document.getElementById('age').value = petData.age;
+        document.getElementById('breed').value = petData.breed;
+        document.getElementById('weight').value = petData.weight;
+
+        if (petData.photo) {
+            document.getElementById('pet-photo').src = petData.photo;  // Set the pet photo
+        }
+
+        if (petData.specialNeeds) {
+            document.getElementById(`special-${petData.specialNeeds}`).checked = true;
+        }
+        if (petData.spayedNeutered) {
+            document.getElementById(`spayed-${petData.spayedNeutered}`).checked = true;
+        }
+        if (petData.gender) {
+            document.getElementById(petData.gender).checked = true;
+        }
+        if (petData.training) {
+            document.getElementById(petData.training).checked = true;
+        }
+        if (petData.vaccinationStatus) {
+            document.getElementById(petData.vaccinationStatus).checked = true;
+        }
+    }
+}
+
+
+
+// Enable editing of the form fields including the file input
+function enableEditing() {
+    const inputs = document.querySelectorAll('input[type="text"], input[type="date"], input[type="file"], input[name="special-needs"], input[name="spayed-neutered"], input[name="gender"], input[name="training"], input[name="vaccination-status"]');
+    inputs.forEach(input => {
+        if (input.type === 'radio' || input.type === 'file') {
+            input.disabled = false;
+        } else {
+            input.removeAttribute('readonly');
+        }
+    });
+}
+// Function to preview the uploaded image and save it to localStorage
 function previewImage(event) {
     const reader = new FileReader();
     const file = event.target.files[0];
-    
+
     reader.onload = function() {
         const imageUrl = reader.result;
         document.getElementById('pet-photo').src = imageUrl;
+        localStorage.setItem('petPhoto', imageUrl);  // Save the image as a base64 string in localStorage
     };
-    
+
     if (file) {
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(file);  // Read the file and trigger onload event
     }
 }
 
-// AJAX function to send data to the server via PHP
+// Save the pet data to local storage
 function savePetData() {
-    const formData = new FormData();
+    const formData = {
+        name: document.getElementById('name').value,
+        ID: document.getElementById('ID').value,
+        type: document.getElementById('type').value,
+        birthday: document.getElementById('birthday').value,
+        age: document.getElementById('age').value,
+        breed: document.getElementById('breed').value,
+        weight: document.getElementById('weight').value,
+        specialNeeds: document.querySelector('input[name="special-needs"]:checked')?.id.split('-')[1],
+        spayedNeutered: document.querySelector('input[name="spayed-neutered"]:checked')?.id.split('-')[1],
+        gender: document.querySelector('input[name="gender"]:checked')?.id,
+        training: document.querySelector('input[name="training"]:checked')?.id,
+        vaccinationStatus: document.querySelector('input[name="vaccination-status"]:checked')?.id,
+        photo: localStorage.getItem('petPhoto')  // Save the photo from localStorage
 
-    // Append all form fields
-    formData.append('name', document.getElementById('name').value);
-    formData.append('ID', document.getElementById('ID').value);
-    formData.append('type', document.getElementById('type').value);
-    formData.append('birthday', document.getElementById('birthday').value);
-    formData.append('age', document.getElementById('age').value);
-    formData.append('breed', document.getElementById('breed').value);
-    formData.append('weight', document.getElementById('weight').value);
-    
-    // Instead of using the base64 URL, get the file directly
-    const fileInput = document.getElementById('photo-upload');
-    if (fileInput.files[0]) {
-        formData.append('photo', fileInput.files[0]); // Append the file directly
-    }
-    
-    formData.append('specialNeeds', document.querySelector('input[name="special-needs"]:checked')?.value);
-    formData.append('spayedNeutered', document.querySelector('input[name="spayed-neutered"]:checked')?.value);
-    formData.append('gender', document.querySelector('input[name="gender"]:checked')?.value);
-    formData.append('training', document.querySelector('input[name="training"]:checked')?.value);
-    formData.append('vaccinationStatus', document.querySelector('input[name="vaccination-status"]:checked')?.value);
+    };
 
-    fetch('save_pet_data.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.text())
-    .then(data => {
-        alert('Pet data saved successfully!');
-        console.log(data); // Optional: See the response for debugging
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
+    localStorage.setItem('petData', JSON.stringify(formData));
+    alert('Pet data saved successfully!');
 }
 
-// Form validation function
+// Function to validate form inputs
 function validateForm() {
     const ID = document.getElementById('ID').value.trim();
     const name = document.getElementById('name').value.trim();
@@ -98,12 +130,14 @@ function validateForm() {
         document.getElementById('ID-error').textContent = "ID must be 1, 2, or 3.";
         isValid = false;
     }
-
+    
+    // Check if birthdate is valid or not
     if (birthday > today) {
         document.getElementById('birthday-error').textContent = "Error: Invalid birthdate.";
         isValid = false;
     }
 
+    // Check if name, type, and breed contain invalid characters
     const invalidChars = /[^a-zA-Z\s]/; 
     if (invalidChars.test(name)) {
         document.getElementById('name-error').textContent = "Name is invalid! No numbers or symbols.";
@@ -118,6 +152,7 @@ function validateForm() {
         isValid = false;
     }
 
+    // Check if weight and id are number
     if (isNaN(weight) || weight.trim() === "") {
         document.getElementById('weight-error').textContent = "Weight must be a number.";
         isValid = false;
@@ -134,21 +169,30 @@ function validateForm() {
         isValid = false;
     }
 
-    if (!name || !type || !birthday || !breed || !weight || !document.querySelector('input[name="special-needs"]:checked') || !document.querySelector('input[name="spayed-neutered"]:checked') || !document.querySelector('input[name="gender"]:checked') || !document.querySelector('input[name="training"]:checked') || !document.querySelector('input[name="vaccination-status"]:checked') || !ID) {
+
+    // Check if all required fields are filled
+    const specialNeeds = document.querySelector('input[name="special-needs"]:checked');
+    const spayedNeutered = document.querySelector('input[name="spayed-neutered"]:checked');
+    const gender = document.querySelector('input[name="gender"]:checked');
+    const training = document.querySelector('input[name="training"]:checked');
+    const vaccinationStatus = document.querySelector('input[name="vaccination-status"]:checked');
+    // Check if all required fields are filled
+    if (!name || !type || !birthday || !breed || !weight || !specialNeeds || !spayedNeutered || !gender || !training || !vaccinationStatus || !ID) {
         alert('Please fill in all the required fields before proceeding to the next page.');
-        isValid = false;
+        isValid = false; // Prevent form submission
     }
 
-    return isValid;
+    return isValid; // Allow form submission if valid
 }
 
 // Handle Form Submission
 function handleSubmit(event) {
-    event.preventDefault();
     if (validateForm()) {
-        calculateAge();
-        savePetData(); // Save data after validating
-        // Redirect to user profile only after the save process (you may handle this in the PHP file)
-        window.location.href = 'user profile.html'; // Ensure URL matches your file
+        calculateAge(); // Calculate age before saving
+        savePetData(); // Save the updated data
+        // Navigate to the next page
+        window.location.href = 'user profile.html';
+    } else {
+        event.preventDefault(); // Prevent default action if validation fails
     }
 }
