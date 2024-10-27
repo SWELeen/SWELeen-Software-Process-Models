@@ -24,6 +24,7 @@ function calculateAge() {
 function loadPetData() {
     const petData = JSON.parse(localStorage.getItem('petData'));
     if (petData) {
+        document.getElementById('ID').value = petData.ID;
         document.getElementById('name').value = petData.name;
         document.getElementById('type').value = petData.type;
         document.getElementById('birthday').value = petData.birthday;
@@ -86,6 +87,7 @@ function previewImage(event) {
 function savePetData() {
     const formData = {
         name: document.getElementById('name').value,
+        ID: document.getElementById('ID').value,
         type: document.getElementById('type').value,
         birthday: document.getElementById('birthday').value,
         age: document.getElementById('age').value,
@@ -106,6 +108,7 @@ function savePetData() {
 
 // Function to validate form inputs
 function validateForm() {
+    const ID = document.getElementById('ID').value.trim();
     const name = document.getElementById('name').value.trim();
     const type = document.getElementById('type').value.trim();
     const birthday = new Date(document.getElementById('birthday').value);
@@ -114,6 +117,7 @@ function validateForm() {
     const today = new Date();
 
     // Clear previous messages
+    document.getElementById('ID-error').textContent = '';
     document.getElementById('name-error').textContent = '';
     document.getElementById('type-error').textContent = '';
     document.getElementById('breed-error').textContent = '';
@@ -143,7 +147,7 @@ function validateForm() {
         isValid = false;
     }
 
-    // Check if weight is a number
+    // Check if weight and id are number
     if (isNaN(weight) || weight.trim() === "") {
         document.getElementById('weight-error').textContent = "Weight must be a number.";
         isValid = false;
@@ -152,6 +156,15 @@ function validateForm() {
         isValid = false;
     }
 
+    if (isNaN(ID) || ID.trim() === "") {
+        document.getElementById('ID-error').textContent = "ID must be a number.";
+        isValid = false;
+    } else if (!/^\d+(\.\d+)?$/.test(ID)) { 
+        document.getElementById('ID-error').textContent = "Please enter valid numbers only.";
+        isValid = false;
+    }
+
+
     // Check if all required fields are filled
     const specialNeeds = document.querySelector('input[name="special-needs"]:checked');
     const spayedNeutered = document.querySelector('input[name="spayed-neutered"]:checked');
@@ -159,7 +172,7 @@ function validateForm() {
     const training = document.querySelector('input[name="training"]:checked');
     const vaccinationStatus = document.querySelector('input[name="vaccination-status"]:checked');
     // Check if all required fields are filled
-    if (!name || !type || !birthday || !breed || !weight || !specialNeeds || !spayedNeutered || !gender || !training || !vaccinationStatus) {
+    if (!name || !type || !birthday || !breed || !weight || !specialNeeds || !spayedNeutered || !gender || !training || !vaccinationStatus || !ID) {
         alert('Please fill in all the required fields before proceeding to the next page.');
         isValid = false; // Prevent form submission
     }
