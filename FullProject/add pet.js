@@ -189,10 +189,17 @@ function handleSubmit(event) {
 }
 // Function to delete all saved pet data
 function deletePetData() {
-    if (confirm('Are you sure you want to delete all pet data? This action cannot be undone.')) {
-        localStorage.removeItem('petData');
+    if (confirm('Are you sure you want to delete all pet data except the ID? This action cannot be undone.')) {
+        const petData = JSON.parse(localStorage.getItem('petData')) || {};
+        
+        // Preserve the ID value
+        const preservedID = petData.ID;
+
+        // Clear all pet data except ID
         localStorage.removeItem('petPhoto'); // Remove photo as well
-        alert('Pet data deleted successfully!');
+        localStorage.setItem('petData', JSON.stringify({ ID: preservedID })); // Re-save only the ID
+
+        alert('All pet data deleted successfully!');
         window.location.href = 'user profile.html'; // Redirect to user profile page
     }
 }
