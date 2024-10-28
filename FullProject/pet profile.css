@@ -209,14 +209,19 @@ input[type="text"], input[type="date"], input[type="file"] {
 .button-group {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-top: 50px;
     width: 100%;
 }
+.button-left-group{
 
-.button {
+    display: flex;
+    gap: 10px;
+}
+
+.button,.button-delete {
     padding: 10px 30px;
     border-radius: 20px;
-    background-color: #ff704d;
     color: white;
     font-size: 14px;
     font-weight: normal;
@@ -226,12 +231,23 @@ input[type="text"], input[type="date"], input[type="file"] {
     transition: background-color 0.3s ease;
 }
 
+.button{
+    background-color: #ff704d;
+}
+.button-delete{
+    background-color: #db4b4b;
+}
+
+
 .Profile {
     margin-left: 270px;
 }
 
 .button:hover {
     background-color: #3b6347;
+}
+.button-delete:hover {
+    background-color: #f80404;
 }
 
 /* Footer Styles */
