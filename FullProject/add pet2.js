@@ -191,7 +191,7 @@ function handleSubmit2(event) {
 // Function to delete all saved pet data
 function deletePetData2() {
     if (confirm('Are you sure you want to delete all pet data except the ID? This action cannot be undone.')) {
-        const petData = JSON.parse(localStorage.getItem('petData2')) || {};
+        const petData2 = JSON.parse(localStorage.getItem('petData2')) || {};
         
         // Preserve the ID value
         const preservedID = petData2.ID;
