@@ -108,7 +108,7 @@ function savePetData() {
 
 // Function to validate form inputs
 function validateForm() {
-    const ID = document.getElementById('ID').value.trim();
+    
     const name = document.getElementById('name').value.trim();
     const type = document.getElementById('type').value.trim();
     const birthday = new Date(document.getElementById('birthday').value);
@@ -117,7 +117,7 @@ function validateForm() {
     const today = new Date();
 
     // Clear previous messages
-    document.getElementById('ID-error').textContent = '';
+
     document.getElementById('name-error').textContent = '';
     document.getElementById('type-error').textContent = '';
     document.getElementById('breed-error').textContent = '';
@@ -126,10 +126,6 @@ function validateForm() {
 
     let isValid = true;
 
-    if (!['1', '2', '3'].includes(ID)) {
-        document.getElementById('ID-error').textContent = "ID must be 1, 2, or 3.";
-        isValid = false;
-    }
     
     // Check if birthdate is valid or not
     if (birthday > today) {
@@ -158,14 +154,6 @@ function validateForm() {
         isValid = false;
     } else if (!/^\d+(\.\d+)?$/.test(weight)) { 
         document.getElementById('weight-error').textContent = "Please enter valid numbers only.";
-        isValid = false;
-    }
-
-    if (isNaN(ID) || ID.trim() === "") {
-        document.getElementById('ID-error').textContent = "ID must be a number.";
-        isValid = false;
-    } else if (!/^\d+(\.\d+)?$/.test(ID)) { 
-        document.getElementById('ID-error').textContent = "Please enter valid numbers only.";
         isValid = false;
     }
 
