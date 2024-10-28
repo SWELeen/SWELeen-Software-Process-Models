@@ -60,7 +60,10 @@ function loadPetData() {
 function enableEditing() {
     const inputs = document.querySelectorAll('input[type="text"], input[type="date"], input[type="file"], input[name="special-needs"], input[name="spayed-neutered"], input[name="gender"], input[name="training"], input[name="vaccination-status"]');
     inputs.forEach(input => {
-        if (input.type === 'radio' || input.type === 'file') {
+        // Check if the input is the ID field
+        if (input.id === 'ID') {
+            input.readOnly = true; // Keep ID readonly
+        } else if (input.type === 'radio' || input.type === 'file') {
             input.disabled = false;
         } else {
             input.removeAttribute('readonly');
