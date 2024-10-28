@@ -206,7 +206,7 @@ function deletePetData() {
 
 // Function to reset form fields
 function resetFormFields() {
-    document.getElementById('ID').value = '';
+    document.getElementById('ID').value = '1';
     document.getElementById('name').value = '';
     document.getElementById('type').value = '';
     document.getElementById('birthday').value = '';

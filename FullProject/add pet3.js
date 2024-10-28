@@ -60,7 +60,10 @@ function loadPetData3() {
 function enableEditing3() {
     const inputs = document.querySelectorAll('input[type="text"], input[type="date"], input[type="file"], input[name="special-needs"], input[name="spayed-neutered"], input[name="gender"], input[name="training"], input[name="vaccination-status"]');
     inputs.forEach(input => {
-        if (input.type === 'radio' || input.type === 'file') {
+        // Check if the input is the ID field
+        if (input.id === 'ID') {
+            input.readOnly = true; // Keep ID readonly
+        } else if (input.type === 'radio' || input.type === 'file') {
             input.disabled = false;
         } else {
             input.removeAttribute('readonly');
@@ -108,7 +111,7 @@ function savePetData3() {
 
 // Function to validate form inputs
 function validateForm3() {
-    const ID = document.getElementById('ID').value.trim();
+
     const name = document.getElementById('name').value.trim();
     const type = document.getElementById('type').value.trim();
     const birthday = new Date(document.getElementById('birthday').value);
@@ -117,7 +120,7 @@ function validateForm3() {
     const today = new Date();
 
     // Clear previous messages
-    document.getElementById('ID-error').textContent = '';
+
     document.getElementById('name-error').textContent = '';
     document.getElementById('type-error').textContent = '';
     document.getElementById('breed-error').textContent = '';
@@ -126,11 +129,8 @@ function validateForm3() {
 
     let isValid = true;
 
-    if (!['1', '2', '3'].includes(ID)) {
-        document.getElementById('ID-error').textContent = "ID must be 1, 2, or 3.";
-        isValid = false;
-    }
     
+
     // Check if birthdate is valid or not
     if (birthday > today) {
         document.getElementById('birthday-error').textContent = "Error: Invalid birthdate.";
@@ -161,14 +161,7 @@ function validateForm3() {
         isValid = false;
     }
 
-    if (isNaN(ID) || ID.trim() === "") {
-        document.getElementById('ID-error').textContent = "ID must be a number.";
-        isValid = false;
-    } else if (!/^\d+(\.\d+)?$/.test(ID)) { 
-        document.getElementById('ID-error').textContent = "Please enter valid numbers only.";
-        isValid = false;
-    }
-
+    
 
     // Check if all required fields are filled
     const specialNeeds = document.querySelector('input[name="special-needs"]:checked');
@@ -198,17 +191,24 @@ function handleSubmit3(event) {
 }
 // Function to delete all saved pet data
 function deletePetData3() {
-    if (confirm('Are you sure you want to delete all pet data? This action cannot be undone.')) {
-        localStorage.removeItem('petData3');
+    if (confirm('Are you sure you want to delete all pet data except the ID? This action cannot be undone.')) {
+        const petData = JSON.parse(localStorage.getItem('petData3')) || {};
+        
+        // Preserve the ID value
+        const preservedID = petData3.ID;
+
+        // Clear all pet data except ID
         localStorage.removeItem('petPhoto3'); // Remove photo as well
-        alert('Pet data deleted successfully!');
+        localStorage.setItem('petData3', JSON.stringify({ ID: preservedID })); // Re-save only the ID
+
+        alert('All pet data deleted successfully!');
         window.location.href = 'user profile.html'; // Redirect to user profile page
     }
 }
 
 // Function to reset form fields
 function resetFormFields3() {
-    document.getElementById('ID').value = '';
+    document.getElementById('ID').value = '3';
     document.getElementById('name').value = '';
     document.getElementById('type').value = '';
     document.getElementById('birthday').value = '';
