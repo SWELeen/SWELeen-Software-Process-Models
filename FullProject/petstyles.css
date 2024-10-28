@@ -89,7 +89,7 @@ label {
     text-align: left;
 }
 
-input[type="text"], input[type="date"], input[type="file"] {
+input[type="text"], input[type="date"], input[type="file"],input[type="number"] {
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
