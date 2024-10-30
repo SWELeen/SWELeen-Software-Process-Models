@@ -1,6 +1,6 @@
 // Initialize HERE platform
 const platform = new H.service.Platform({
-    apikey: '7BDY-cRK-dcNrK58gKoJaayDW-1QNMY935ip6EriM3o'  // Replace with your HERE Maps API key
+    apikey: '7BDY-cRK-dcNrK58gKoJaayDW-1QNMY935ip6EriM3o'  
 });
 
 const defaultLayers = platform.createDefaultLayers();
