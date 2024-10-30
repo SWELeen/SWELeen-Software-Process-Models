@@ -26,7 +26,7 @@ const userIcon = new H.map.Icon(
 );
 
 
-// Function to find nearby vet clinics and add "Save as Favorite" option
+// Function to find nearby vet clinics
 function findVetClinics(location) {
     const service = platform.getSearchService();
 
