@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User profile</title>
+    <title>User Profile</title>
     <link rel="stylesheet" href="user profile.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
@@ -18,8 +18,6 @@
             <li><a href="Home.html">Home</a></li>
             <li><a href="#">About</a></li>
             <li><a href="#">Service</a></li>
-            <a href="findNearClinics.html" class="NearClinics">NearClinics</a> 
-
         </ul>
         <div class="nav-icons">
             <a href="user profile.html"><img src="user.svg" alt="User Icon"></a>
@@ -34,83 +32,34 @@
             <a href="#"><img src="profile-picture.png"></a>
         </div>
     </div>
-    <form class="profile-form">
-        <div class="form-group">
-            <label for="first-name">First Name</label>
-            <input type="text" id="first-name" placeholder="First Name">
-        </div>
-        <div class="form-group">
-            <label for="last-name">Last Name</label>
-            <input type="text" id="last-name" placeholder="Last Name">
-        </div>
+    <form class="profile-form" id="profileForm" action="/create-profile" method="POST">
         <div class="form-group">
             <label for="username">User Name</label>
-            <input type="text" id="username" placeholder="User Name">
+            <input type="text" id="username" name="username" placeholder="User Name" required>
         </div>
         <div class="form-group">
             <label for="email">Email Address</label>
-            <input type="email" id="email" placeholder="Email Address">
+            <input type="email" id="email" name="email" placeholder="Email Address" required>
         </div>
         <div class="form-group">
             <label for="phone">Phone Number</label>
-            <input type="tel" id="phone" placeholder="Phone Number">
-        </div>
-        <div class="form-group">
-            <label for="location">Location</label>
-            <input type="text" id="location" placeholder="Location">
-        </div>
-        <div class="form-group">
-            <label for="current-password">Current Password</label>
-            <input type="password" id="current-password" placeholder="Current Password">
+            <input type="tel" id="phone" name="phone" placeholder="Phone Number" required>
         </div>
         <div class="form-group">
             <label for="new-password">New Password</label>
-            <input type="password" id="new-password" placeholder="New Password">
+            <input type="password" id="new-password" name="password" placeholder="New Password" required>
         </div>
-        <div class="form-group">
-            <label for="confirm-password">Confirm New Password</label>
-            <input type="password" id="confirm-password" placeholder="Confirm New Password">
+
+        <a href="Sign in.html"><button type="button" class="signin">Have an account?</button></a>
+
+        <div class="button-group">
+            <a href="Home.html"><button type="button" class="cancel">Cancel</button></a>
+           <button type="submit" class="save">Create</button>
         </div>
-     </form>
-
-   <!-- Pets Section -->
-<div class="pets-section">
-    <h3>Pets</h3>
-    <ul class="pet-list">
-        <li>
-            <a href="add pet.html"><button class="add-pet-button">+</button></a>
-            <img src="pet.png" alt="Pet Icon" class="pet-icon">
-            <a href="pet profile.html?pet=firstPet"><span>First Pet</span></a>
-            
-        </li>
-        <li>
-            <a href="add pet2.html"><button class="add-pet-button">+</button></a>
-            <img src="pet.png" alt="Pet Icon" class="pet-icon">
-            <a href="pet profile2.html?pet=secondPet"><span>Second Pet</span></a>
-                    
-        </li>
-        <li>
-            <a href="add pet3.html"><button class="add-pet-button">+</button></a>
-            <img src="pet.png" alt="Pet Icon" class="pet-icon">
-            <a href="pet profile3.html?pet=thirdPet"><span>Third Pet</span></a>
-            
-
-        </li>
-    </ul>
-    <div class="add-pet">
-        
-
-     
-
-    </div>    
-    <div class="button-group">
-        <a href="Home.html"><button type="button" class="cancel">Cancel</button></a>
-        <button type="submit" class="save">Save Changes</button>
-    </div>
+    </form>
 </div>
-</div>
+
   <!-- Footer -->
-
   <footer>
     <div class="footer-container">
         <div class="footer-links">
