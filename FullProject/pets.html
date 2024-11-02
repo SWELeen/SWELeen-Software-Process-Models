@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="user profile.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="logo.jpg" alt="Aleef Logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="Home.html">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Service</a></li>
+                <a href="findNearClinics.html" class="NearClinics">Near Clinics</a>
+            </ul>
+            <div class="nav-icons">
+                <a href="user profile.html"><img src="user.svg" alt="User Icon"></a>
+                <a href="#"><img src="language.png" alt="Globe Icon"></a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Your Profile</h2>
+        <div class="profile-header">
+            <div class="profile-picture">
+                <a href="#"><img src="profile-picture.png" alt="Profile Picture"></a>
+            </div>
+        </div>
+        <form class="profile-form" id="profileForm">
+            <div class="form-group">
+                <label for="username">User Name</label>
+                <input type="text" id="username" placeholder="User Name" readonly>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="Email Address" readonly>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" placeholder="Phone Number" readonly>
+            </div>
+            <div class="form-group">
+                <label for="current-password">Current Password</label>
+                <input type="password" id="current-password" placeholder="Current Password" readonly>
+            </div>
+            <div class="form-group">
+                <button type="button" id="editButton">Edit</button>
+            </div>
+        </form>
+
+        <div class="pets-section">
+            <h3>Pets</h3>
+            <ul class="pet-list">
+                <!-- Pets will be dynamically added here -->
+            </ul>
+        </div>
+
+        <div class="button-group">
+
+            <a href="Home.html"><button type="button" class="cancel">Cancel</button></a>
+            <button type="submit" class="save">Save Changes</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-links">
+                <h4>About Us</h4>
+                <ul>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-resources">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="#">Tutorials</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h4>Follow Us</h4>
+                <a href="#"><img src="facebook.png" alt="Facebook"></a>
+                <a href="#"><img src="instagram.png" alt="Instagram"></a>
+                <a href="#"><img src="X.png" alt="Twitter"></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 Aleef. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Script for loading user profile and pet list -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Fetch the user's profile information and populate the form fields
+            fetch('/get-user-profile', {
+                credentials: 'include'
+            })
+                .then(response => response.json())
+                .then(user => {
+                    if (user) {
+                        document.getElementById('username').value = user.username;
+                        document.getElementById('email').value = user.email;
+                        document.getElementById('phone').value = user.phone;
+                        document.getElementById('current-password').value = user.password;
+
+                        // Make the fields read-only
+                        const fields = ['username', 'email', 'phone', 'current-password'];
+                        fields.forEach(field => {
+                            document.getElementById(field).readOnly = true;
+                        });
+                    }
+                })
+                .catch(error => console.error('Error fetching profile data:', error));
+
+            // Fetch the user's pets and populate the pet list
+            fetch('/get-pets', {
+                credentials: 'include'
+            })
+                .then(response => response.json())
+                .then(pets => {
+                    const petList = document.querySelector('.pet-list');
+                    petList.innerHTML = ''; // Clear existing pet entries
+
+                    // Add existing pets to the list
+                    pets.forEach(pet => {
+                        const petItem = document.createElement('li');
+                        petItem.innerHTML = `
+                    <a href="pet profile.html?ID=${pet.ID}" class="pet-link">
+                        <img src="pet.png" alt="Pet Icon" class="pet-icon">
+                        <span>${pet.name}</span>
+                    </a>
+                `;
+                        petList.appendChild(petItem);
+                    });
+
+                    // Ensure the "Add Pet" button remains visible
+                    const addPetItem = document.createElement('li');
+                    addPetItem.innerHTML = <a href="add pet.html"><button class="add-pet-button">+ Add pet</button></a>;
+                    petList.appendChild(addPetItem);
+                })
+                .catch(error => console.error('Error fetching pets:', error));
+
+            // Edit profile functionality
+            document.getElementById('editButton').addEventListener('click', () => {
+                const fields = ['username', 'phone', 'current-password'];
+                fields.forEach(field => {
+                    document.getElementById(field).readOnly = false; // Make fields editable
+                });
+                document.getElementById('editButton').style.display = 'none'; // Hide edit button
+            });
+
+            // Save changes functionality
+            document.querySelector('.save').addEventListener('click', () => {
+                const updatedUser = {
+                    username: document.getElementById('username').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    password: document.getElementById('current-password').value
+                };
+
+                fetch('/update-user-profile', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(updatedUser)
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Failed to update profile');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        alert('Profile updated successfully!');
+                        const fields = ['username', 'email', 'phone', 'current-password'];
+                        fields.forEach(field => {
+                            document.getElementById(field).readOnly = true; // Make fields read-only again
+                        });
+                        document.getElementById('editButton').style.display = 'block'; // Show edit button again
+                    })
+                    .catch(error => {
+                        console.error('Error updating profile:', error);
+                        alert('Error updating profile: ' + error.message);
+                    });
+            });
+        });
+    </script>
