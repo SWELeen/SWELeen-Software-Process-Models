@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pet Care Form</title>
     <link rel="stylesheet" href="petstyles.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <script src="add pet.js"></script>
 </head>
+
 <body>
-
-
-
     <!-- Navbar -->
     <header>
         <nav class="navbar">
@@ -22,8 +20,6 @@
                 <li><a href="Home.html">Home</a></li>
                 <li><a href="#">About</a></li>
                 <li><a href="#">Service</a></li>
-                <a href="findNearClinics.html" class="NearClinics">NearClinics</a> 
-
             </ul>
             <div class="nav-icons">
                 <a href="user profile.html"><img src="user.svg" alt="User Icon"></a>
@@ -35,166 +31,240 @@
     <!-- Main Form Section -->
     <div class="container">
         <h2>Enter your pet's details</h2>
-        <div class="form-container">
-            <!-- Left Column -->
-            <div class="form-group">
-                <label for="ID">ID</label>
-                <input type="number" id="ID" value="1" readonly>
-            </div>
+        <form id="pet-form" onsubmit="handleSubmit(event)">
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" placeholder="Pet's name" required>
+                </div>
 
-            <div class="form-group file-upload-group">
-                <div class="file-input-container">
-                    <label class="custom-file-upload">
-                        <input type="file" id="photo-upload" onchange="previewImage(event)">
+                <div class="form-group file-upload-group">
+                    <div class="file-input-container">
+                        <label class="custom-file-upload">
+                            <input type="file" id="photo-upload" onchange="previewImage(event)">
+                            <img src="photo.png" id="pet-photo" alt="Pet's Photo Preview"
+                                style="width: 100px; height: 100px;">
+                        </label>
+                        <span class="upload-text">Upload Pet's photo</span>
+                    </div>
+                </div>
 
-                        <img src="photo.png" id="pet-photo" alt="Pet's Photo Preview">
-                    </label>
-                    <span class="upload-text">Upload Pet's photo</span>
+                <div class="form-group">
+                    <label for="ID">ID (Enter Unique ID):</label>
+                    <input type="text" id="ID" placeholder="Pet's ID" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="type">Type</label>
+                    <input type="text" id="type" placeholder="Pet's type" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="birthday">Birthday</label>
+                    <input type="date" id="birthday" onchange="calculateAge()" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="breed">Breed</label>
+                    <input type="text" id="breed" placeholder="Pet's breed" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="text" id="age" placeholder="Pet's age" disabled>
+                </div>
+
+                <div class="form-group">
+                    <label for="weight">Weight</label>
+                    <input type="text" id="weight" placeholder="Pet's weight" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Special Needs</label>
+                    <div class="toggle-container">
+                        <input type="radio" id="special-yes" name="special-needs" value="Yes">
+                        <label for="special-yes">Yes</label>
+                        <input type="radio" id="special-no" name="special-needs" value="No">
+                        <label for="special-no">No</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Spayed or Neutered</label>
+                    <div class="toggle-container">
+                        <input type="radio" id="spayed-yes" name="spayed-neutered" value="Yes">
+                        <label for="spayed-yes">Yes</label>
+                        <input type="radio" id="spayed-no" name="spayed-neutered" value="No">
+                        <label for="spayed-no">No</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Gender</label>
+                    <div class="toggle-container">
+                        <input type="radio" id="female" name="gender" value="Female">
+                        <label for="female">Female</label>
+                        <input type="radio" id="male" name="gender" value="Male">
+                        <label for="male">Male</label>
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Training</label>
+                    <div class="toggle-container">
+                        <input type="radio" id="house-trained" name="training" value="House-trained">
+                        <label for="house-trained">House-trained</label>
+
+                        <input type="radio" id="crate-trained" name="training" value="Crate-trained">
+                        <label for="crate-trained">Crate-trained</label>
+
+                        <input type="radio" id="obedience" name="training" value="Obedience level">
+                        <label for="obedience">Obedience level</label>
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Vaccination Status</label>
+                    <div class="toggle-container">
+                        <input type="radio" id="up-to-date" name="vaccination-status" value="Up-to-date">
+                        <label for="up-to-date">Up-to-date</label>
+
+                        <input type="radio" id="overdue" name="vaccination-status" value="Overdue">
+                        <label for="overdue">Overdue</label>
+
+                        <input type="radio" id="pending" name="vaccination-status" value="Pending">
+                        <label for="pending">Pending</label>
+                    </div>
                 </div>
             </div>
-
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" id="name" placeholder="Pet's name">
-                <span id="name-error" class="error-message"></span>
-
+            <!-- Buttons -->
+            <div class="button-group">
+                <a class="button back" href="user profile.html">Back</a>
+                <button type="submit" class="button next">Save</button>
             </div>
+        </form>
+    </div>
 
-            <div class="form-group">
-                <label for="type">Type</label>
-                <input type="text" id="type" placeholder="Pet's type">
-                <span id="type-error" class="error-message"></span>
-            </div>
+    <script>
+        // Function to handle form submission
+        function handleSubmit(event) {
+            event.preventDefault();
+            if (validateForm()) {
+                const petData = {
+                    name: document.getElementById('name').value,
+                    ID: document.getElementById('ID').value,
+                    type: document.getElementById('type').value,
+                    breed: document.getElementById('breed').value,
+                    birthday: document.getElementById('birthday').value,
+                    weight: document.getElementById('weight').value,
+                    specialNeeds: document.querySelector('input[name="special-needs"]:checked')?.value,
+                    spayedNeutered: document.querySelector('input[name="spayed-neutered"]:checked')?.value,
+                    gender: document.querySelector('input[name="gender"]:checked')?.value,
+                    training: Array.from(document.querySelectorAll('input[name="training"]:checked')).map(input => input.value),
+                    vaccinationStatus: document.querySelector('input[name="vaccination-status"]:checked')?.value
+                };
 
-            <div class="form-group">
-                <label for="birthday">Birthday</label>
-                <input type="date" id="birthday" onchange="calculateAge()">
-                <span id="birthday-error" class="error-message"></span>
-            </div>
+                fetch('/pet_data', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(petData)
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.json().then(data => {
+                                alert(data.message || 'An error occurred');
+                                throw new Error('Validation error');
+                            });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.message) {
+                            alert(data.message);
+                            resetFormFields(); // Reset the form fields after successful submission
+                            document.getElementById('pet-photo').src = ''; // Reset photo preview
+                            window.location.href = 'pets.html'; // Redirect to pets.html
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+        }
 
-            <!-- Right Column -->
-            <div class="form-group">
-                <label for="breed">Breed</label>
-                <input type="text" id="breed" placeholder="Pet's breed">
-                <span id="breed-error" class="error-message"></span>
-            </div>
+        // Function to calculate the pet's age based on the birthday
+        function calculateAge() {
+            const birthdayInput = document.getElementById('birthday').value;
+            if (!birthdayInput) {
+                alert('Please enter the birthday.');
+                return;
+            }
 
-            <div class="form-group">
-                <label for="age">Age</label>
-                <input type="text" id="age" placeholder="Pet's age" disabled>
-            </div>
+            const birthday = new Date(birthdayInput);
+            const today = new Date();
+            let age = today.getFullYear() - birthday.getFullYear();
+            const monthDifference = today.getMonth() - birthday.getMonth();
 
-            <div class="form-group">
-                <label for="weight">Weight</label>
-                <input type="text" id="weight" placeholder="Pet's weight">
-                <span id="weight-error" class="error-message"></span>
-            </div>
+            if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthday.getDate())) {
+                age--;
+            }
 
-            <!-- Special Needs Section -->
-            <div class="form-group">
-                <label>Special Needs</label>
-                <div class="toggle-container">
-                    <input type="radio" id="special-yes" name="special-needs">
-                    <label for="special-yes">Yes</label>
-                    <input type="radio" id="special-no" name="special-needs">
-                    <label for="special-no">No</label>
-                </div>
-            </div>
+            document.getElementById('age').value = age;
+        }
 
-            <!-- Spayed/Neutered Section -->
-            <div class="form-group">
-                <label>Spayed or Neutered</label>
-                <div class="toggle-container">
-                    <input type="radio" id="spayed-yes" name="spayed-neutered">
-                    <label for="spayed-yes">Yes</label>
-                    <input type="radio" id="spayed-no" name="spayed-neutered">
-                    <label for="spayed-no">No</label>
-                </div>
-            </div>
+        // Function to validate form inputs
+        function validateForm() {
+            const ID = document.getElementById('ID').value.trim();
+            const name = document.getElementById('name').value.trim();
+            const type = document.getElementById('type').value.trim();
+            const birthday = new Date(document.getElementById('birthday').value);
+            const breed = document.getElementById('breed').value.trim();
+            const weight = document.getElementById('weight').value.trim();
+            const today = new Date();
 
-            <!-- Gender Section -->
-            <div class="form-group">
-                <label>Gender</label>
-                <div class="toggle-container">
-                    <input type="radio" id="female" name="gender">
-                    <label for="female">Female</label>
-                    <input type="radio" id="male" name="gender">
-                    <label for="male">Male</label>
-                </div>
-            </div>
+            let isValid = true;
 
-            <!-- Training Section -->
-            <div class="form-group full-width">
-                <label>Training</label>
-                <div class="toggle-container">
-                    <input type="radio" id="house-trained" name="training">
-                    <label for="house-trained">house-trained</label>
+            if (birthday > today) {
+                alert("Error: Invalid birthdate.");
+                isValid = false;
+            }
 
-                    <input type="radio" id="crate-trained" name="training">
-                    <label for="crate-trained">crate-trained</label>
+            if (!name || !type || !birthday || !breed || !weight) {
+                alert('Please fill in all the required fields.');
+                isValid = false;
+            }
 
-                    <input type="radio" id="obedience" name="training">
-                    <label for="obedience">obedience level</label>
-                </div>
-            </div>
+            return isValid;
+        }
 
-            <!-- Vaccination Status Section -->
-            <div class="form-group full-width">
-                <label>Vaccination Status</label>
-                <div class="toggle-container">
-                    <input type="radio" id="up-to-date" name="vaccination-status">
-                    <label for="up-to-date">up-to-date</label>
+        // Function to reset form fields
+        function resetFormFields() {
+            document.getElementById('ID').value = '';
+            document.getElementById('name').value = '';
+            document.getElementById('type').value = '';
+            document.getElementById('birthday').value = '';
+            document.getElementById('age').value = '';
+            document.getElementById('breed').value = '';
+            document.getElementById('weight').value = '';
+            document.getElementById('photo-upload').value = ''; // Reset file input
+            document.getElementById('pet-photo').src = ''; // Reset photo preview
+            document.querySelectorAll('input[type="radio"]').forEach(radio => radio.checked = false);
+        }
 
-                    <input type="radio" id="overdue" name="vaccination-status">
-                    <label for="overdue">overdue</label>
+        // Function to preview the uploaded image
+        function previewImage(event) {
+            const reader = new FileReader();
+            const file = event.target.files[0];
 
-                    <input type="radio" id="pending" name="vaccination-status">
-                    <label for="pending">pending</label>
-                </div>
-            </div>
-        </div>
-        <!-- Buttons -->
-        <div class="button-group">
-            <a class="button back" href="user profile.html">Back</a>
+            reader.onload = function () {
+                document.getElementById('pet-photo').src = reader.result;
+            };
 
-            <a class="button next" href="#" onclick="handleSubmit()">Save</a>
-        </div>
-</div>
-
-
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-container">
-            <div class="footer-links">
-                <h4>About Us</h4>
-                <ul>
-                    <li><a href="#">Contact Us</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms of Service</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-resources">
-                <h4>Resources</h4>
-                <ul>
-                    <li><a href="#">Tutorials</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">FAQ</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-social">
-                <h4>Follow Us</h4>
-                <a href="#"><img src="facebook.png" alt="Facebook"></a>
-                <a href="#"><img src="instagram.png" alt="Instagram"></a>
-                <a href="#"><img src="X.png" alt="Twitter"></a>
-            </div>
-        </div>
-
-        <div class="footer-bottom">
-            <p>© 2024 Aleef. All rights reserved.</p>
-        </div>
-    </footer>
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
 </body>
+
 </html>
