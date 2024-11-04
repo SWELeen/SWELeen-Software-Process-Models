@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const app = express();
-const PORT = 3002;
+const PORT = 3003;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
