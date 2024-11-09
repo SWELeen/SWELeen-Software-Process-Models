@@ -282,6 +282,60 @@ app.get('/get-user-profile', (req, res) => {
     }
 });
 
+app.get('/pet_data/:email/:petID', (req, res) => {
+    const { email, petID } = req.params;
+    let users = {};
+    if (fs.existsSync(dataFilePath)) {
+        try {
+            const fileData = fs.readFileSync(dataFilePath, 'utf8');
+            users = JSON.parse(fileData);
+        } catch (error) {
+            console.error("Error reading or parsing data.json:", error);
+            return res.status(500).json({ message: 'Failed to load existing data' });
+        }
+    }
+
+    const user = users[email];
+    if (user) {
+        const pet = user.pets.find(pet => pet.ID === petID);
+        if (pet) {
+            res.json(pet);
+        } else {
+            res.status(404).send('Pet not found');
+        }
+    } else {
+        res.status(404).send('User not found');
+    }
+});
+
+
+app.get('/pet-profile', (req, res) => {
+    const { ID, email } = req.query;
+    let users = {};
+    if (fs.existsSync(dataFilePath)) {
+        try {
+            const fileData = fs.readFileSync(dataFilePath, 'utf8');
+            users = JSON.parse(fileData);
+        } catch (error) {
+            console.error("Error reading or parsing data.json:", error);
+            return res.status(500).json({ message: 'Failed to load existing data' });
+        }
+    }
+
+    const user = users[email];
+    if (user) {
+        const pet = user.pets.find(pet => pet.ID === ID);
+        if (pet) {
+            res.render('pet-profile', { pet }); // Use templating to pass pet data to the page
+        } else {
+            res.status(404).send('Pet not found');
+        }
+    } else {
+        res.status(404).send('User not found');
+    }
+}); 
+
+
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
