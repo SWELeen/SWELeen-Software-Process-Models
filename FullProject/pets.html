@@ -106,18 +106,19 @@
     <!-- Script for loading user profile and pet list -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            let userEmail = '';
+    
             // Fetch the user's profile information and populate the form fields
-            fetch('/get-user-profile', {
-                credentials: 'include'
-            })
+            fetch('/get-user-profile', { credentials: 'include' })
                 .then(response => response.json())
                 .then(user => {
                     if (user) {
+                        userEmail = user.email; // Store email for later use
                         document.getElementById('username').value = user.username;
                         document.getElementById('email').value = user.email;
                         document.getElementById('phone').value = user.phone;
                         document.getElementById('current-password').value = user.password;
-
+    
                         // Make the fields read-only
                         const fields = ['username', 'email', 'phone', 'current-password'];
                         fields.forEach(field => {
