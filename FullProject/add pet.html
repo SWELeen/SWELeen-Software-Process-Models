@@ -161,7 +161,7 @@
                     specialNeeds: document.querySelector('input[name="special-needs"]:checked')?.value,
                     spayedNeutered: document.querySelector('input[name="spayed-neutered"]:checked')?.value,
                     gender: document.querySelector('input[name="gender"]:checked')?.value,
-                    training: Array.from(document.querySelectorAll('input[name="training"]:checked')).map(input => input.value),
+                    training:document.querySelector('input[name="training"]:checked')?.value,
                     vaccinationStatus: document.querySelector('input[name="vaccination-status"]:checked')?.value
                 };
 
