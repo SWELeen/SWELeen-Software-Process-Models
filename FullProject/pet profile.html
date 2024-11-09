@@ -280,7 +280,7 @@
             document.getElementById('file-input').disabled = false; // Enable file input
         }
 
-        async function handleSubmit() {
+        async function savePetData() {
             const petData = {
                 name: document.getElementById('name').value,
                 ID: document.getElementById('ID').value,
@@ -288,8 +288,8 @@
                 birthday: document.getElementById('birthday').value,
                 breed: document.getElementById('breed').value,
                 weight: document.getElementById('weight').value,
-                specialNeeds: document.getElementById('special-yes').checked,
-                spayedNeutered: document.getElementById('spayed-yes').checked,
+                specialNeeds: document.getElementById('special-yes').checked ? "Yes" : "No",
+                spayedNeutered: document.getElementById('spayed-yes').checked ? "Yes" : "No",
                 gender: document.querySelector('input[name="gender"]:checked').id,
                 training: document.querySelector('input[name="training"]:checked').id,
                 vaccinationStatus: document.querySelector('input[name="vaccination-status"]:checked').id,
