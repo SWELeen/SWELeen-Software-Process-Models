@@ -335,6 +335,22 @@ app.get('/pet-profile', (req, res) => {
     }
 }); 
 
+app.delete('/pet_data/:email/:petID', (req, res) => {
+    const { email, petID } = req.params;
+
+    let users = JSON.parse(fs.readFileSync(dataFilePath, 'utf8'));
+
+    const user = users[email];
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    const petIndex = user.pets.findIndex(pet => pet.ID === petID);
+    if (petIndex === -1) return res.status(404).json({ message: 'Pet not found' });
+
+    user.pets.splice(petIndex, 1); // Remove pet from user's pet array
+
+    fs.writeFileSync(dataFilePath, JSON.stringify(users, null, 2));
+    res.json({ message: 'Pet data deleted successfully!' });
+});
 
 // Start the server
 app.listen(PORT, () => {
