@@ -6,9 +6,9 @@ body {
     background-color: #f5f5f0;
 }
 
-h3 {
+h2 {
     font-family: 'Montserrat', sans-serif;
-    font-size: 40px;
+    font-size: 20px;
     color: #4e7c56;
     text-align: center;
     margin: 20px 0 30px;
@@ -53,11 +53,80 @@ header {
     margin-left: 15px;
 }
 
-/* nearClinics.css */
-#map {
-    height: 500px;
-    width: 100%;
+/* Main Content */
+.container {
+    width: 85%;
+    margin: 50px auto;
+    text-align: center;
 }
+
+h2 {
+    color: #4e7c56;
+    font-size: 40px;
+    margin-bottom: 50px;
+    font-weight: bold;
+    
+}
+
+/* Guide Container */
+.guide-container {
+    background-color: #fff;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+
+.guide-block {
+    padding: 20px;
+    border-left: 4px solid #6A9A79;
+    transition: all 0.3s ease-in-out;
+}
+
+.guide-block:hover {
+    background-color: #f4f4f4;
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.guide-block h3 {
+    color: #ff704d;
+    font-size: 26px;
+    margin-bottom: 10px;
+    font-weight: normal;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+}
+
+.guide-block p {
+    color: #666;
+    font-size: 16px;
+    line-height: 1.6;
+    font-weight: 300;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .guide-container {
+        grid-template-columns: 1fr;
+        padding: 20px;
+    }
+
+    .guide-block h3 {
+        font-size: 22px;
+    }
+
+    .guide-block p {
+        font-size: 14px;
+    }
+}
+
+
+
 /* Footer Styles */
 footer {
     background-color: #393737;

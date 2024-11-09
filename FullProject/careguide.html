@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Care Guides</title>
+    <link rel="stylesheet" href="careguide.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+     <!-- Navbar -->
+     <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="logo.jpg" alt="Aleef Logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="Home.html">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Service</a></li>
+                <a href="findNearClinics.html" class="NearClinics">Near Clinics</a>
+            </ul>
+            <div class="nav-icons">
+                <a href="user profile.html"><img src="user.svg" alt="User Icon"></a>
+                <a href="#"><img src="language.png" alt="Globe Icon"></a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Care Guides for Your Pet</h2>
+        <div class="guide-container">
+            <div class="guide-block">
+                <h3>Nutrition</h3>
+                <p id="nutrition-guide">Comprehensive nutritional information based on the pet's type and breed.</p>
+            </div>
+    
+            <div class="guide-block">
+                <h3>Exercise</h3>
+                <p id="exercise-guide">Exercise tips tailored to keep your pet healthy and active.</p>
+            </div>
+    
+            <div class="guide-block">
+                <h3>Grooming</h3>
+                <p id="grooming-guide">Guidelines on grooming to keep your pet looking and feeling great.</p>
+            </div>
+    
+            <div class="guide-block">
+                <h3>Health Tips</h3>
+                <p id="health-guide">Common health tips and advice based on breed-specific considerations.</p>
+            </div>
+    
+            <div class="guide-block">
+                <h3>Training Tips</h3>
+                <p id="training-guide">Training suggestions to help improve your pet's behavior.</p>
+            </div>
+
+            <!-- Additional Guide Blocks -->
+            <div class="guide-block">
+                <h3>Behavioral Tips</h3>
+                <p id="behavioral-guide">Tips to help manage behavior and ensure your pet's well-being.</p>
+            </div>
+            
+            <div class="guide-block">
+                <h3>Playtime & Mental Stimulation</h3>
+                <p id="playtime-guide">Suggestions for keeping your pet mentally engaged and active.</p>
+            </div>
+
+
+            <div class="guide-block">
+                <h3>Dental Health</h3>
+                <p id="dental-guide">Tips for maintaining your pet's oral hygiene and health.</p>
+            </div>
+
+            <div class="guide-block">
+                <h3>Hydration</h3>
+                <p id="hydration-guide">How to ensure your pet stays hydrated.</p>
+            </div>
+
+
+            <div class="guide-block">
+                <h3>Fur Maintenance</h3>
+                <p id="fur-guide">How to maintain your pet's fur and coat.</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-links">
+                <h4>About Us</h4>
+                <ul>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-resources">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="#">Tutorials</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-social">
+                <h4>Follow Us</h4>
+                <a href="#"><img src="facebook.png" alt="Facebook"></a>
+                <a href="#"><img src="instagram.png" alt="Instagram"></a>
+                <a href="#"><img src="X.png" alt="Twitter"></a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2024 Aleef. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript to load care guides -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Sample JSON Data for pet care
+            const petCareData = {
+                "Dog": {
+                    "Nutrition": "Feed a balanced diet with proteins and vegetables.",
+                    "Exercise": "Daily walks are essential for good health.",
+                    "Grooming": "Brush weekly and bathe monthly.",
+                    "Health Tips": "Regular vet check-ups and vaccinations are necessary.",
+                    "Training Tips": "Consistency is key for training your dog.",
+                    "Behavioral Tips": "Introduce your dog to various environments, people, and other pets to improve social behavior.",
+                    "Playtime and Mental Stimulation": "Interactive toys, puzzles, and games help stimulate your dog's mind and reduce boredom.",
+                    "Dental Health": "Brush your dog’s teeth regularly with dog-specific toothpaste.",
+                    "Hydration": "Always ensure your dog has access to clean, fresh water, especially after exercise.",
+                    "Fur Maintenance": "Trim your dog's nails regularly and check ears for dirt or infection.",
+    
+                },
+                "Cat": {
+                    "Nutrition": "High-protein diets with fewer carbs are ideal.",
+                    "Exercise": "Provide interactive toys and climbing structures.",
+                    "Grooming": "Brush regularly to reduce shedding.",
+                    "Health Tips": "Vaccinations and dental care are important.",
+                    "Training Tips": "Positive reinforcement works best for cats.",
+                    "Behavioral Tips": "Use gradual introductions to new pets or environments to reduce stress.",
+                    "Playtime and Mental Stimulation": "Engage your cat with toys that encourage hunting instincts, such as laser pointers or feather wands.",
+                    "Dental Health": "Regularly check for plaque build-up, and consider dental treats or toys to promote oral hygiene.",
+                    "Hydration": "Cats can be picky drinkers. Consider using a cat water fountain to encourage drinking.",
+                    "Fur Maintenance": "Brush your cat regularly, especially if they have long hair, to prevent matting.",
+                    }
+            };
+    
+            // Function to load care guides based on pet type
+            function loadCareGuides(petType) {
+                const guides = petCareData[petType] || {};
+                document.getElementById("nutrition-guide").innerText = guides.Nutrition || "No information available.";
+                document.getElementById("exercise-guide").innerText = guides.Exercise || "No information available.";
+                document.getElementById("grooming-guide").innerText = guides.Grooming || "No information available.";
+                document.getElementById("health-guide").innerText = guides["Health Tips"] || "No information available.";
+                document.getElementById("training-guide").innerText = guides["Training Tips"] || "No information available.";
+                document.getElementById("behavioral-guide").innerText = guides["Behavioral Tips"] || "No information available.";
+                document.getElementById("playtime-guide").innerText = guides["Playtime and Mental Stimulation"] || "No information available.";
+                document.getElementById("dental-guide").innerText = guides["Dental Health"] || "No information available.";
+                document.getElementById("hydration-guide").innerText = guides.Hydration || "No information available.";
+                document.getElementById("fur-guide").innerText = guides.Fur || "No information available.";
+                }
+    
+            // Get the pet type from the profile
+            const petType = document.getElementById("type").innerText || "Dog";  // Default to Dog if no pet type is found
+            loadCareGuides(petType);  // Load care guides based on the pet type
+        });
+    </script>
+    
+</body>
+</html>

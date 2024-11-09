@@ -19,6 +19,7 @@
                 <li><a href="Home.html">Home</a></li>
                 <li><a href="#">About</a></li>
                 <li><a href="#">Service</a></li>
+                <a href="findNearClinics.html" class="NearClinics">Near Clinics</a>
             </ul>
             <div class="nav-icons">
                 <a href="user profile.html"><img src="user.svg" alt="User Icon"></a>
@@ -30,6 +31,14 @@
     <!-- Main Form Section -->
     <div class="container">
         <h2>Pet's profile</h2>
+        <div class="icon-container">
+            <a href="#" onclick="enableEditing()">
+                <img src="edit.png" alt="edit" class="edit-icon">
+            </a>
+            <a href="#" onclick="deletePetData()">
+                <img src="trash.png" alt="delete" class="delete-icon">
+            </a>
+        </div>        
         <div class="form-container">
             <!-- Left Column -->
             <div class="photo-container">
@@ -144,11 +153,10 @@
         </div>
         
         <!-- Buttons -->
-        <div class="button-group">
-            <button class="button edit" type="button" onclick="enableEditing()">Edit</button>
+        <div class="button-group"> 
+            <a class="button back" href="pets.html">Back</a>   
             <button class="button next" type="button" onclick="savePetData()">Save</button>
-            <button class="button delete" type="button" onclick="deletePetData()">Delete</button>
-            <a class="button back" href="pets.html">Back</a>
+            <a href="careguide.html" class="button">Care Guide</a>
         </div>
     </div>
 
@@ -223,6 +231,7 @@
     
         function populatePetData(petData) {
             // Populate fields with pet data
+            console.log("Pet Photo:", petData.photo);
             document.getElementById('pet-photo').src = petData.photo || 'pets.png';
             document.getElementById('name').value = petData.name || 'N/A';
             document.getElementById('ID').value = petData.ID || 'N/A';
