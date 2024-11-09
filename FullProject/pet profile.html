@@ -295,17 +295,22 @@
                 vaccinationStatus: document.querySelector('input[name="vaccination-status"]:checked').id,
             };
 
-            const response = await fetch(`/pet_data`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(petData)
-            });
-
-            if (response.ok) {
-                alert('Pet data updated successfully!');
-            } else {
+            try {
+                const response = await fetch(`/pet_data/${petData.ID}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(petData)
+                });
+    
+                if (response.ok) {
+                    alert('Pet data updated successfully!');
+                } else {
+                    throw new Error('Failed to update pet data');
+                }
+            } catch (error) {
+                console.error('Error updating pet data:', error);
                 alert('Error updating pet data.');
             }
         }
