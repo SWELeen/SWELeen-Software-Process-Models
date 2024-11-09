@@ -188,63 +188,78 @@
     </footer>
 
     <script>
-        async function loadPetList() {
-    const response = await fetch('/pet_data');
-    const pets = await response.json();
-    const petListContainer = document.getElementById('pet-list');
-
-    petListContainer.innerHTML = ''; // Clear existing list if any
-
-    pets.forEach(pet => {
-        const petItem = document.createElement('li');
-        petItem.innerHTML = `<a href="pet profile.html?ID=${pet.ID}">${pet.name}</a>`;
-        petListContainer.appendChild(petItem);
-    });
-}
-
-            if (!petID || !userEmail) {
-                alert('Invalid access or no pet ID provided.');
+               document.addEventListener('DOMContentLoaded', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const petID = urlParams.get('ID');
+            const email = urlParams.get('email');
+    
+            // Debugging logs
+            console.log('Pet ID:', petID);
+            console.log('User Email:', email);
+    
+            if (!petID || !email) {
+                alert('Pet ID or User Email is missing.');
                 return;
             }
-
+    
             try {
-                const response = await fetch(`/pet_data/${petID}`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${userEmail}`
-                    }
-                });
-
+                const response = await fetch(`/pet_data/${email}/${petID}`);
                 if (!response.ok) {
-                    throw new Error('Failed to fetch pet data');
+                    throw new Error(`Failed to load pet data. Status: ${response.status}`);
                 }
-
+    
                 const petData = await response.json();
-
-                // Populate fields with pet data
-                document.getElementById('pet-photo').src = petData.photo || 'pets.png'; // Default photo if none
-                document.getElementById('name').value = petData.name || '';
-                document.getElementById('ID').value = petData.ID || '';
-                document.getElementById('type').value = petData.type || '';
-                document.getElementById('birthday').value = petData.birthday || '';
-                document.getElementById('breed').value = petData.breed || '';
-                document.getElementById('weight').value = petData.weight || '';
-
-                // Update radio buttons for special needs, spayed/neutered, gender, training, vaccination status
-                document.getElementById(petData.specialNeeds ? 'special-yes' : 'special-no').checked = true;
-                document.getElementById(petData.spayedNeutered ? 'spayed-yes' : 'spayed-no').checked = true;
-                document.getElementById(petData.gender).checked = true;
-                document.getElementById(petData.training).checked = true;
-                document.getElementById(petData.vaccinationStatus).checked = true;
-
-                calculateAge(); // Update age based on birthday
-
+    
+                if (!petData) {
+                    alert('No data found for this pet ID.');
+                    return;
+                }
+    
+                populatePetData(petData);
             } catch (error) {
                 alert('Error loading pet data: ' + error.message);
+                console.error('Fetch error:', error);
             }
-
-
+        });
+    
+        function populatePetData(petData) {
+            // Populate fields with pet data
+            document.getElementById('pet-photo').src = petData.photo || 'pets.png';
+            document.getElementById('name').value = petData.name || 'N/A';
+            document.getElementById('ID').value = petData.ID || 'N/A';
+            document.getElementById('type').value = petData.type || 'N/A';
+            document.getElementById('birthday').value = petData.birthday || '';
+            document.getElementById('breed').value = petData.breed || 'N/A';
+            document.getElementById('weight').value = petData.weight || 'N/A';
+    
+            // Set radio buttons
+            document.getElementById('special-yes').checked = petData.specialNeeds === "Yes" || petData.specialNeeds === true;
+            document.getElementById('special-no').checked = petData.specialNeeds === "No" || petData.specialNeeds === false;
+            document.getElementById('spayed-yes').checked = petData.spayedNeutered === "Yes" || petData.spayedNeutered === true;
+            document.getElementById('spayed-no').checked = petData.spayedNeutered === "No" || petData.spayedNeutered === false;
+            
+            if (petData.gender) {
+                document.getElementById(petData.gender.toLowerCase()).checked = true;
+            }
+            
+            if (typeof petData.training === 'string') {
+                const trainingID = petData.training.toLowerCase().replace(' ', '-');
+                const trainingElement = document.getElementById(trainingID);
+                if (trainingElement) {
+                    trainingElement.checked = true;
+                }
+            }
+    
+            if (typeof petData.vaccinationStatus === 'string') {
+                const vaccinationID = petData.vaccinationStatus.toLowerCase().replace(' ', '-');
+                const vaccinationElement = document.getElementById(vaccinationID);
+                if (vaccinationElement) {
+                    vaccinationElement.checked = true;
+                }
+            }
+    
+            calculateAge();
+        }
         function calculateAge() {
             const birthday = new Date(document.getElementById('birthday').value);
             const ageField = document.getElementById('age');
