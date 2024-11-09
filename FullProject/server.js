@@ -334,7 +334,6 @@ app.delete('/pet_data/:email/:petID', (req, res) => {
 
     fs.writeFileSync(dataFilePath, JSON.stringify(users, null, 2));
     res.json({ message: 'Pet data deleted successfully!' });
-    window.location.href = 'pets.html'; // Redirect to pets.html
 });
 
 // Start the server
