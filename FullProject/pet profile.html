@@ -274,75 +274,77 @@
         }
 
         function enableEditing() {
-            const inputs = document.querySelectorAll('input');
-            inputs.forEach(input => input.removeAttribute('readonly'));
-            document.getElementById('file-input').disabled = false; // Enable file input
+    const inputs = document.querySelectorAll('input');
+
+    inputs.forEach(input => {
+        // Enable all inputs except for the age field
+        if (input.id !== 'age'&& input.id !== 'ID') {
+            input.removeAttribute('readonly');
+            input.removeAttribute('disabled'); // Ensure the input is not disabled
         }
+    });
 
-        async function savePetData() {
-            const petData = {
-                name: document.getElementById('name').value,
-                ID: document.getElementById('ID').value,
-                type: document.getElementById('type').value,
-                birthday: document.getElementById('birthday').value,
-                breed: document.getElementById('breed').value,
-                weight: document.getElementById('weight').value,
-                specialNeeds: document.getElementById('special-yes').checked ? "Yes" : "No",
-                spayedNeutered: document.getElementById('spayed-yes').checked ? "Yes" : "No",
-                gender: document.querySelector('input[name="gender"]:checked').id,
-                training: document.querySelector('input[name="training"]:checked').id,
-                vaccinationStatus: document.querySelector('input[name="vaccination-status"]:checked').id,
-                photo: document.getElementById('pet-photo').src
-            };
+    alert("You can now edit the fields.");
+}
 
+
+    async function savePetData() {
+        const petID = document.getElementById('ID').value;
+        const email = new URLSearchParams(window.location.search).get('email');
+
+        const petData = {
+            name: document.getElementById('name').value,
+            ID: petID,
+            type: document.getElementById('type').value,
+            birthday: document.getElementById('birthday').value,
+            breed: document.getElementById('breed').value,
+            weight: document.getElementById('weight').value,
+            specialNeeds: document.getElementById('special-yes').checked ? "Yes" : "No",
+            spayedNeutered: document.getElementById('spayed-yes').checked ? "Yes" : "No",
+            gender: document.querySelector('input[name="gender"]:checked')?.id,
+            training: document.querySelector('input[name="training"]:checked')?.id,
+            vaccinationStatus: document.querySelector('input[name="vaccination-status"]:checked')?.id,
+            photo: document.getElementById('pet-photo').src
+        };
+
+        try {
+            const response = await fetch(`/pet_data/${email}/${petID}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(petData)
+            });
+
+            if (response.ok) {
+                alert('Pet data updated successfully!');
+            } else {
+                const error = await response.json();
+                alert(`Failed to update pet data: ${error.message}`);
+            }
+        } catch (error) {
+            console.error('Error updating pet data:', error);
+            alert('Error updating pet data.');
+        }
+    }
+
+    async function deletePetData() {
+        const petID = new URLSearchParams(window.location.search).get('ID');
+        const email = new URLSearchParams(window.location.search).get('email');
+
+        if (confirm('Are you sure you want to delete this pet?')) {
             try {
-                const response = await fetch(`/pet_data/${petData.ID}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(petData)
-                });
-    
+                const response = await fetch(`/pet_data/${email}/${petID}`, { method: 'DELETE' });
                 if (response.ok) {
-                    alert('Pet data updated successfully!');
+                    alert('Pet data deleted successfully!');
+                    window.location.href = 'user profile.html';
                 } else {
-                    throw new Error('Failed to update pet data');
+                    throw new Error('Failed to delete pet data');
                 }
             } catch (error) {
-                console.error('Error updating pet data:', error);
-                alert('Error updating pet data.');
+                console.error('Error deleting pet data:', error);
+                alert('Error deleting pet data.');
             }
         }
-
-        async function deletePetData() {
-            const petID = new URLSearchParams(window.location.search).get('ID');
-    
-            if (confirm('Are you sure you want to delete this pet?')) {
-                try {
-                    const response = await fetch(`/pet_data/${petID}`, {
-                        method: 'DELETE'
-                    });
-    
-                    if (response.ok) {
-                        alert('Pet data deleted successfully!');
-                        window.location.href = 'user profile.html';
-                    } else {
-                        throw new Error('Error deleting pet data');
-                    }
-                } catch (error) {
-                    console.error('Error deleting pet data:', error);
-                    alert('Error deleting pet data.');
-                }
-            }
-        }
-
-        // Helper function to get cookie by name
-        function getCookie(name) {
-            const value = `; ${document.cookie}`;
-            const parts = value.split(`; ${name}=`);
-            if (parts.length === 2) return parts.pop().split(';').shift();
-        }
+    }
     </script>
 </body>
 </html>
