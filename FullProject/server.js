@@ -133,47 +133,31 @@ app.post('/create-profile', (req, res) => {
 });
 
 // Route to update pet data
-app.put('/pet_data/:ID', (req, res) => {
-    const userEmail = req.cookies.userEmail;
-    const petID = req.params.ID;
-
-    if (!userEmail) {
-        return res.status(401).json({ message: 'Unauthorized' });
-    }
-
-    let users = {};
-    if (fs.existsSync(dataFilePath)) {
-        try {
-            const fileData = fs.readFileSync(dataFilePath, 'utf8');
-            users = JSON.parse(fileData);
-        } catch (error) {
-            console.error("Error reading or parsing data.json:", error);
-            return res.status(500).json({ message: 'Failed to load existing data' });
-        }
-    }
-
-    const user = users[userEmail] || { pets: [] };
-    const petIndex = user.pets.findIndex(pet => pet.ID === petID);
-
-    if (petIndex === -1) {
-        return res.status(404).json({ message: 'Pet not found' });
-    }
-
+app.put('/pet_data/:email/:petID', (req, res) => {
+    const { email, petID } = req.params;
     const updatedPetData = req.body;
 
-    // Update pet data with the new values
-    user.pets[petIndex] = { ...user.pets[petIndex], ...updatedPetData };
-    users[userEmail] = user;
+    let users = JSON.parse(fs.readFileSync(dataFilePath, 'utf8'));
 
-    fs.writeFile(dataFilePath, JSON.stringify(users, null, 2), (err) => {
-        if (err) {
-            console.error("Error writing to data.json:", err);
-            return res.status(500).json({ message: 'Failed to save pet data' });
+    const user = users[email];
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    const petIndex = user.pets.findIndex(pet => pet.ID === petID);
+    if (petIndex === -1) return res.status(404).json({ message: 'Pet not found' });
+
+    // Ensure updated ID does not conflict with existing pets
+    if (updatedPetData.ID && updatedPetData.ID !== petID) {
+        const duplicatePet = user.pets.find(pet => pet.ID === updatedPetData.ID);
+        if (duplicatePet) {
+            return res.status(400).json({ message: `Pet ID ${updatedPetData.ID} already exists.` });
         }
-        res.status(200).json({ message: 'Pet data updated successfully!' });
-    });
-});
+    }
 
+    user.pets[petIndex] = { ...user.pets[petIndex], ...updatedPetData };
+
+    fs.writeFileSync(dataFilePath, JSON.stringify(users, null, 2));
+    res.json({ message: 'Pet data updated successfully!' });
+});
 
 app.post('/pet_data', (req, res) => {
     const userEmail = req.cookies.userEmail;
