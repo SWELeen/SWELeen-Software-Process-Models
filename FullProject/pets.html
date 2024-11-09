@@ -128,27 +128,27 @@
                 })
                 .catch(error => console.error('Error fetching profile data:', error));
 
-            // Fetch the user's pets and populate the pet list
-            fetch('/get-pets', {
-                credentials: 'include'
-            })
-                .then(response => response.json())
+ // Fetch the user's pets and populate the pet list
+ fetch('/get-pets', { credentials: 'include' })
+                .then(response => {
+                    if (!response.ok) throw new Error('Failed to fetch pets');
+                    return response.json();
+                })
                 .then(pets => {
                     const petList = document.querySelector('.pet-list');
-                    petList.innerHTML = ''; // Clear existing pet entries
-
-                    // Add existing pets to the list
+                    petList.innerHTML = ''; // Clear existing list
+    
                     pets.forEach(pet => {
-                        const petItem = document.createElement('li');
-                        petItem.innerHTML = `
-                    <a href="pet profile.html?ID=${pet.ID}" class="pet-link">
-                        <img src="pet.png" alt="Pet Icon" class="pet-icon">
-                    <span>${pet.ID}-</span>
-                    <span>${pet.name}</span>
-                    </a>
-                `;
-                        petList.appendChild(petItem);
-                    });
+    const petItem = document.createElement('li');
+    petItem.innerHTML = `
+    <a href="pet profile.html?ID=${pet.ID}&email=${userEmail}" class="pet-link">
+        <img src="pet.png" alt="Pet Icon" class="pet-icon">
+        <span>${pet.ID} - ${pet.name}</span>
+    </a>
+`;
+    petList.appendChild(petItem);
+});
+                
 
                 })
                 .catch(error => console.error('Error fetching pets:', error));
