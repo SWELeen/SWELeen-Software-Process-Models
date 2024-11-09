@@ -335,7 +335,7 @@
                 const response = await fetch(`/pet_data/${email}/${petID}`, { method: 'DELETE' });
                 if (response.ok) {
                     alert('Pet data deleted successfully!');
-                    window.location.href = 'user profile.html';
+                    window.location.href = 'pets.html';
                 } else {
                     throw new Error('Failed to delete pet data');
                 }
