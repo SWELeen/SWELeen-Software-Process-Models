@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaccination Schedule</title>
+    <link rel="stylesheet" href="calender.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="logo.jpg" alt="Aleef Logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="Home.html">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Service</a></li>
+                <a href="findNearClinics.html" class="NearClinics">Near Clinics</a>
+            </ul>
+            <div class="nav-icons">
+                <a href="user profile.html"><img src="user.svg" alt="User Icon"></a>
+                <a href="#"><img src="language.png" alt="Globe Icon"></a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Vaccination Schedule</h2>
+        <div class="schedule-form">
+            <div class="form-group">
+                <label for="pet-select">Choose pet</label>
+                <select id="pet-select">
+                    <option value="">choose pet</option>
+                    <option value="dog">dog</option>
+                    <option value="cat">cat</option>
+                    <option value="bird">bird</option>
+                    <option value="rabbit">rabbit</option>
+                    <option value="reptile">reptile</option>
+                    <option value="horse">horse</option>
+
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="vaccine-select">Choose vaccine</label>
+                <select id="vaccine-select" disabled>
+                    <option value="">choose vaccine</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="vaccine-date">Choose date</label>
+                <input type="date" id="vaccine-date" />
+            </div>
+        
+        </div>
+        <button  class="button next" type="button" id="add-data">Add</button>
+
+        <div id='calendar'></div>
+    </div>
+
+    <script>
+        /*
+        document.addEventListener('DOMContentLoaded', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const email = urlParams.get('email');
+    
+            // Debugging logs
+            console.log('User Email:', email);
+    
+            if (!email) {
+                alert('User Email is missing.');
+                return;
+            }
+    
+            try {
+                const response = await fetch(`/calender/${email}`);
+                if (!response.ok) {
+                    throw new Error(`Failed to load pet data. Status: ${response.status}`);
+                }
+    
+                const petData = await response.json();
+    
+                if (!petData) {
+                    alert('No data found for this pet ID.');
+                    return;
+                }
+    
+                populatePetData(petData);
+            } catch (error) {
+                alert('Error loading pet data: ' + error.message);
+                console.error('Fetch error:', error);
+            }
+        });*/
+        const vaccinesData = {
+            dog: [
+                "Distemper, Adenovirus, Parvovirus (DAPP)",
+                "Rabies",
+                "Bordetella (Kennel Cough)",
+                "Leptospirosis"
+            ],
+            cat: [
+                "Feline Viral Rhinotracheitis (FVRCP)",
+                "Rabies",
+                "Feline Leukemia (FeLV)",
+                "Feline Immunodeficiency Virus (FIV)"
+            ],
+            bird: [
+                "Avian Influenza",
+                "Chlamydia",
+                "Polyoma Virus"
+            ],
+            rabbit: [
+                "Myxomatosis",
+                "Rabbit Hemorrhagic Disease (RHD)"
+            ],
+            reptile: [
+                "Salmonella",
+                "Calicivirus"
+            ],
+            horse: [
+                "Equine Herpesvirus (EHV)",
+                "Rabies",
+                "West Nile Virus",
+                "Equine Influenza"
+            ]
+        };
+
+        var calendarData = [];
+
+        // calender frame
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                calendarData: calendarData
+            });
+    
+            calendar.render();
+
+            // change vaccineations depend on type of pet
+            document.getElementById('pet-select').addEventListener('change', function() {
+                var pet = this.value;
+                var vaccineSelect = document.getElementById('vaccine-select');
+                vaccineSelect.innerHTML = '<option value="">choose vaccine</option>';    
+
+                if (pet) {
+                    vaccineSelect.disabled = false;
+                    vaccinesData[pet].forEach(function(vaccine) {
+                        var option = document.createElement('option');
+                        option.value = vaccine;
+                        option.textContent = vaccine;
+                        vaccineSelect.appendChild(option);
+                    });
+                } else {
+                    vaccineSelect.disabled = true;
+                }
+            });
+
+            // add the event in calender
+            document.getElementById('add-data').addEventListener('click', function() {
+                var pet = document.getElementById('pet-select').value;
+                var vaccine = document.getElementById('vaccine-select').value;
+                var date = document.getElementById('vaccine-date').value;
+
+                if (pet && vaccine && date) {
+                    var title = `${pet}: ${vaccine}`;
+                    if (!calendarData.some(data => data.title === title && data.start === date)) {
+                        calendarData.push({
+                            title: title,
+                            start: date,
+                            allDay: true
+                        });
+                        calendar.addEvent({
+                            title: title,
+                            start: date,
+                            allDay: true
+                        });
+                    } else {
+                        alert('This data already exists!');
+                    }
+
+                    document.getElementById('pet-select').selectedIndex = 0;
+                    document.getElementById('vaccine-select').innerHTML = '<option value="">choose vaccine </option>';
+                    document.getElementById('vaccine-select').disabled = true;
+                    document.getElementById('vaccine-date').value = '';
+
+                } else {
+                    alert('Fill all fields');
+                }
+            });
+        });
+
+    </script>
+
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-links">
+                <h4>About Us</h4>
+                <ul>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-resources">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="#">Tutorials</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-social">
+                <h4>Follow Us</h4>
+                <a href="#"><img src="facebook.png" alt="Facebook"></a>
+                <a href="#"><img src="instagram.png" alt="Instagram"></a>
+                <a href="#"><img src="X.png" alt="Twitter"></a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2024 Aleef. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
