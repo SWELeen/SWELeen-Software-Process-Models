@@ -184,6 +184,7 @@
 
             // Save changes functionality
             document.querySelector('.save').addEventListener('click', () => {
+                if (!validateForm()) return;
                 const updatedUser = {
                     username: document.getElementById('username').value,
                     email: document.getElementById('email').value,
