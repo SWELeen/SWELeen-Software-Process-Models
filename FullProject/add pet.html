@@ -225,6 +225,12 @@
 
             let isValid = true;
 
+             // Check if ID contains only numbers
+        if (!/^\d+$/.test(ID)) {
+            alert("ID should contain only numbers.");
+            isValid = false;
+        }
+
             if (birthday > today) {
                 alert("Error: Invalid birthdate.");
                 isValid = false;
