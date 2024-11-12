@@ -162,6 +162,26 @@
                 document.getElementById('editButton').style.display = 'none'; // Hide edit button
             });
 
+             // Validate form fields
+            function validateForm() {
+                const phone = document.getElementById('phone').value.trim();
+                const password = document.getElementById('current-password').value.trim();
+
+                // Validate phone number (only numbers)
+                if (!/^\d+$/.test(phone)) {
+                    alert("Phone number should contain only numbers.");
+                    return false;
+                }
+
+                // Validate password length (4 to 10 characters)
+                if (password.length < 4 || password.length > 10) {
+                    alert("Password should be between 4 and 10 characters.");
+                    return false;
+                }
+
+                return true; // Validation passed
+            }
+
             // Save changes functionality
             document.querySelector('.save').addEventListener('click', () => {
                 const updatedUser = {
