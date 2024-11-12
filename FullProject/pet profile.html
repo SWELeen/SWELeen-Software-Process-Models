@@ -295,9 +295,35 @@
 
     alert("You can now edit the fields.");
 }
+// Function to validate Type, Breed, and Weight fields
+function validatePetData() {
+        const type = document.getElementById('type').value.trim();
+        const breed = document.getElementById('breed').value.trim();
+        const weight = document.getElementById('weight').value.trim();
 
+        // Validate that Type and Breed contain only letters
+        if (!/^[A-Za-z]+$/.test(type)) {
+            alert("Type should contain only letters.");
+            return false;
+        }
+
+        if (!/^[A-Za-z]+$/.test(breed)) {
+            alert("Breed should contain only letters.");
+            return false;
+        }
+
+        // Validate that Weight contains only numbers
+        if (!/^\d+$/.test(weight)) {
+            alert("Weight should contain only numbers.");
+            return false;
+        }
+
+        return true; // Validation passed
+    }
 
     async function savePetData() {
+        if (!validatePetData()) return; // Stop if validation fails
+
         const petID = document.getElementById('ID').value;
         const email = new URLSearchParams(window.location.search).get('email');
 
