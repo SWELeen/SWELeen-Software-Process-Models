@@ -231,6 +231,24 @@
             isValid = false;
         }
 
+         // Check if Type contains only letters
+         if (!/^[A-Za-z]+$/.test(type)) {
+            alert("Type should contain only letters.");
+            isValid = false;
+        }
+
+        // Check if Breed contains only letters
+        if (!/^[A-Za-z]+$/.test(breed)) {
+            alert("Breed should contain only letters.");
+            isValid = false;
+        }
+
+        // Check if Weight contains only numbers
+        if (!/^\d+$/.test(weight)) {
+            alert("Weight should contain only numbers.");
+            isValid = false;
+        }
+
             if (birthday > today) {
                 alert("Error: Invalid birthdate.");
                 isValid = false;
