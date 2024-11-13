@@ -1,4 +1,7 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const sgMail = require('@sendgrid/mail');
+const { sendWelcomeEmail } = require('./EmailNotification'); // Import the email function
 const fs = require('fs');
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -93,7 +96,7 @@ app.post('/update-user-profile', (req, res) => {
     });
 });
 
-// Route to save user profile data
+// Route to save user profile data and send email
 app.post('/create-profile', (req, res) => {
     const { username, email, phone, password } = req.body;
 
@@ -119,16 +122,28 @@ app.post('/create-profile', (req, res) => {
         return res.status(400).send(`<script>alert('Account or number already exists'); window.location.href = '/Sign in.html';</script>`);
     }
 
-    users[email] = { email,username, phone, password, pets: [] };
+    users[email] = { email, username, phone, password, pets: [] };
 
     fs.writeFile(dataFilePath, JSON.stringify(users, null, 2), (err) => {
         if (err) {
             console.error("Error writing to data.json:", err);
             return res.status(500).json({ message: 'Failed to save data' });
         }
-        res.status(200).send(`<script>alert('Profile created successfully!'); window.location.href = '/Sign in.html';</script>`);
+
+        console.log("User profile saved. Attempting to send email...");
+
+        sendWelcomeEmail(email, username)
+            .then(() => {
+                console.log("Email sent successfully.");
+                res.status(200).send(`<script>alert('Profile created successfully and email sent!'); window.location.href = '/Sign in.html';</script>`);
+            })
+            .catch((error) => {
+                console.error("Error sending email:", error);
+                res.status(500).send(`<script>alert('Profile created, but email notification failed.'); window.location.href = '/Sign in.html';</script>`);
+            });
     });
 });
+
 
 // Route to update pet data
 app.put('/pet_data/:email/:petID', (req, res) => {
