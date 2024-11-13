@@ -16,9 +16,9 @@ app.use(express.static(__dirname));
 const dataFilePath = path.join(__dirname, 'data.json');
 
 // Serve the HTML page
-app.get('/', (req, res) => {
+/*app.get('/', (req, res) => {
     res.sendFile(__dirname + '/user profile.html');
-    });
+    });*/
 
 // Serve the user profile page at the root URL
 app.get('/', (req, res) => {
@@ -104,6 +104,7 @@ app.post('/update-user-profile', (req, res) => {
 
 
 // Route to save user profile data
+// Corrected Route to save user profile data
 app.post('/create-profile', (req, res) => {
     const { username, email, phone, password } = req.body;
 
@@ -137,9 +138,11 @@ app.post('/create-profile', (req, res) => {
             return res.status(500).json({ message: 'Failed to save data' });
         }
 
-        // Send welcome email after saving data
+        console.log("User profile saved. Attempting to send email...");
+
         sendWelcomeEmail(email, username)
             .then(() => {
+                console.log("Email sent successfully.");
                 res.status(200).send(`<script>alert('Profile created successfully and email sent!'); window.location.href = '/Sign in.html';</script>`);
             })
             .catch((error) => {
@@ -148,6 +151,7 @@ app.post('/create-profile', (req, res) => {
             });
     });
 });
+
 
 
 // Route to update pet data
