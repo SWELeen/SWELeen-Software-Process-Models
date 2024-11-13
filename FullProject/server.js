@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const sgMail = require('@sendgrid/mail');
+const { sendWelcomeEmail } = require('./EmailNotification'); // Import the email function
 const fs = require('fs');
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -18,32 +19,6 @@ const dataFilePath = path.join(__dirname, 'data.json');
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/user profile.html');
     });
-
-  // Handle email submission
-    app.post('/send-email', (req, res) => {
-    const userEmail = req.body.email;
-
-    // Email content
-    const msg = {
-    to: userEmail,
-    from: 'aleef.care@gmail.com', 
-    subject: 'Welcome!',
-    text: 'Welcome! You\'ve joined us.',
-    html: '<strong>Welcome! You\'ve joined us.</strong>',
-    };
-
-    // Send email
-    sgMail
-    .send(msg)
-    .then(() => {
-        res.send('Email sent successfully!');
-    })
-    .catch((error) => {
-        console.error(error);
-        res.status(500).send('Error sending email.');
-    });
-});
-
 
 // Serve the user profile page at the root URL
 app.get('/', (req, res) => {
@@ -154,16 +129,26 @@ app.post('/create-profile', (req, res) => {
         return res.status(400).send(`<script>alert('Account or number already exists'); window.location.href = '/Sign in.html';</script>`);
     }
 
-    users[email] = { email,username, phone, password, pets: [] };
+    users[email] = { email, username, phone, password, pets: [] };
 
     fs.writeFile(dataFilePath, JSON.stringify(users, null, 2), (err) => {
         if (err) {
             console.error("Error writing to data.json:", err);
             return res.status(500).json({ message: 'Failed to save data' });
         }
-        res.status(200).send(`<script>alert('Profile created successfully!'); window.location.href = '/Sign in.html';</script>`);
+
+        // Send welcome email after saving data
+        sendWelcomeEmail(email, username)
+            .then(() => {
+                res.status(200).send(`<script>alert('Profile created successfully and email sent!'); window.location.href = '/Sign in.html';</script>`);
+            })
+            .catch((error) => {
+                console.error("Error sending email:", error);
+                res.status(500).send(`<script>alert('Profile created, but email notification failed.'); window.location.href = '/Sign in.html';</script>`);
+            });
     });
 });
+
 
 // Route to update pet data
 app.put('/pet_data/:email/:petID', (req, res) => {
