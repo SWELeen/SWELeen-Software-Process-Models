@@ -1,4 +1,6 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const sgMail = require('@sendgrid/mail');
 const fs = require('fs');
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -11,6 +13,37 @@ app.use(cookieParser());
 app.use(express.static(__dirname));
 
 const dataFilePath = path.join(__dirname, 'data.json');
+
+// Serve the HTML page
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/user profile.html');
+    });
+
+  // Handle email submission
+    app.post('/send-email', (req, res) => {
+    const userEmail = req.body.email;
+
+    // Email content
+    const msg = {
+    to: userEmail,
+    from: 'aleef.care@gmail.com', 
+    subject: 'Welcome!',
+    text: 'Welcome! You\'ve joined us.',
+    html: '<strong>Welcome! You\'ve joined us.</strong>',
+    };
+
+    // Send email
+    sgMail
+    .send(msg)
+    .then(() => {
+        res.send('Email sent successfully!');
+    })
+    .catch((error) => {
+        console.error(error);
+        res.status(500).send('Error sending email.');
+    });
+});
+
 
 // Serve the user profile page at the root URL
 app.get('/', (req, res) => {
@@ -342,4 +375,6 @@ app.listen(PORT, () => {
     console.log(`You can access the user profile at http://localhost:${PORT}`);
     console.log(`You can access the pet profile at http://localhost:${PORT}/pet-profile`);
     console.log(`You can access the map page at http://localhost:${PORT}/map`);
-});
+    console.log(`Server running on http://localhost:${PORT}`);
+  });
+  
