@@ -162,7 +162,9 @@
                     spayedNeutered: document.querySelector('input[name="spayed-neutered"]:checked')?.value,
                     gender: document.querySelector('input[name="gender"]:checked')?.value,
                     training:document.querySelector('input[name="training"]:checked')?.value,
-                    vaccinationStatus: document.querySelector('input[name="vaccination-status"]:checked')?.value
+                    vaccinationStatus: document.querySelector('input[name="vaccination-status"]:checked')?.value,
+                    photo: document.getElementById('pet-photo').src  // Add the photo to petData
+
                 };
 
                 fetch('/pet_data', {
@@ -276,19 +278,21 @@
             document.querySelectorAll('input[type="radio"]').forEach(radio => radio.checked = false);
         }
 
-        // Function to preview the uploaded image
         function previewImage(event) {
-            const reader = new FileReader();
-            const file = event.target.files[0];
+        const file = event.target.files[0];
+        const reader = new FileReader();
 
-            reader.onload = function () {
-                document.getElementById('pet-photo').src = reader.result;
-            };
+        reader.onload = function (e) {
+        const image = document.getElementById('pet-photo');
+        image.src = e.target.result;  // Set the preview image source to the selected file
+    };
 
-            if (file) {
-                reader.readAsDataURL(file);
-            }
-        }
+    if (file) {
+        reader.readAsDataURL(file);  // Read the file as a data URL
+    }
+}
+
+        
     </script>
 </body>
 
