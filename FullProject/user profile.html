@@ -33,6 +33,7 @@
             <a href="#"><img src="profile-picture.png"></a>
         </div>
     </div>
+    <!-- Single form for profile creation and email notification -->
     <form class="profile-form" id="profileForm" action="/create-profile" method="POST" onsubmit="return validateForm()">
         <div class="form-group">
             <label for="username">User Name</label>
@@ -55,7 +56,8 @@
 
         <div class="button-group">
             <a href="Home.html"><button type="button" class="cancel">Cancel</button></a>
-           <button type="submit" class="save">Create</button>
+            <!-- Submit button triggers the /create-profile action -->
+            <button type="submit" class="save">Create</button>
         </div>
     </form>
 </div>
