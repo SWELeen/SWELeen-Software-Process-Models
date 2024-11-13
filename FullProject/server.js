@@ -116,7 +116,7 @@ app.post('/create-profile', (req, res) => {
     const phoneExists = Object.values(users).some(user => user.phone === phone);
 
     if (emailExists || phoneExists) {
-        return res.status(400).send(<script>alert('Account or number already exists'); window.location.href = '/Sign in.html';</script>);
+        return res.status(400).send(`<script>alert('Account or number already exists'); window.location.href = '/Sign in.html';</script>`);
     }
 
     users[email] = { email,username, phone, password, pets: [] };
@@ -126,7 +126,7 @@ app.post('/create-profile', (req, res) => {
             console.error("Error writing to data.json:", err);
             return res.status(500).json({ message: 'Failed to save data' });
         }
-        res.status(200).send(<script>alert('Profile created successfully!'); window.location.href = '/Sign in.html';</script>);
+        res.status(200).send(`<script>alert('Profile created successfully!'); window.location.href = '/Sign in.html';</script>`);
     });
 });
 
