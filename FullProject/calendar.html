@@ -65,38 +65,6 @@
     </div>
 
     <script>
-        /*
-        document.addEventListener('DOMContentLoaded', async () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const email = urlParams.get('email');
-    
-            // Debugging logs
-            console.log('User Email:', email);
-    
-            if (!email) {
-                alert('User Email is missing.');
-                return;
-            }
-    
-            try {
-                const response = await fetch(`/calender/${email}`);
-                if (!response.ok) {
-                    throw new Error(`Failed to load pet data. Status: ${response.status}`);
-                }
-    
-                const petData = await response.json();
-    
-                if (!petData) {
-                    alert('No data found for this pet ID.');
-                    return;
-                }
-    
-                populatePetData(petData);
-            } catch (error) {
-                alert('Error loading pet data: ' + error.message);
-                console.error('Fetch error:', error);
-            }
-        });*/
         const vaccinesData = {
             dog: [
                 "Distemper, Adenovirus, Parvovirus (DAPP)",
@@ -130,11 +98,18 @@
                 "Equine Influenza"
             ]
         };
-
+    
         var calendarData = [];
-
-        // calender frame
-        document.addEventListener('DOMContentLoaded', function() {
+    
+        document.addEventListener('DOMContentLoaded', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const email = urlParams.get('email');
+    
+            if (!email) {
+                alert('User Email is missing.');
+                return;
+            }
+    
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
@@ -143,17 +118,38 @@
                     center: 'title',
                     right: 'dayGridMonth,timeGridWeek,timeGridDay'
                 },
-                calendarData: calendarData
+                events: calendarData
             });
-    
             calendar.render();
-
-            // change vaccineations depend on type of pet
+    
+            // Fetch saved events from data.json for the current user and populate the calendar
+            try {
+                const response = await fetch(`/get-events/${email}`);
+                if (response.ok) {
+                    const events = await response.json();
+                    events.forEach(event => {
+                        calendar.addEvent({
+                            title: event.title,
+                            start: event.date,
+                            allDay: true
+                        });
+    
+                        // Store the event in the calendarData array to keep track of the session events
+                        calendarData.push({ title: event.title, start: event.date, allDay: true });
+                    });
+                } else {
+                    console.error('Failed to load events from the server.');
+                }
+            } catch (error) {
+                console.error('Error fetching events:', error);
+            }
+    
+            // Update available vaccines based on pet type selection
             document.getElementById('pet-select').addEventListener('change', function() {
                 var pet = this.value;
                 var vaccineSelect = document.getElementById('vaccine-select');
-                vaccineSelect.innerHTML = '<option value="">choose vaccine</option>';    
-
+                vaccineSelect.innerHTML = '<option value="">choose vaccine</option>';
+    
                 if (pet) {
                     vaccineSelect.disabled = false;
                     vaccinesData[pet].forEach(function(vaccine) {
@@ -166,43 +162,52 @@
                     vaccineSelect.disabled = true;
                 }
             });
-
-            // add the event in calender
-            document.getElementById('add-data').addEventListener('click', function() {
+    
+            // Add event to calendar and save it in data.json
+            document.getElementById('add-data').addEventListener('click', async function() {
                 var pet = document.getElementById('pet-select').value;
                 var vaccine = document.getElementById('vaccine-select').value;
                 var date = document.getElementById('vaccine-date').value;
-
+    
                 if (pet && vaccine && date) {
                     var title = `${pet}: ${vaccine}`;
+                    
+                    // Avoid duplicate events (same title and date) for the same user
                     if (!calendarData.some(data => data.title === title && data.start === date)) {
-                        calendarData.push({
-                            title: title,
-                            start: date,
-                            allDay: true
-                        });
-                        calendar.addEvent({
-                            title: title,
-                            start: date,
-                            allDay: true
-                        });
+                        calendarData.push({ title: title, start: date, allDay: true });
+                        calendar.addEvent({ title: title, start: date, allDay: true });
+    
+                        // Save the event in data.json under the user's email
+                        try {
+                            const response = await fetch(`/add-event/${email}`, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ title, date })
+                            });
+    
+                            if (!response.ok) {
+                                throw new Error('Failed to save event');
+                            }
+                            alert('Event added successfully!');
+                        } catch (error) {
+                            console.error('Error saving event:', error);
+                            alert('Failed to save the event.');
+                        }
                     } else {
-                        alert('This data already exists!');
+                        alert('This event already exists!');
                     }
-
+    
+                    // Reset form fields
                     document.getElementById('pet-select').selectedIndex = 0;
                     document.getElementById('vaccine-select').innerHTML = '<option value="">choose vaccine </option>';
                     document.getElementById('vaccine-select').disabled = true;
                     document.getElementById('vaccine-date').value = '';
-
                 } else {
                     alert('Fill all fields');
                 }
             });
         });
-
     </script>
-
     
     <!-- Footer -->
     <footer>

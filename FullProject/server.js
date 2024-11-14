@@ -96,6 +96,80 @@ app.post('/update-user-profile', (req, res) => {
     });
 });
 
+
+// Route to fetch events based on the user's email
+app.get('/get-events/:email', (req, res) => {
+    const { email } = req.params;
+
+    // Read the data from data.json
+    fs.readFile(dataFilePath, 'utf8', (err, data) => {
+        if (err) {
+            return res.status(500).json({ message: 'Error reading data' });
+        }
+
+        const parsedData = JSON.parse(data);
+        if (parsedData[email] && parsedData[email].events) {
+            // Return the events for the user
+            return res.json(parsedData[email].events);
+        } else {
+            return res.json([]);  // No events for the user
+        }
+    });
+});
+
+
+// Route to add an event for a user
+app.post('/add-event/:email', (req, res) => {
+    const email = req.params.email;
+    const { title, date } = req.body;
+
+    // Validate input
+    if (!title || !date) {
+        return res.status(400).json({ message: 'Event title and date are required.' });
+    }
+
+    let users = {};
+    if (fs.existsSync(dataFilePath)) {
+        try {
+            const fileData = fs.readFileSync(dataFilePath, 'utf8');
+            users = JSON.parse(fileData);
+        } catch (error) {
+            console.error("Error reading or parsing data.json:", error);
+            return res.status(500).json({ message: 'Failed to load existing data' });
+        }
+    }
+
+    // Find the user
+    const user = users[email];
+    if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Ensure user has an events array
+    if (!user.events) {
+        user.events = [];
+    }
+
+    // Check if an event with the same title and date already exists
+    const eventExists = user.events.some(event => event.title === title && event.date === date);
+    if (eventExists) {
+        return res.status(400).json({ message: 'This reminder already exists.' });
+    }
+
+    // Add the new event
+    user.events.push({ title, date });
+
+    // Save the updated user data back to the file
+    try {
+        fs.writeFileSync(dataFilePath, JSON.stringify(users, null, 2));
+        res.status(200).json({ message: 'Event added successfully!' });
+    } catch (error) {
+        console.error("Error writing to data.json:", error);
+        return res.status(500).json({ message: 'Failed to save event' });
+    }
+});
+
+
 // Route to save user profile data and send email
 app.post('/create-profile', (req, res) => {
     const { username, email, phone, password } = req.body;
@@ -122,7 +196,15 @@ app.post('/create-profile', (req, res) => {
         return res.status(400).send(`<script>alert('Account or number already exists'); window.location.href = '/Sign in.html';</script>`);
     }
 
-    users[email] = { email, username, phone, password, pets: [] };
+    // Add new user with both pets and events arrays
+    users[email] = { 
+        email, 
+        username, 
+        phone, 
+        password, 
+        pets: [], 
+        events: [] 
+    };
 
     fs.writeFile(dataFilePath, JSON.stringify(users, null, 2), (err) => {
         if (err) {

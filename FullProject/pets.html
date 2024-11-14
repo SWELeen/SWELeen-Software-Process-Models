@@ -67,6 +67,7 @@
 
         <div class="button-group">
             <a href="add pet.html"><button class="add-pet-button">+Add new Pet</button></a>
+            <a href="#" id="setReminderLink"><button class="button">Set reminder</button></a>
             <a href="Home.html"><button type="button" class="cancel">Cancel</button></a>
             <button type="submit" class="save">Save Changes</button>
         </div>
@@ -108,8 +109,8 @@
         document.addEventListener('DOMContentLoaded', () => {
             let userEmail = '';
     
-            // Fetch the user's profile information and populate the form fields
-            fetch('/get-user-profile', { credentials: 'include' })
+ // Fetch the user's profile information and populate the form fields
+ fetch('/get-user-profile', { credentials: 'include' })
                 .then(response => response.json())
                 .then(user => {
                     if (user) {
@@ -125,8 +126,19 @@
                             document.getElementById(field).readOnly = true;
                         });
                     }
+
+                    if (user && user.email) {
+                    userEmail = user.email; // Store the user's email
+                    document.getElementById('setReminderLink').href = `calendar.html?email=${encodeURIComponent(userEmail)}`;
+                } else {
+                    console.error('Failed to retrieve user email.');
+                }
+            })
+
+
                 })
                 .catch(error => console.error('Error fetching profile data:', error));
+
 
  // Fetch the user's pets and populate the pet list
  fetch('/get-pets', { credentials: 'include' })
@@ -218,7 +230,7 @@
                         alert('Error updating profile: ' + error.message);
                     });
             });
-        });
+        
     </script>
     </body>
     </html>
