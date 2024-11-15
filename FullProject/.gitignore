@@ -1,5 +1,5 @@
 node_modules/
 data.json
-EmailNotification.js
+.env
 package-lock.json
 package.json
