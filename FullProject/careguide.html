@@ -18,7 +18,8 @@
                 <li><a href="Home.html">Home</a></li>
                 <li><a href="#">About</a></li>
                 <li><a href="#">Service</a></li>
-                <a href="findNearClinics.html" class="NearClinics">Near Clinics</a>
+                <li><a href="findNearClinics.html" class="NearClinics">NearClinics</a></li>
+                <li><a href="careguide.html" class="CareGuides">CareGuides</a></li>
             </ul>
             <div class="nav-icons">
                 <a href="user profile.html"><img src="user.svg" alt="User Icon"></a>
@@ -29,6 +30,19 @@
 
     <div class="container">
         <h2>Care Guides for Your Pet</h2>
+
+        <!-- Pet Type Selector -->
+        <label for="pet-type">Select Pet Type:</label>
+        <select id="pet-type">
+            <option value="Dog">Dog</option>
+            <option value="Cat">Cat</option>
+            <option value="Bird">Bird</option>
+            <option value="Rabbit">Rabbit</option>
+            <option value="Hamster">Hamster</option>
+            <option value="Fish">Fish</option>
+            <option value="Turtle">Turtle</option>
+        </select>
+
         <div class="guide-container">
             <div class="guide-block">
                 <h3>Nutrition</h3>
@@ -124,7 +138,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             // Sample JSON Data for pet care
-            const petCareData = {
+            const petCareData =  {
                 "Dog": {
                     "Nutrition": "Feed a balanced diet with proteins and vegetables.",
                     "Exercise": "Daily walks are essential for good health.",
@@ -219,14 +233,19 @@
                 document.getElementById("playtime-guide").innerText = guides["Playtime and Mental Stimulation"] || "No information available.";
                 document.getElementById("dental-guide").innerText = guides["Dental Health"] || "No information available.";
                 document.getElementById("hydration-guide").innerText = guides.Hydration || "No information available.";
-                document.getElementById("fur-guide").innerText = guides.Fur || "No information available.";
-                }
+                document.getElementById("fur-guide").innerText = guides["Fur Maintenance"] || "No information available.";
+            }
     
-            // Get the pet type from the profile
-            const petType = document.getElementById("type").innerText || "Dog";  // Default to Dog if no pet type is found
-            loadCareGuides(petType);  // Load care guides based on the pet type
+            // Listen for changes in pet type selection
+            const petTypeSelect = document.getElementById("pet-type");
+            petTypeSelect.addEventListener("change", function() {
+                const selectedPetType = petTypeSelect.value;
+                loadCareGuides(selectedPetType);
+            });
+    
+            // Load the care guides for the default pet type on page load
+            loadCareGuides(petTypeSelect.value);
         });
     </script>
-    
 </body>
 </html>

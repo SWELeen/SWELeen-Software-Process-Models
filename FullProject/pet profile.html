@@ -19,7 +19,9 @@
                 <li><a href="Home.html">Home</a></li>
                 <li><a href="#">About</a></li>
                 <li><a href="#">Service</a></li>
-                <a href="findNearClinics.html" class="NearClinics">Near Clinics</a>
+                <li><a href="findNearClinics.html" class="NearClinics">NearClinics</a></li>
+                <li><a href="careguide.html" class="CareGuides">CareGuides</a></li>
+
             </ul>
             <div class="nav-icons">
                 <a href="user profile.html"><img src="user.svg" alt="User Icon"></a>
@@ -59,7 +61,16 @@
 
             <div class="form-group">
                 <label for="type">Type</label>
-                <input type="text" id="type" placeholder="" readonly>
+                    <select id="type" disabled>
+                        <option value="" disabled selected>Select Pet Type</option>
+                        <option value="Dog">Dog</option>
+                        <option value="Cat">Cat</option>
+                        <option value="Bird">Bird</option>
+                        <option value="Rabbit">Rabbit</option>
+                        <option value="Hamster">Hamster</option>
+                        <option value="Fish">Fish</option>
+                        <option value="Turtle">Turtle</option>
+                    </select>
                 <span id="type-error" class="error-message"></span>
             </div>
 
@@ -156,7 +167,6 @@
         <div class="button-group"> 
             <a class="button back" href="pets.html">Back</a>   
             <button class="button next" type="button" onclick="savePetData()">Save</button>
-            <a href="careguide.html" class="button">Care Guide</a>
 
         </div>
     </div>
@@ -285,6 +295,7 @@
 
         function enableEditing() {
     const inputs = document.querySelectorAll('input');
+    const select = document.getElementById('type');
 
     inputs.forEach(input => {
         // Enable all inputs except for the age field
@@ -293,6 +304,8 @@
             input.removeAttribute('disabled'); // Ensure the input is not disabled
         }
     });
+    // Enable the select dropdown
+    select.removeAttribute('disabled');
 
     alert("You can now edit the fields.");
 }

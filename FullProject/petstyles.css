@@ -97,6 +97,27 @@ input[type="text"], input[type="date"], input[type="file"],input[type="number"] 
     background-color: #fff;
     width: 93%; /* Ensure inputs take full width of their columns */
 }
+/* Ensure select dropdown looks like the text boxes */
+select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    background-color: #fff;
+    width: 100%; /* Match the width of the text boxes */
+    cursor: pointer;
+}
+
+select:disabled {
+    background-color: #f5f5f0;
+    cursor: not-allowed;
+}
+
+/* Optional: Style for the dropdown */
+select option {
+    font-size: 14px;
+    padding: 10px;
+}
 
 /* Adjust the upload button container */
 .file-input-container {

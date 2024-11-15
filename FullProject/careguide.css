@@ -68,6 +68,24 @@ h2 {
     
 }
 
+/* Drop-down Style */
+label {
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: inline-block;
+    color: #555;
+}
+
+#pet-type {
+    padding: 10px;
+    width: 200px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
 /* Guide Container */
 .guide-container {
     background-color: #fff;
