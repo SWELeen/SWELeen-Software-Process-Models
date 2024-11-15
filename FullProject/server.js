@@ -1,7 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const sgMail = require('@sendgrid/mail');
-const { sendWelcomeEmail } = require('./EmailNotification'); // Import the email function
+const { sendWelcomeEmail, sendReminderEmail } = require('./EmailNotification');
+const schedule = require('node-schedule');
 const fs = require('fs');
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -101,21 +102,25 @@ app.post('/update-user-profile', (req, res) => {
 app.get('/get-events/:email', (req, res) => {
     const { email } = req.params;
 
-    // Read the data from data.json
-    fs.readFile(dataFilePath, 'utf8', (err, data) => {
-        if (err) {
-            return res.status(500).json({ message: 'Error reading data' });
-        }
+    if (!fs.existsSync(dataFilePath)) {
+        return res.status(404).json({ message: 'Data file not found' });
+    }
 
-        const parsedData = JSON.parse(data);
-        if (parsedData[email] && parsedData[email].events) {
-            // Return the events for the user
-            return res.json(parsedData[email].events);
+    try {
+        const data = JSON.parse(fs.readFileSync(dataFilePath, 'utf8'));
+        const user = data[email];
+
+        if (user && user.events) {
+            return res.json(user.events); // Send events including title and dateTime
         } else {
-            return res.json([]);  // No events for the user
+            return res.json([]); // No events for the user
         }
-    });
+    } catch (error) {
+        console.error('Error reading data:', error);
+        return res.status(500).json({ message: 'Failed to load events' });
+    }
 });
+
 
 
 // Route to add an event for a user
@@ -123,9 +128,16 @@ app.post('/add-event/:email', (req, res) => {
     const email = req.params.email;
     const { title, dateTime } = req.body;
 
-    // Validate input
     if (!title || !dateTime) {
         return res.status(400).json({ message: 'Event title and date-time are required.' });
+    }
+    
+    const eventDateTime = new Date(dateTime);
+    const currentDateTime = new Date();
+    
+    // Check if the dateTime is in the past
+    if (eventDateTime < currentDateTime) {
+        return res.status(400).json({ message: 'Cannot select a date or time in the past.' });
     }
 
     let users = {};
@@ -139,30 +151,35 @@ app.post('/add-event/:email', (req, res) => {
         }
     }
 
-    // Find the user
     const user = users[email];
     if (!user) {
         return res.status(404).json({ message: 'User not found' });
     }
 
-    // Ensure user has an events array
     if (!user.events) {
         user.events = [];
     }
 
-    // Check if an event with the same title and dateTime already exists
     const eventExists = user.events.some(event => event.title === title && event.dateTime === dateTime);
     if (eventExists) {
         return res.status(400).json({ message: 'This reminder already exists.' });
     }
 
-    // Add the new event
     user.events.push({ title, dateTime });
-
-    // Save the updated user data back to the file
     try {
         fs.writeFileSync(dataFilePath, JSON.stringify(users, null, 2));
-        res.status(200).json({ message: 'Event added successfully!' });
+
+        // Schedule the email
+        const reminderDate = new Date(dateTime);
+        schedule.scheduleJob(reminderDate, () => {
+            sendReminderEmail(email, title, dateTime).then(() => {
+                console.log(`Reminder email sent to ${email} for event: ${title}`);
+            }).catch(err => {
+                console.error(`Failed to send reminder email: ${err}`);
+            });
+        });
+
+        res.status(200).json({ message: 'Event added and reminder scheduled successfully!' });
     } catch (error) {
         console.error("Error writing to data.json:", error);
         return res.status(500).json({ message: 'Failed to save event' });
