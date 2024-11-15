@@ -57,6 +57,12 @@
                 <label for="vaccine-date">Choose date</label>
                 <input type="date" id="vaccine-date" />
             </div>
+
+            <div class="form-group">
+                <label for="vaccine-time">Choose time</label>
+                <input type="time" id="vaccine-time" />
+            </div>
+            
         
         </div>
         <button  class="button next" type="button" id="add-data">Add</button>
@@ -163,50 +169,52 @@
                 }
             });
     
-            // Add event to calendar and save it in data.json
             document.getElementById('add-data').addEventListener('click', async function() {
-                var pet = document.getElementById('pet-select').value;
-                var vaccine = document.getElementById('vaccine-select').value;
-                var date = document.getElementById('vaccine-date').value;
-    
-                if (pet && vaccine && date) {
-                    var title = `${pet}: ${vaccine}`;
-                    
-                    // Avoid duplicate events (same title and date) for the same user
-                    if (!calendarData.some(data => data.title === title && data.start === date)) {
-                        calendarData.push({ title: title, start: date, allDay: true });
-                        calendar.addEvent({ title: title, start: date, allDay: true });
-    
-                        // Save the event in data.json under the user's email
-                        try {
-                            const response = await fetch(`/add-event/${email}`, {
-                                method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({ title, date })
-                            });
-    
-                            if (!response.ok) {
-                                throw new Error('Failed to save event');
-                            }
-                            alert('Event added successfully!');
-                        } catch (error) {
-                            console.error('Error saving event:', error);
-                            alert('Failed to save the event.');
-                        }
-                    } else {
-                        alert('This event already exists!');
-                    }
-    
-                    // Reset form fields
-                    document.getElementById('pet-select').selectedIndex = 0;
-                    document.getElementById('vaccine-select').innerHTML = '<option value="">choose vaccine </option>';
-                    document.getElementById('vaccine-select').disabled = true;
-                    document.getElementById('vaccine-date').value = '';
-                } else {
-                    alert('Fill all fields');
+    var pet = document.getElementById('pet-select').value;
+    var vaccine = document.getElementById('vaccine-select').value;
+    var date = document.getElementById('vaccine-date').value;
+    var time = document.getElementById('vaccine-time').value;
+
+    if (pet && vaccine && date && time) {
+        var title = `${pet}: ${vaccine}`;
+        var dateTime = `${date}T${time}`;
+
+        // Avoid duplicate events (same title and date-time) for the same user
+        if (!calendarData.some(data => data.title === title && data.start === dateTime)) {
+            calendarData.push({ title: title, start: dateTime });
+            calendar.addEvent({ title: title, start: dateTime, allDay: false });
+            // Save the event in data.json under the user's email
+            try {
+                const response = await fetch(`/add-event/${email}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ title, dateTime })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to save event');
                 }
-            });
-        });
+                alert('Event added successfully!');
+            } catch (error) {
+                console.error('Error saving event:', error);
+                alert('Failed to save the event.');
+            }
+        } else {
+            alert('This event already exists!');
+        }
+
+        // Reset form fields
+        document.getElementById('pet-select').selectedIndex = 0;
+        document.getElementById('vaccine-select').innerHTML = '<option value="">choose vaccine</option>';
+        document.getElementById('vaccine-select').disabled = true;
+        document.getElementById('vaccine-date').value = '';
+        document.getElementById('vaccine-time').value = '';
+    } else {
+        alert('Fill all fields');
+    }
+});
+});
+
     </script>
     
     <!-- Footer -->

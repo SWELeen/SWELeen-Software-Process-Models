@@ -121,11 +121,11 @@ app.get('/get-events/:email', (req, res) => {
 // Route to add an event for a user
 app.post('/add-event/:email', (req, res) => {
     const email = req.params.email;
-    const { title, date } = req.body;
+    const { title, dateTime } = req.body;
 
     // Validate input
-    if (!title || !date) {
-        return res.status(400).json({ message: 'Event title and date are required.' });
+    if (!title || !dateTime) {
+        return res.status(400).json({ message: 'Event title and date-time are required.' });
     }
 
     let users = {};
@@ -150,14 +150,14 @@ app.post('/add-event/:email', (req, res) => {
         user.events = [];
     }
 
-    // Check if an event with the same title and date already exists
-    const eventExists = user.events.some(event => event.title === title && event.date === date);
+    // Check if an event with the same title and dateTime already exists
+    const eventExists = user.events.some(event => event.title === title && event.dateTime === dateTime);
     if (eventExists) {
         return res.status(400).json({ message: 'This reminder already exists.' });
     }
 
     // Add the new event
-    user.events.push({ title, date });
+    user.events.push({ title, dateTime });
 
     // Save the updated user data back to the file
     try {
@@ -168,6 +168,7 @@ app.post('/add-event/:email', (req, res) => {
         return res.status(500).json({ message: 'Failed to save event' });
     }
 });
+
 
 
 // Route to save user profile data and send email
