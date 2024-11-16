@@ -65,35 +65,35 @@
             </div>
     
             <div class="guide-block">
-                <h3>Training Tips</h3>
-                <p id="training-guide">Training suggestions to help improve your pet's behavior.</p>
+                <h3>Behavioral Tips</h3>
+                <p id="behavioral-guide">Tips to help manage behavior and ensure your pet's well-being.</p>
             </div>
 
             <!-- Additional Guide Blocks -->
             <div class="guide-block">
-                <h3>Behavioral Tips</h3>
-                <p id="behavioral-guide">Tips to help manage behavior and ensure your pet's well-being.</p>
+                <h3 id="section6">Training Tips</h3>
+                <p id="training-guide">Training suggestions to help improve your pet's behavior.</p>
             </div>
             
             <div class="guide-block">
-                <h3>Playtime & Mental Stimulation</h3>
+                <h3 id="section7">Playtime & Mental Stimulation</h3>
                 <p id="playtime-guide">Suggestions for keeping your pet mentally engaged and active.</p>
             </div>
 
 
             <div class="guide-block">
-                <h3>Dental Health</h3>
+                <h3 id="section8">Dental Health</h3>
                 <p id="dental-guide">Tips for maintaining your pet's oral hygiene and health.</p>
             </div>
 
             <div class="guide-block">
-                <h3>Hydration</h3>
+                <h3 id="section9">Hydration</h3>
                 <p id="hydration-guide">How to ensure your pet stays hydrated.</p>
             </div>
 
 
             <div class="guide-block">
-                <h3>Fur Maintenance</h3>
+                <h3 id="section10">Fur Maintenance</h3>
                 <p id="fur-guide">How to maintain your pet's fur and coat.</p>
             </div>
 
@@ -138,89 +138,95 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             // Sample JSON Data for pet care
-            const petCareData =  {
-                "Dog": {
-                    "Nutrition": "Feed a balanced diet with proteins and vegetables.",
-                    "Exercise": "Daily walks are essential for good health.",
-                    "Grooming": "Brush weekly and bathe monthly.",
-                    "Health Tips": "Regular vet check-ups and vaccinations are necessary.",
-                    "Training Tips": "Consistency is key for training your dog.",
-                    "Behavioral Tips": "Introduce your dog to various environments, people, and other pets to improve social behavior.",
-                    "Playtime and Mental Stimulation": "Interactive toys, puzzles, and games help stimulate your dog's mind and reduce boredom.",
-                    "Dental Health": "Brush your dog’s teeth regularly with dog-specific toothpaste.",
-                    "Hydration": "Always ensure your dog has access to clean, fresh water, especially after exercise.",
-                    "Fur Maintenance": "Trim your dog's nails regularly and check ears for dirt or infection.",
-                },
-                "Cat": {
-                    "Nutrition": "High-protein diets with fewer carbs are ideal.",
-                    "Exercise": "Provide interactive toys and climbing structures.",
-                    "Grooming": "Brush regularly to reduce shedding.",
-                    "Health Tips": "Vaccinations and dental care are important.",
-                    "Training Tips": "Positive reinforcement works best for cats.",
-                    "Behavioral Tips": "Use gradual introductions to new pets or environments to reduce stress.",
-                    "Playtime and Mental Stimulation": "Engage your cat with toys that encourage hunting instincts, such as laser pointers or feather wands.",
-                    "Dental Health": "Regularly check for plaque build-up, and consider dental treats or toys to promote oral hygiene.",
-                    "Hydration": "Cats can be picky drinkers. Consider using a cat water fountain to encourage drinking.",
-                    "Fur Maintenance": "Brush your cat regularly, especially if they have long hair, to prevent matting.",
-                    },
-                "Bird": {
-                    "Nutrition": "Provide a diet of seeds, grains, fruits, and vegetables.",
-                    "Exercise": "Allow your bird out of its cage daily for flying and stretching.",
-                    "Grooming": "Bathe your bird regularly, or provide a shallow dish for it to bathe itself.",
-                    "Health Tips": "Regular vet visits to check for feather and respiratory health.",
-                    "Training Tips": "Use positive reinforcement for training, such as teaching your bird to step up.",
-                    "Behavioral Tips": "Birds are social and need interaction. Talk to your bird and play with it daily.",
-                    "Playtime and Mental Stimulation": "Offer toys for chewing, climbing, and foraging to prevent boredom.",
-                    "Dental Health": "Provide cuttlebones to help keep beaks healthy.",
-                    "Hydration": "Ensure access to fresh, clean water daily.",
-                    "Feather Maintenance": "Keep the cage clean to prevent feather contamination and provide a dust-free environment."
-                     },
-                "Rabbit": {
-                    "Nutrition": "Feed hay, fresh vegetables, and small portions of pellets.",
-                    "Exercise": "Allow for daily exercise outside of the cage in a safe, enclosed space.",
-                    "Grooming": "Brush regularly to reduce shedding, especially during molting.",
-                    "Health Tips": "Rabbits need regular vet check-ups to monitor dental and digestive health.",
-                    "Training Tips": "Use treats to encourage good behavior and litter training.",
-                    "Behavioral Tips": "Rabbits are social animals. Provide plenty of attention and avoid sudden, loud noises.",
-                    "Playtime and Mental Stimulation": "Offer tunnels, chew toys, and hiding spots to keep your rabbit active and engaged.",
-                    "Dental Health": "Ensure proper dental care with hay and chew toys to prevent overgrown teeth.",
-                    "Hydration": "Always provide clean, fresh water, ideally in a spill-proof bottle.",
-                    "Fur Maintenance": "Regularly check for matted fur and brush as needed, especially in long-haired breeds."
-                    },
-                "Hamster": {
-                    "Nutrition": "Feed pellets, fresh fruits, and vegetables in moderation.",
-                    "Exercise": "Provide a wheel for running and allow time outside the cage in a safe space.",
-                    "Grooming": "Hamsters are generally self-grooming, but you can gently brush long-haired breeds.",
-                    "Health Tips": "Check for signs of overgrown teeth and keep the cage clean to prevent respiratory issues.",
-                    "Training Tips": "Use treats to build trust and encourage handling.",
-                    "Behavioral Tips": "Handle hamsters gently, especially in the evening when they are more active.",
-                    "Playtime and Mental Stimulation": "Provide chew toys, tunnels, and climbing structures.",
-                    "Dental Health": "Offer chew sticks to prevent teeth from overgrowing.",
-                    "Hydration": "Keep a water bottle with fresh water attached to the cage."
-                    },
-                "Fish": {
-                    "Nutrition": "Feed species-specific fish food in small amounts daily.",
-                    "Exercise": "Provide a spacious tank with room to swim.",
-                    "Grooming": "Keep the tank clean and maintain water conditions.",
-                    "Health Tips": "Monitor water quality and temperature regularly.",
-                    "Training Tips": "Observe feeding habits and avoid overfeeding.",
-                    "Behavioral Tips": "Provide hiding spots and tank decor for stimulation.",
-                    "Playtime and Mental Stimulation": "Create an interesting environment with plants and decorations.",
-                    "Hydration": "Maintain proper water quality to support health.",
-                    "Tank Maintenance": "Clean the tank regularly to avoid buildup of toxins."
-                    },
-                "Turtle": {
-                   "Nutrition": "Feed leafy greens, vegetables, and turtle pellets.",
-                   "Exercise": "Allow space to roam in a secure area or tank.",
-                   "Grooming": "Keep the tank clean and provide basking light.",
-                   "Health Tips": "Monitor shell health and ensure adequate UV lighting.",
-                   "Training Tips": "Turtles can learn feeding routines over time.",
-                   "Behavioral Tips": "Provide hiding spots and varied tank environment.",
-                   "Playtime and Mental Stimulation": "Include rocks and plants in tank for stimulation.",
-                   "Hydration": "Maintain clean water in the tank."
-                    }
-            };
-    
+            const petCareData = {
+    "Dog": {
+        "Nutrition": "Feed a diet tailored to your dog's size, age, and activity level. Include high-quality kibble, canned food, or raw diets. Avoid harmful foods like chocolate, grapes, onions, and fatty scraps. Stick to a feeding schedule of twice daily to maintain a healthy weight and digestive routine.",
+        "Exercise": "Provide 30 minutes to 2 hours of exercise daily depending on the breed. Activities can include walking, running, playing fetch, swimming, or agility training. Ensure both physical and mental stimulation by incorporating games like food puzzles or hide-and-seek.",
+        "Grooming": "Brush your dog weekly, or daily for long-haired breeds, to reduce shedding. Bathe monthly with dog-safe shampoo, and trim nails every 2-3 weeks. Check and clean ears weekly to prevent infections and brush teeth with dog-safe toothpaste 2-3 times a week.",
+        "Health Tips": "Schedule annual vet check-ups for vaccinations and overall health assessments. Use flea, tick, and heartworm preventatives regularly. Monitor for common health issues like arthritis, obesity, and dental problems. Ensure your dog has access to fresh, clean water at all times.",
+        "Training Tips": "Train using positive reinforcement methods like treats and verbal praise. Teach essential commands such as sit, stay, come, and leash manners. Early socialization with people, other dogs, and new environments reduces anxiety and builds confidence.",
+        "Behavioral Tips": "Introduce your dog to different environments and situations to improve social behavior. Address common issues like excessive barking, chewing, or digging with training and consistent boundaries. Prevent separation anxiety by gradually increasing time apart and creating a safe, comfortable space.",
+        "Playtime and Mental Stimulation": "Provide toys like squeaky balls, tug ropes, and chew toys. Engage in interactive games like fetch, tug-of-war, or learning new tricks. Rotate toys weekly to maintain interest and prevent boredom.",
+        "Dental Health": "Brush your dog's teeth regularly with dog-specific toothpaste. Offer dental chews, toys, or treats to reduce plaque buildup. Schedule professional cleanings if necessary.",
+        "Hydration": "Ensure constant access to fresh, clean water, especially after exercise or in hot weather. Regularly clean the water bowl to maintain hygiene.",
+        "Fur Maintenance": "Increase brushing during shedding seasons to manage loose fur and prevent matting. Use de-shedding tools for heavy-shedding breeds."
+    },
+    "Cat": {
+        "Nutrition": "Provide a high-protein, low-carb diet with wet food supplemented by grain-free dry kibble. Avoid harmful foods like chocolate, caffeine, onions, and raw eggs. Feed small meals 2-3 times daily to mimic natural feeding habits.",
+        "Exercise": "Ensure daily playtime of 20-30 minutes with interactive toys like laser pointers, feather wands, or balls. Provide vertical spaces like cat trees or shelves for climbing and exploring.",
+        "Grooming": "Brush your cat weekly for short-haired breeds, or daily for long-haired breeds, to reduce shedding and prevent hairballs. Trim nails every 2-4 weeks and clean ears as needed. Baths are rarely required unless the cat gets dirty or has skin issues.",
+        "Health Tips": "Annual check-ups and vaccinations are essential. Use flea and worm preventatives regularly. Monitor for signs of common issues like urinary tract infections, obesity, or dental problems.",
+        "Training Tips": "Use positive reinforcement with treats and toys to train litter box use and discourage scratching furniture. Provide scratching posts to satisfy natural instincts.",
+        "Behavioral Tips": "Introduce your cat to new environments or pets gradually to reduce stress. Use pheromone sprays or diffusers to promote calm behavior. Address issues like furniture scratching or aggression promptly.",
+        "Playtime and Mental Stimulation": "Offer a variety of toys, including puzzle feeders and interactive toys that mimic hunting. Regularly rotate toys to maintain interest and engagement.",
+        "Dental Health": "Gradually introduce tooth brushing with cat-safe toothpaste. Provide dental treats or chew toys to maintain oral hygiene. Schedule professional cleanings if necessary.",
+        "Hydration": "Encourage hydration by using a cat fountain or adding water to wet food. Monitor water intake, as reduced drinking can signal health problems.",
+        "Fur Maintenance": "Brush more frequently during shedding seasons. Check for matting or parasites, especially in long-haired breeds."
+    },
+    "Bird": {
+        "Nutrition": "Feed a diet of high-quality seeds, grains, fruits, and vegetables. Avoid chocolate, caffeine, and avocado, which are toxic to birds. Ensure fresh food and water are available daily.",
+        "Exercise": "Allow your bird out of its cage daily to fly and stretch. Provide climbing structures and perches within the cage to encourage activity.",
+        "Grooming": "Offer opportunities for bathing, either through shallow water dishes or misting. Trim nails and feathers only under professional guidance to prevent injury.",
+        "Health Tips": "Schedule regular vet visits to monitor feather, beak, and respiratory health. Ensure proper UV light exposure for vitamin D synthesis.",
+        "Training Tips": "Train using positive reinforcement to teach basic behaviors like stepping onto your hand or returning to the cage. Be patient and consistent.",
+        "Behavioral Tips": "Talk to your bird daily and provide toys for mental stimulation. Birds are social creatures and require regular interaction to prevent loneliness and depression.",
+        "Playtime and Mental Stimulation": "Include chewable toys, mirrors, and foraging puzzles in their environment. Change toys frequently to keep your bird engaged.",
+        "Dental Health": "Provide cuttlebones or mineral blocks to maintain beak health.",
+        "Hydration": "Fresh, clean water should always be available. Clean the water dish regularly to prevent bacterial growth.",
+        "Feather Maintenance": "Keep the cage clean and dust-free to maintain healthy feathers. Monitor for signs of feather plucking or stress-related issues."
+    },
+    "Rabbit": {
+        "Nutrition": "Feed unlimited hay, which should form the majority of their diet. Supplement with fresh leafy greens like spinach, kale, and parsley. Limit fruits and pellets to avoid obesity.",
+        "Exercise": "Provide a safe, enclosed space for daily exercise outside the cage. Include toys and tunnels to encourage movement and exploration.",
+        "Grooming": "Brush regularly to prevent matting and reduce shedding, especially during molting seasons. Check nails every month and trim if needed. Avoid bathing unless directed by a vet.",
+        "Health Tips": "Regular vet check-ups are crucial for monitoring dental health and gut motility. Watch for signs of illness such as reduced appetite, changes in stool, or lethargy.",
+        "Training Tips": "Use a litter box with a safe bedding material, and train with positive reinforcement like treats. Be patient and consistent.",
+        "Behavioral Tips": "Provide plenty of attention and avoid sudden movements or loud noises. Rabbits can form strong bonds with their owners and benefit from social interaction.",
+        "Playtime and Mental Stimulation": "Offer chew toys, cardboard boxes, and safe materials for digging and chewing. Rotate toys to keep your rabbit entertained.",
+        "Dental Health": "Ensure constant access to hay to help naturally wear down teeth. Offer chew toys to prevent overgrowth.",
+        "Hydration": "Provide clean, fresh water in a spill-proof bottle or heavy bowl. Monitor for changes in drinking habits.",
+        "Fur Maintenance": "Long-haired breeds may require daily brushing. Check for matting or signs of parasites regularly."
+    },
+    "Hamster": {
+        "Nutrition": "Provide a balanced hamster mix with seeds, grains, and small amounts of fresh vegetables and fruits. Avoid citrus and sugary treats.",
+        "Exercise": "Include a solid-surface exercise wheel and tunnels in their cage. Allow supervised playtime in a hamster-safe enclosure outside the cage.",
+        "Grooming": "Hamsters are self-grooming but may need assistance with brushing for long-haired breeds. Avoid bathing as it can cause stress and illness.",
+        "Health Tips": "Monitor for overgrown teeth, changes in activity levels, and signs of respiratory issues. Clean the cage weekly to maintain hygiene.",
+        "Training Tips": "Handle your hamster gently and frequently to build trust. Use treats to encourage positive behavior.",
+        "Behavioral Tips": "Provide a deep substrate for digging and burrowing. Hamsters are nocturnal and prefer a quiet, dark environment during the day.",
+        "Playtime and Mental Stimulation": "Offer chew toys, climbing structures, and puzzle feeders. Rotate toys to maintain interest.",
+        "Dental Health": "Provide wooden chew toys to prevent teeth from overgrowing.",
+        "Hydration": "Ensure constant access to fresh water in a bottle with a sipper tube. Clean the bottle weekly.",
+        "Fur Maintenance": "Brush your hamster occasionally, especially if it's a long-haired breed, to prevent mats. Check for signs of parasites like mites or fleas, and keep its bedding clean and dry."
+    },
+    "Fish": {
+        "Nutrition": "Feed species-specific fish food in small portions once or twice a day. Remove uneaten food to prevent tank contamination.",
+        "Exercise": "Provide a spacious, well-decorated tank with plenty of swimming room. Avoid overcrowding to reduce stress.",
+        "Grooming": "Maintain clean tank water by using a filtration system and performing regular partial water changes. Monitor water temperature and pH levels based on the fish species.",
+        "Health Tips": "Watch for changes in behavior or appearance, such as discoloration or clamped fins, which may indicate illness. Use water conditioners to remove chlorine and other harmful substances.",
+        "Behavioral Tips": "Create a stimulating environment with plants, rocks, and decorations. Provide hiding spots to reduce stress.",
+        "Tank Maintenance": "Clean the tank regularly and monitor water quality using test kits. Ensure proper lighting and filtration.",
+        "Companionship": "Fish are generally solitary or prefer species-specific groups. Avoid placing aggressive species together to reduce stress.",
+        "Lighting": "Provide adequate lighting, as it supports fish health and regulates their day-night cycle. The intensity and duration depend on the species of fish.",
+        "Breeding": "For breeding fish, ensure proper water conditions, a suitable breeding tank, and the right environment. Research the specific breeding needs of the species you are keeping.",
+        "Water Quality": "Test and maintain water quality regularly. Regular water changes and use of conditioners help remove toxins and improve fish health."
+    },
+    "Turtle": {
+        "Nutrition": "Provide a varied diet of leafy greens, vegetables, and commercially available turtle pellets. Occasionally include protein sources like insects or small fish for omnivorous species.",
+        "Exercise": "Allow your turtle space to swim and bask. Provide areas for climbing and exploring within the tank.",
+        "Grooming": "Keep the tank clean and ensure proper filtration. Provide UVB lighting for healthy shell and bone development.",
+        "Health Tips": "Monitor shell health and check for signs of infection, discoloration, or cracking. Schedule annual vet visits.",
+        "Behavioral Tips": "Turtles are solitary but benefit from an enriched environment with rocks, logs, and plants. Avoid frequent handling to reduce stress.",
+        "Tank Maintenance": "Maintain clean water and proper temperature using a heater and filtration system. Perform regular water changes to prevent buildup of toxins.",
+        "Companionship": "Turtles are solitary by nature. It’s important not to overcrowd their tank and to avoid housing them with aggressive species.",
+        "Basking": "Turtles need a dry basking area with proper UVB lighting. This helps with their metabolism and shell health. Ensure the basking spot is warm enough.",
+        "Hydration": "Ensure your turtle has access to clean, fresh water for drinking and swimming. Some species may need both aquatic and terrestrial environments.",
+        "Shell Maintenance": "Monitor your turtle’s shell for any cracks or signs of injury. Avoid handling them by their shell, as this can cause stress and injury."
+}
+    }
+        
+
+
             // Function to load care guides based on pet type
             function loadCareGuides(petType) {
                 const guides = petCareData[petType] || {};
@@ -228,24 +234,51 @@
                 document.getElementById("exercise-guide").innerText = guides.Exercise || "No information available.";
                 document.getElementById("grooming-guide").innerText = guides.Grooming || "No information available.";
                 document.getElementById("health-guide").innerText = guides["Health Tips"] || "No information available.";
-                document.getElementById("training-guide").innerText = guides["Training Tips"] || "No information available.";
+                document.getElementById("training-guide").innerText = guides["Training Tips"] || guides["Tank Maintenance"] ||"No information available.";
                 document.getElementById("behavioral-guide").innerText = guides["Behavioral Tips"] || "No information available.";
-                document.getElementById("playtime-guide").innerText = guides["Playtime and Mental Stimulation"] || "No information available.";
-                document.getElementById("dental-guide").innerText = guides["Dental Health"] || "No information available.";
-                document.getElementById("hydration-guide").innerText = guides.Hydration || "No information available.";
-                document.getElementById("fur-guide").innerText = guides["Fur Maintenance"] || "No information available.";
-            }
+                document.getElementById("playtime-guide").innerText = guides["Playtime and Mental Stimulation"] || guides["Companionship"] || "No information available.";
+                document.getElementById("dental-guide").innerText = guides["Dental Health"] || guides["Basking"] || guides["Lighting"] || "No information available.";
+                document.getElementById("hydration-guide").innerText = guides["Hydration"] || guides["Breeding"] || "No information available.";
+                document.getElementById("fur-guide").innerText = guides["Fur Maintenance"] || guides["Feather Maintenance"] || guides["Water Quality"] || guides["Shell Maintenance"] ||"No information available.";
+            };
     
-            // Listen for changes in pet type selection
+            //Listen for changes in pet type selection
             const petTypeSelect = document.getElementById("pet-type");
             petTypeSelect.addEventListener("change", function() {
                 const selectedPetType = petTypeSelect.value;
+                if (selectedPetType == "Bird") {
+                    document.getElementById("section10").innerText = "Feather Maintenance";
+                }
+                else if  (selectedPetType == "Fish") {
+                    document.getElementById("section6").innerText = "Tank Maintenance";
+                    document.getElementById("section7").innerText = "Companionship";
+                    document.getElementById("section8").innerText = "Lighting";
+                    document.getElementById("section9").innerText = "Breeding";
+                    document.getElementById("section10").innerText = "Water Quality";
+                }
+                else if (selectedPetType == "Turtle") {
+                    document.getElementById("section6").innerText = "Tank Maintenance";
+                    document.getElementById("section7").innerText = "Companionship";
+                    document.getElementById("section8").innerText = "Basking";
+                    document.getElementById("section9").innerText = "Hydraion";
+                    document.getElementById("section10").innerText = "Shell Maintenance";
+                }
+                else{
+                    document.getElementById("section6").innerText = "Training Tips";
+                    document.getElementById("section7").innerText = "Playtime and Mental Stimulation";
+                    document.getElementById("section8").innerText = "Dental Health";
+                    document.getElementById("section9").innerText = "Hydraion";
+                    document.getElementById("section10").innerText = "Fur Maintenance";
+                }
+
+                
                 loadCareGuides(selectedPetType);
             });
     
             // Load the care guides for the default pet type on page load
             loadCareGuides(petTypeSelect.value);
         });
+
     </script>
 </body>
 </html>
