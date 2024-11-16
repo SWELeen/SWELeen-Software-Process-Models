@@ -42,7 +42,7 @@
                 <div class="form-group file-upload-group">
                     <div class="file-input-container">
                         <label class="custom-file-upload">
-                            <input type="file" id="photo-upload" onchange="previewImage(event)">
+                            <input type="file" id="photo-upload" accept="image/png, image/jpeg, image/jpg" onchange="previewImage(event)">
                             <img src="photo.png" id="pet-photo" alt="Pet's Photo Preview"
                                 style="width: 100px; height: 100px;">
                         </label>
@@ -289,18 +289,67 @@
         }
 
         function previewImage(event) {
-        const file = event.target.files[0];
-        const reader = new FileReader();
+    const file = event.target.files[0];
+    const validTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+    const maxSize = 5 * 1024 * 1024; // 5 MB
 
-        reader.onload = function (e) {
-        const image = document.getElementById('pet-photo');
-        image.src = e.target.result;  // Set the preview image source to the selected file
+    if (!file) {
+        alert('No file selected.');
+        return;
+    }
+
+    if (!validTypes.includes(file.type)) {
+        alert('Invalid file type. Please upload a PNG or JPEG image.');
+        return;
+    }
+
+    if (file.size > maxSize) {
+        alert('File size exceeds 5 MB. Please upload a smaller image.');
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        const image = new Image();
+        image.onload = function () {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+
+            // Resize image
+            const maxWidth = 300; // Adjust as needed
+            const maxHeight = 300; // Adjust as needed
+            let width = image.width;
+            let height = image.height;
+
+            if (width > height) {
+                if (width > maxWidth) {
+                    height = Math.round((height * maxWidth) / width);
+                    width = maxWidth;
+                }
+            } else {
+                if (height > maxHeight) {
+                    width = Math.round((width * maxHeight) / height);
+                    height = maxHeight;
+                }
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+            ctx.drawImage(image, 0, 0, width, height);
+
+            // Convert canvas to Base64
+            const compressedImage = canvas.toDataURL('image/jpeg', 0.8); // Adjust quality as needed (0.1 to 1)
+            document.getElementById('pet-photo').src = compressedImage;
+
+            console.log('Compressed Base64 Image:', compressedImage); // Debugging
+        };
+        image.src = e.target.result;
     };
 
-    if (file) {
-        reader.readAsDataURL(file);  // Read the file as a data URL
-    }
+    reader.readAsDataURL(file);
 }
+
+
 
         
     </script>
