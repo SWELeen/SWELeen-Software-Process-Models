@@ -1,5 +1,7 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
+const axios = require('axios');
 const sgMail = require('@sendgrid/mail');
 const { sendWelcomeEmail, sendReminderEmail } = require('./EmailNotification');
 const schedule = require('node-schedule');
@@ -8,6 +10,8 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const app = express();
 const PORT = 3003;
+const cors = require('cors'); // Enable Cross-Origin Resource Sharing
+const API_KEY = process.env.API_KEY;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -448,6 +452,35 @@ app.delete('/pet_data/:email/:petID', (req, res) => {
     fs.writeFileSync(dataFilePath, JSON.stringify(users, null, 2));
     res.json({ message: 'Pet data deleted successfully!' });
 });
+
+
+
+// Serve the HTML file for the root URL
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'pet news.html'));
+  });
+  
+  // API endpoint for fetching pet news
+  app.get('/news', async (req, res) => {
+    try {
+      const response = await axios.get('https://newsapi.org/v2/everything', {
+        params: {
+          q: 'pets', // Search term for news related to pets
+          apiKey: process.env.API_KEY, // Use API key from environment variable
+          language: 'en', // Specify language (optional)
+          sortBy: 'publishedAt', // Sort by publication date
+        },
+      });
+  
+      // Return the news articles in JSON format
+      res.json(response.data.articles);
+    } catch (error) {
+      console.error('Error fetching news:', error.message);
+      res.status(500).send('Error fetching news');
+    }
+  });
+  
+
 
 // Start the server
 app.listen(PORT, () => {

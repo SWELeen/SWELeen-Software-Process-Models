@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet news!</title>
+    <link rel="stylesheet" href="pet news.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
+</head>
+<body>
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="logo.jpg" alt="Aleef Logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="Home.html">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Service</a></li>
+                <a href="findNearClinics.html" class="NearClinics">Near Clinics</a>
+            </ul>
+            <div class="nav-icons">
+                <a href="user profile.html"><img src="user.svg" alt="User Icon"></a>
+                <a href="#"><img src="language.png" alt="Globe Icon"></a>
+            </div>
+        </nav>
+    </header>
+
+
+    <h1>Check Latest Pet News!</h1>
+    <div id="news-container"></div>
+
+    <script>
+        // Fetch the latest pet news from the Node.js server
+        fetch('http://localhost:3003/news')
+          .then(response => response.json())
+          .then(data => {
+            const newsContainer = document.getElementById('news-container');
+            data.forEach(article => {
+              const articleElement = document.createElement('div');
+              articleElement.classList.add('news-item');
+              
+              const title = document.createElement('h2');
+              title.textContent = article.title;
+    
+              const description = document.createElement('p');
+              description.textContent = article.description;
+    
+              const link = document.createElement('a');
+              link.href = article.url;
+              link.target = '_blank';
+              link.textContent = 'Read more';
+    
+              articleElement.appendChild(title);
+              articleElement.appendChild(description);
+              articleElement.appendChild(link);
+              
+              newsContainer.appendChild(articleElement);
+            });
+          })
+          .catch(error => console.error('Error fetching news:', error));
+      </script>
+
+
+     <!-- Footer -->
+     <footer>
+        <div class="footer-container">
+            <div class="footer-links">
+                <h4>About Us</h4>
+                <ul>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-resources">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="#">Tutorials</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-social">
+                <h4>Follow Us</h4>
+                <a href="#"><img src="facebook.png" alt="Facebook"></a>
+                <a href="#"><img src="instagram.png" alt="Instagram"></a>
+                <a href="#"><img src="X.png" alt="Twitter"></a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2024 Aleef. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
