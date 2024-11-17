@@ -485,28 +485,28 @@ app.delete('/pet_data/:email/:petID', (req, res) => {
 // Serve the HTML file for the root URL
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'pet news.html'));
-  });
-  
+});
+
   // API endpoint for fetching pet news
-  app.get('/news', async (req, res) => {
+app.get('/news', async (req, res) => {
     try {
-      const response = await axios.get('https://newsapi.org/v2/everything', {
+        const response = await axios.get('https://newsapi.org/v2/everything', {
         params: {
           q: 'pets', // Search term for news related to pets
           apiKey: process.env.API_KEY, // Use API key from environment variable
           language: 'en', // Specify language (optional)
           sortBy: 'publishedAt', // Sort by publication date
         },
-      });
-  
-      // Return the news articles in JSON format
-      res.json(response.data.articles);
+    });
+
+    // Return the news articles in JSON format
+    res.json(response.data.articles);
     } catch (error) {
-      console.error('Error fetching news:', error.message);
-      res.status(500).send('Error fetching news');
+        console.error('Error fetching news:', error.message);
+        res.status(500).send('Error fetching news');
     }
-  });
-  
+});
+
 
 
 // Start the server
@@ -515,5 +515,5 @@ app.listen(PORT, () => {
     console.log(`You can access the user profile at http://localhost:${PORT}`);
     console.log(`You can access the pet profile at http://localhost:${PORT}/pet-profile`);
     console.log(`You can access the map page at http://localhost:${PORT}/map`);
-  });
-  
+});
+

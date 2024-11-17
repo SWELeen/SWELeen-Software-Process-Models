@@ -35,37 +35,37 @@
     <script>
         // Fetch the latest pet news from the Node.js server
         fetch('http://localhost:3003/news')
-          .then(response => response.json())
-          .then(data => {
-            const newsContainer = document.getElementById('news-container');
-            data.forEach(article => {
-              const articleElement = document.createElement('div');
-              articleElement.classList.add('news-item');
-              
-              const title = document.createElement('h2');
-              title.textContent = article.title;
-    
-              const description = document.createElement('p');
-              description.textContent = article.description;
-    
-              const link = document.createElement('a');
-              link.href = article.url;
-              link.target = '_blank';
-              link.textContent = 'Read more';
-    
-              articleElement.appendChild(title);
-              articleElement.appendChild(description);
-              articleElement.appendChild(link);
-              
-              newsContainer.appendChild(articleElement);
-            });
-          })
-          .catch(error => console.error('Error fetching news:', error));
-      </script>
+            .then(response => response.json())
+            .then(data => {
+                const newsContainer = document.getElementById('news-container');
+                data.forEach(article => {
+                    const articleElement = document.createElement('div');
+                    articleElement.classList.add('news-item');
+
+                    const title = document.createElement('h2');
+                    title.textContent = article.title;
+        
+                    const description = document.createElement('p');
+                    description.textContent = article.description;
+        
+                    const link = document.createElement('a');
+                    link.href = article.url;
+                    link.target = '_blank';
+                    link.textContent = 'Read more';
+        
+                    articleElement.appendChild(title);
+                    articleElement.appendChild(description);
+                    articleElement.appendChild(link);
+            
+                    newsContainer.appendChild(articleElement);
+                });
+            })
+        .catch(error => console.error('Error fetching news:', error));
+    </script>
 
 
-     <!-- Footer -->
-     <footer>
+    <!-- Footer -->
+    <footer>
         <div class="footer-container">
             <div class="footer-links">
                 <h4>About Us</h4>
