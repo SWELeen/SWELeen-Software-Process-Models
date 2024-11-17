@@ -37,12 +37,13 @@
                 <label for="pet-select">Choose pet</label>
                 <select id="pet-select">
                     <option value="">choose pet</option>
-                    <option value="dog">dog</option>
-                    <option value="cat">cat</option>
-                    <option value="bird">bird</option>
-                    <option value="rabbit">rabbit</option>
-                    <option value="reptile">reptile</option>
-                    <option value="horse">horse</option>
+                    <option value="dog">Dog</option>
+                    <option value="cat">Cat</option>
+                    <option value="bird">Bird</option>
+                    <option value="rabbit">Rabbit</option>
+                    <option value="hamster">Hamster</option>
+                    <option value="fish">Fish</option>
+                    <option value="turtle">Turtle</option>
 
                 </select>
             </div>
@@ -69,40 +70,51 @@
         <button  class="button next" type="button" id="add-data">Add</button>
 
         <div id='calendar'></div>
+        <button class="button next" type="button" id="delete-data" style="display: none;">Delete Selected</button> <!-- زر الحذف -->
     </div>
 
     <script>
         const vaccinesData = {
             dog: [
-                "Distemper, Adenovirus, Parvovirus (DAPP)",
                 "Rabies",
-                "Bordetella (Kennel Cough)",
-                "Leptospirosis"
+                "Distemper",
+                "Parvovirus",
+                "Coronavirus",
+                "Parainfluenza",
+                "Bordetella (Kennel Cough)"
             ],
             cat: [
-                "Feline Viral Rhinotracheitis (FVRCP)",
                 "Rabies",
-                "Feline Leukemia (FeLV)",
-                "Feline Immunodeficiency Virus (FIV)"
+                "Feline Panleukopenia (Distemper)",
+                "Feline Herpesvirus",
+                "Feline Calicivirus",
+                "Feline Leukemia Virus"
             ],
             bird: [
-                "Avian Influenza",
+                "Avian Influenza (Flu)",
                 "Chlamydia",
-                "Polyoma Virus"
+                "Polyoma Virus",
+                "Pox virus",
+                "Psittacosis"
             ],
             rabbit: [
                 "Myxomatosis",
-                "Rabbit Hemorrhagic Disease (RHD)"
+                "Rabbit Hemorrhagic Disease (RHD)",
+                "Pasteurellosis"
             ],
-            reptile: [
+            hamster: [
+                "Hamster Wet Tail (Coronavirus)",
+                "Rabies"
+            ],
+            fish: [
+                "Viral Nervous Necrosis (VNN)",
+                "Columnaris",
+                "Ich (White Spot Disease)"
+            ],
+            turtle:[      
                 "Salmonella",
-                "Calicivirus"
-            ],
-            horse: [
-                "Equine Herpesvirus (EHV)",
-                "Rabies",
-                "West Nile Virus",
-                "Equine Influenza"
+                "Shell Diseases",
+                "Respiratory Infections" 
             ]
         };
     
@@ -120,6 +132,8 @@
                 return;
             }
     
+            let selectedEvent = null;
+
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
@@ -128,28 +142,66 @@
                     center: 'title',
                     right: 'dayGridMonth,timeGridWeek,timeGridDay'
                 },
-                events: [] // Empty initially, will be populated with events fetched from the server
-    });
-    calendar.render();
-
-    // Fetch saved events for the current user
-    try {
-        const response = await fetch(`/get-events/${email}`);
-        if (response.ok) {
-            const events = await response.json();
-            events.forEach(event => {
-                calendar.addEvent({
-                    title: event.title,
-                    start: event.dateTime, // Ensure the backend sends the full dateTime
-                    allDay: false
-                });
+                events: [],
+                eventClick: function(info) {
+                    selectedEvent = info.event;
+                    //console.log('Deleting event:', {selectedEvent});
+                    document.getElementById('delete-data').style.display = 'inline-block';
+                }
+                
             });
-        } else {
-            console.error('Failed to load events from the server.');
-        }
-    } catch (error) {
-        console.error('Error fetching events:', error);
-    }
+
+            calendar.render();
+            
+
+            // Fetch saved events for the current user
+            try {
+                const response = await fetch(`/get-events/${email}`);
+                if (response.ok) {
+                    const events = await response.json();
+                    events.forEach(event => {
+                        calendar.addEvent({
+                            title: event.title,
+                            start: event.dateTime, // Ensure the backend sends the full dateTime
+                            allDay: false
+                        });
+                    });
+                } else {
+                    console.error('Failed to load events from the server.');
+                }
+            } catch (error) {
+                console.error('Error fetching events:', error);
+            }
+
+            //delete event
+            document.getElementById('delete-data').addEventListener('click', async function() {
+                const email = new URLSearchParams(window.location.search).get('email');
+
+                if (selectedEvent && confirm('Are you sure you want to delete this event?')) {
+                    try {
+                        const response = await fetch(`/delete-event/${email}`, {
+                            method: 'DELETE',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                title: selectedEvent.title,
+                                dataTime: selectedEvent.dateTime
+                            })
+                        });
+
+                        if (response.ok) {
+                            alert('Event deleted successfully!');
+                            selectedEvent.remove();
+                            selectedEvent = null;
+                            this.style.display = 'none';
+                        } else {
+                            const errorData = await response.json();
+                            alert(`Error deleting event: ${errorData.message}`);
+                        }
+                    } catch (error) {
+                        alert(`Error deleting event: ${error.message}`);
+                    }
+                }
+            });
 
     
             // Update available vaccines based on pet type selection
@@ -172,59 +224,59 @@
             });
     
             document.getElementById('add-data').addEventListener('click', async function () {
-    var pet = document.getElementById('pet-select').value;
-    var vaccine = document.getElementById('vaccine-select').value;
-    var date = document.getElementById('vaccine-date').value;
-    var time = document.getElementById('vaccine-time').value;
+                var pet = document.getElementById('pet-select').value;
+                var vaccine = document.getElementById('vaccine-select').value;
+                var date = document.getElementById('vaccine-date').value;
+                var time = document.getElementById('vaccine-time').value;
 
-    if (pet && vaccine && date && time) {
-        const currentDateTime = new Date(); // Current date and time
-        const selectedDateTime = new Date(`${date}T${time}`); // Combine date and time
+                if (pet && vaccine && date && time) {
+                    const currentDateTime = new Date(); // Current date and time
+                    const selectedDateTime = new Date(`${date}T${time}`); // Combine date and time
 
-        // Check if the selected date-time is in the past
-        if (selectedDateTime < currentDateTime) {
-            alert('You cannot select a date and time in the past.');
-            return; // Prevent adding the event
-        }
+                    // Check if the selected date-time is in the past
+                    if (selectedDateTime < currentDateTime) {
+                        alert('You cannot select a date and time in the past.');
+                        return; // Prevent adding the event
+                    }
 
-        var title = `${pet}: ${vaccine}`;
-        var dateTime = `${date}T${time}`;
+                    var title = `${pet}: ${vaccine}`;
+                    var dateTime = `${date}T${time}`;
 
-        // Avoid duplicate events
-        if (!calendarData.some(data => data.title === title && data.start === dateTime)) {
-            calendarData.push({ title: title, start: dateTime });
-            calendar.addEvent({ title: title, start: dateTime, allDay: false });
+                    // Avoid duplicate events
+                    if (!calendarData.some(data => data.title === title && data.start === dateTime)) {
+                        calendarData.push({ title: title, start: dateTime });
+                        calendar.addEvent({ title: title, start: dateTime, allDay: false });
 
-            try {
-                const response = await fetch(`/add-event/${email}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ title, dateTime })
-                });
+                        try {
+                            const response = await fetch(`/add-event/${email}`, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ title, dateTime })
+                            });
 
-                if (!response.ok) {
-                    throw new Error('Failed to save event');
-                }
-                alert('Event added successfully!');
-            } catch (error) {
-                console.error('Error saving event:', error);
-                alert('Failed to save the event.');
+                            if (!response.ok) {
+                                throw new Error('Failed to save event');
+                            }
+                            alert('Event added successfully!');
+                        } catch (error) {
+                            console.error('Error saving event:', error);
+                            alert('Failed to save the event.');
+                        }
+                    } else {
+                        alert('This event already exists!');
+                    }
+
+                    // Reset form fields
+                    document.getElementById('pet-select').selectedIndex = 0;
+                    document.getElementById('vaccine-select').innerHTML = '<option value="">choose vaccine</option>';
+                    document.getElementById('vaccine-select').disabled = true;
+                    document.getElementById('vaccine-date').value = '';
+                    document.getElementById('vaccine-time').value = '';
+            } else {
+                alert('Fill all fields');
             }
-        } else {
-            alert('This event already exists!');
-        }
-
-        // Reset form fields
-        document.getElementById('pet-select').selectedIndex = 0;
-        document.getElementById('vaccine-select').innerHTML = '<option value="">choose vaccine</option>';
-        document.getElementById('vaccine-select').disabled = true;
-        document.getElementById('vaccine-date').value = '';
-        document.getElementById('vaccine-time').value = '';
-    } else {
-        alert('Fill all fields');
-    }
-});
-});
+        });
+    });
 
 
     </script>

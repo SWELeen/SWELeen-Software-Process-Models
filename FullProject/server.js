@@ -190,7 +190,34 @@ app.post('/add-event/:email', (req, res) => {
     }
 });
 
+// delete event
+app.delete('/delete-event/:email', (req, res) => {
+    const { email } = req.params;
+    const { title, dataTime } = req.body;
 
+    console.log('Deleting event:', { title, dataTime });
+
+    let users;
+    try {
+        users = JSON.parse(fs.readFileSync(dataFilePath, 'utf8'));
+    } catch (error) {
+        return res.status(500).json({ message: 'Error reading data file.' });
+    }
+
+    const user = users[email];
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    const eventIndex = user.events.findIndex(event => {
+        console.log('Comparing event:', event);
+        return event.title === title && event.dateTime === dataTime;
+    });
+    if (eventIndex === -1) return res.status(404).json({ message: 'Event not found' });
+
+    user.events.splice(eventIndex, 1);
+
+    fs.writeFileSync(dataFilePath, JSON.stringify(users, null, 2));
+    res.json({ message: 'Event deleted successfully!' });
+});
 
 // Route to save user profile data and send email
 app.post('/create-profile', (req, res) => {
