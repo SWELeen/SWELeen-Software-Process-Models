@@ -1,3 +1,9 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f0 !important;
+}
 /* Navbar Styles */
 header {
     background-color: #ffffff;
@@ -123,18 +129,10 @@ footer {
         margin-top: 20px;
     }
 }
-/* General Styling */
-body {
-    font-family: 'Montserrat', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f7f7f7;
-}
 
 /* FAQ Section */
 .faq {
     padding: 50px 0;
-    background-color: #ffffff;
 }
 
 .faq .container {

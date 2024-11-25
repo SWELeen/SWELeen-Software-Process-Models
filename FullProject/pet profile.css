@@ -223,6 +223,16 @@ input[type="text"], input[type="date"], input[type="file"],input[type="number"] 
     transform: scale(1.1); /* Slightly enlarge the icon on hover */
 }
 
+.hero-img {
+    position: absolute; /* Absolute positioning */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 150%;
+    object-fit: cover; /* Cover the entire section */
+    filter: brightness(50%); /* Darken the image */
+    z-index: -1; /* Place the image behind the content */
+}
 
 /* Optional: If you want to align them at the top-right of a specific section */
 .section-icons {
