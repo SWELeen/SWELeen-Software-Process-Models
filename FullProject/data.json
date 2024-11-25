@@ -4,7 +4,50 @@
     "username": "shatha",
     "phone": "0503394135",
     "password": "1234",
-    "pets": [],
+    "pets": [
+      {
+        "name": "lili",
+        "ID": "1",
+        "type": "Cat",
+        "breed": "arabian",
+        "birthday": "2024-11-02",
+        "weight": "5",
+        "specialNeeds": "No",
+        "spayedNeutered": "Yes",
+        "gender": "Male",
+        "training": "Crate-trained",
+        "vaccinationStatus": "Overdue",
+        "photo": "http://localhost:3003/photo.png"
+      },
+      {
+        "name": "poppy",
+        "ID": "2",
+        "type": "Dog",
+        "breed": "r",
+        "birthday": "2024-11-13",
+        "weight": "5",
+        "specialNeeds": "No",
+        "spayedNeutered": "Yes",
+        "gender": "Male",
+        "training": "Crate-trained",
+        "vaccinationStatus": "Overdue",
+        "photo": "http://localhost:3003/photo.png"
+      },
+      {
+        "name": "h",
+        "ID": "3",
+        "type": "Cat",
+        "breed": "arabian",
+        "birthday": "2024-11-09",
+        "weight": "1",
+        "specialNeeds": "No",
+        "spayedNeutered": "Yes",
+        "gender": "Female",
+        "training": "House-trained",
+        "vaccinationStatus": "Up-to-date",
+        "photo": "http://localhost:3003/photo.png"
+      }
+    ],
     "events": []
   }
 }
