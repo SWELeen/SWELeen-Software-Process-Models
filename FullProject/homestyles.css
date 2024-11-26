@@ -137,12 +137,16 @@ header {
     color: #4e7c56; /* Change this to your desired color */
 }
 
-.feature-cards {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr)
-}
+
 .feature-cards h3{
     color: #4e7c56;
+}
+
+.feature-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
+    gap: 20px; /* Spacing between rows and columns */
+    justify-content: center; /* Centers the grid in the container */
 }
 
 .card {
@@ -150,11 +154,10 @@ header {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 20px;
     padding: 20px;
-    width: 250px;
     height: 150px; 
     text-align: center;
-    margin-bottom: 20px;
 }
+
 
 
 /* Footer Styles */
