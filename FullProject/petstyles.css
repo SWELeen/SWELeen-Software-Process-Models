@@ -353,12 +353,3 @@ footer {
         margin-top: 20px;
     }
 }
-.error-message{
-    color: red;
-    font-size: 0.65em;
-    position: absolute;
-    left: 0;
-    top: 100%;
-    margin-top: 2px;
-    display: block;
-}
